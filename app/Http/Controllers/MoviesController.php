@@ -67,17 +67,30 @@ class MoviesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $title)
     {
 
         $movie = Http::withToken(config('services.tmdb.token'))
             ->get('https://api.themoviedb.org/3/movie/'.$id.'?append_to_response=credits,videos,images')
             ->json();
 
-        dump($movie);
+        $apikey = 'Your api Key';
+
+        $imdb_info = Http::get('http://www.omdbapi.com/?s='.$title.'&apikey='.$apikey)
+            ->Json();
+
+        $imdb_id = $imdb_info['Search'][0]['imdbID'];
+
+        $rating = Http::withToken($apikey)
+            ->get('http://www.omdbapi.com/?i='.$imdb_id.'&apikey=ef1c5717')
+            ->Json();
+
+        dump($rating);
+
 
         return view('show', [
             'movie' => $movie,
+            'rating' => $rating,
         ]);
     }
 
