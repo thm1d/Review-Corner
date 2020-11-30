@@ -31,7 +31,7 @@ class MoviesController extends Controller
             return [$genre['id'] => $genre['name']];
         });
 
-        dump($nowPlayingMovies);
+        //dump($nowPlayingMovies);
 
         return view('index', [
             'popularMovies' => $popularMovies,
@@ -76,29 +76,16 @@ class MoviesController extends Controller
 
         $apikey = 'ef1c5717';
 
-
-        $imdb = Http::get('http://www.omdbapi.com/?i='.$movie['imdb_id'].'&apikey='.$apikey)
+        if ($movie['imdb_id'] != "") {
+            $imdb = Http::get('http://www.omdbapi.com/?i='.$movie['imdb_id'].'&apikey='.$apikey)
             ->Json();
+        }
+        else {
+            $imdb = $movie;
+        }
+        
 
-        // $year = substr($movie['release_date'],0,4);
-        // if ($imdb_info['Response'] == "True") {
-        //     foreach ($imdb_info['Search'] as $list) {
-        //         # code...
-        //         if ( $list['Year'] == $year) {
-        //             $imdb_id = $list['imdbID'];
-        //         }
-        //     }
-
-        //     $imdb = Http::withToken($apikey)
-        //         ->get('http://www.omdbapi.com/?i='.$imdb_id.'&apikey=ef1c5717')
-        //         ->Json();
-
-        //     dump($movie);
-        // }
-        // else {
-        //     $imdb = $movie;
-        //     dump($imdb);
-        // }
+        
         dump($imdb);
 
         return view('show', [
