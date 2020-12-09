@@ -37,7 +37,7 @@
 			    				href="{{ route('movies.show', $result['id']) }}" 
 			    				class="block hover:bg-gray-700 px-3 py-3 flex items-center"
 			    				@if ($loop->last)
-			    					@keydown.tab.exact="isOpen = false"
+			    					@keydown.tab="isOpen = false"
 			    				@endif
 			    			>
 			    				@if($result['poster_path'])

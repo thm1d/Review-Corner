@@ -9,6 +9,7 @@
     
     <link href="https://unpkg.com/tailwindcss@^1.9/dist/tailwind.min.css" rel="stylesheet">
     <livewire:styles />
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
 </head>
 <body class="font-sans bg-gray-900 text-white">
     <nav class="border-b border-gray-800">
@@ -28,13 +29,14 @@
                 <li class="md:ml-6 mt-3 md:mt-0">
                     <a href="#" class="hover:text-gray-300">Actors</a>
                 </li>
+                <li class="md:ml-6 mt-3 md:mt-0">
+                    <a href="#" class="hover:text-gray-300">Games</a>
+                </li>
             </ul>
             <div class="flex flex-col md:flex-row items-center">
                 <livewire:search-dropdown>
                 <div class="md:ml-4 mt-3 md:mt-0">
-                    <a href="#">
-                        <img src="{{ URL::asset('/img/avatar.jpg ') }}" alt="avatar" class="rounded-full w-8 h-8">
-                    </a>
+                    <a href="#" class="hover:text-gray-300">Sign in</a>
                 </div>
             </div>
         </div>
