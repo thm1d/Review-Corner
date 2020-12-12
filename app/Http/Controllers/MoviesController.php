@@ -46,7 +46,7 @@ class MoviesController extends Controller
             $genres,
         );
 
-        return view('index', $viewModel);
+        return view('movie.index', $viewModel);
 
         // return view('index', [
         //     'trendingMovies' => $trendingMovies,
@@ -87,10 +87,11 @@ class MoviesController extends Controller
     {
 
         $movie = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/movie/'.$id.'?append_to_response=credits,videos,images')
+            ->get('https://api.themoviedb.org/3/movie/'.$id.'?append_to_response=credits,videos,images,review')
             ->json();
 
         $apikey = 'ef1c5717';
+
 
         if ($movie['imdb_id'] != "") {
             $imdb = Http::get('http://www.omdbapi.com/?i='.$movie['imdb_id'].'&apikey='.$apikey)
@@ -109,7 +110,7 @@ class MoviesController extends Controller
             $imdb,
         );
 
-        return view('show', $viewModel);
+        return view('movie.show', $viewModel);
     }
 
     /**
