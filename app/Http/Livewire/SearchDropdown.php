@@ -7,25 +7,22 @@ use Illuminate\Support\Facades\Http;
 
 class SearchDropdown extends Component
 {
-	public $search= '';
+    public $search = '';
+    public $searchResults = [];
 
     public function render()
     {
+        if (strlen($this->search) >= 2) {
+            $this->searchResults =  Http::withHeaders(config('services.igdb.headers'))
+                ->withBody(
+                    "search \"{$this->search}\";
+                        fields name, slug, cover.url;
+                        limit 8;
+                    ", "text/plain"
+                )->post(config('services.igdb.endpoint'))
+                ->json();
+        }
 
-    	$searchResults = [];
-
-    	if (strlen($this->search) > 2) {
-    		$searchResults = http::withToken(config('services.tmdb.token'))
-	        ->get('https://api.themoviedb.org/3/search/movie?query='.$this->search)
-	        ->json()['results'];
-    	}
-
-        //dump($searchResults);
-
-        return view('livewire.search-dropdown', [
-        	'searchResults' => collect($searchResults)->take(7),
-
-        ]);
+        return view('livewire.search-dropdown');
     }
-
 }

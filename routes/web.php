@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\TvController;
+use App\Http\Controllers\GamesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,6 @@ Route::get('/actors', [ActorController::class, 'index'])->name('actors.index');
 Route::get('/actors/page/{page?}', [ActorController::class, 'index'])->name('actors.index');
 
 Route::get('/actors/{actor}', [ActorController::class, 'show'])->name('actors.show');
+
+Route::get('/games', [GamesController::class, 'index'])->name('games.index');
+Route::get('/games/{slug}', [GamesController::class, 'show'])->name('games.show');

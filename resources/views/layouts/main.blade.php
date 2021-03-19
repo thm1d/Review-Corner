@@ -8,12 +8,11 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
         <link rel="stylesheet" href="{{ URL::asset('/css/main.css') }}">
-
         <link href="https://unpkg.com/tailwindcss@^1.9/dist/tailwind.min.css" rel="stylesheet">
         <livewire:styles />
-        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
+        
+        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.x/dist/alpine.min.js" defer></script>
     </head>
     <body class="font-sans bg-gray-900 text-white antialiased">
         <nav class="border-b border-gray-800">
@@ -34,7 +33,7 @@
                         <a href="{{ route('actors.index') }}" class="hover:text-gray-300">Actors</a>
                     </li>
                     <li class="md:ml-6 mt-3 md:mt-0">
-                        <a href="#" class="hover:text-gray-300">Games</a>
+                        <a href="{{ route('games.index') }}" class="hover:text-gray-300">Games</a>
                     </li>
                 </ul>
                 <div class="flex flex-col md:flex-row items-center">

@@ -1,60 +1,51 @@
-<div class="relative mt-3 md:mt-0" x-data="{ isOpen: true }" @click.away="isOpen = false">
-	<!--   Search Bar Here   -->
-    <input 
-	    wire:model="search" 
-	    type="text" 
-	    class="bg-gray-800 text-sm rounded-full w-64 px-4 pl-8 py-1 focus:outline-none focus:shadow-outline" 
-	    placeholder="Search"
-	    x-ref="search"
-	    @keydown.window="
+<div class="relative" x-data="{ isVisible: true }" @click.away="isVisible = false">
+    <input
+        wire:model.debounce.300ms="search"
+        type="text"
+        class="bg-gray-800 text-sm rounded-full focus:outline-none focus:shadow-outline w-64 px-3 pl-8 py-1"
+        placeholder="Search (Press '/' to focus)"
+        x-ref="search"
+        @keydown.window="
             if (event.keyCode === 191) {
                 event.preventDefault();
                 $refs.search.focus();
             }
         "
-	    @focus="isOpen=true"
-	    @keydown="isOpen = true"
-	    @keydown.escape.window="isOpen = false"
-	    @keydown.shift.tab="isOpen = false"
-	>
-    <div class="absolute top-0">
-        <svg class="fill-current w-4 text-gray-500 mt-2 ml-2" viewBox="0 0 24 24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 01-1.42 1.4l-5.38-5.38a8 8 0 111.41-1.41zM10 16a6 6 0 100-12 6 6 0 000 12z"/></svg>
+        @focus="isVisible = true"
+        @keydown.escape.window = "isVisible = false"
+        @keydown="isVisible = true"
+        @keydown.shift.tab="isVisible = false"
+    >
+    <div class="absolute top-0 flex items-center h-full ml-2">
+        <svg class="fill-current text-gray-400 w-4" viewBox="0 0 24 24"><path class="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 01-1.42 1.4l-5.38-5.38a8 8 0 111.41-1.41zM10 16a6 6 0 100-12 6 6 0 000 12z"/></svg>
     </div>
-    <!--   Spinner Here   -->
-	<div wire:loading class="absolute top-0 right-0 mr-2 mt-2">
-		<svg class="animate-spin h-4 w-4 rounded-full bg-transparent border-2 border-transparent border-opacity-50" style="border-right-color: white; border-top-color: white;" viewBox="0 0 24 24"></svg>
-	</div>
-    @if(strlen($search) > 2)
-	    <div 
-	    	class="z-50 absolute text-sm bg-gray-800 rounded w-64 mt-4"
-	    	x-show.transition.opacity="isOpen"
-	    >
-	    	<ul>
-	    		@if ($searchResults->count() > 0)
-	    			@foreach ($searchResults as $result)
-		    			<li class="border-b border-gray-700">
-			    			<a 
-			    				href="{{ route('movies.show', $result['id']) }}" 
-			    				class="block hover:bg-gray-700 px-3 py-3 flex items-center"
-			    				@if ($loop->last)
-			    					@keydown.tab="isOpen = false"
-			    				@endif
-			    			>
-			    				@if($result['poster_path'])
-				    				<img src="https://image.tmdb.org/t/p/w92/{{ $result['poster_path'] }}" alt="poster" class="w-8">
-				    			@else
-				    				<img src="https://via.placeholder.com/50x75" alt="poster" class="w-8">
-				    			@endif
-				    			<span class="ml-4">{{ $result['title'] }}</span>
 
-			    			</a>
-			    		</li>
-		    		@endforeach
-		    	@else 
-		    		<div class="px-3 py-3 text-sm">No Result for {{ $search  }}</div>
-	    		@endif	
-	    	</ul>
-	    </div>
+    <div wire:loading class="spinner top-0 right-0 mr-4 mt-3" style="position: absolute"></div>
+
+    @if (strlen($search) >= 2)
+        <div class="absolute z-50 bg-gray-800 text-xs rounded w-64 mt-2" x-show.transition.opacity.duration.200="isVisible">
+            @if (count($searchResults) > 0)
+                <ul>
+                    @foreach ($searchResults as $game)
+                        <li class="border-b border-gray-700">
+                            <a
+                                href="{{ route('games.show', $game['slug']) }}"
+                                class="block hover:bg-gray-700 flex items-center transition ease-in-out duration-150 px-3 py-3"
+                                @if ($loop->last) @keydown.tab="isVisible=false" @endif
+                            >
+                                @if (isset($game['cover']))
+                                    <img src="{{ Str::replaceFirst('thumb', 'cover_small', $game['cover']['url']) }}" alt="cover" class="w-10">
+                                @else
+                                    <img src="https://via.placeholder.com/264x352" alt="game cover" class="w-10">
+                                @endif
+                                <span class="ml-4">{{ $game['name'] }}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <div class="px-3 py-3">No results for "{{ $search }}"</div>
+            @endif
+        </div>
     @endif
 </div>
-
