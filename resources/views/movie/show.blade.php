@@ -169,8 +169,39 @@
     </div> <!-- end movie-images -->
 
     <div class="movie-review border-b border-gray-800">
-        <div class="container mx-auto px-4 py-16">
-            <h2 class="text-4xl font-semibold">Reviews</h2>
+        <div class="container mx-auto px-4 py-16 block">
+            <div class="flex flex-row ">
+                <h2 class="text-4xl font-semibold mr-8">Social</h2>
+                <h3 class="text-2xl font-normal py-3 ">Reviews</h3>
+            </div>
+
+            <div class="review-box box-border border border-white h-auto w-full px-8 py-8 mt-8">
+                <div class="review-header flex flex-row items-center content-center w-full">
+                    <div class="avatar mr-5 mt-2 md:mt-0 w-16">
+                        <a href="#">
+                            <img src="{{asset('/img/avatar.jpg')}}" alt="avatar" class="rounded-full w-16 h-16">
+                        </a>
+                    </div>
+                    <div class="info w-full">
+                        <div class="">
+                            <h4>Featured Review</h4>
+                        </div>
+                        <div class="rating_wrapper w-full flex flex-wrap items-baseline justify-start">
+                            <h3 class="font-bold">
+                                A review by {{ $movie['reviews']['results'][0]['author'] }}
+                            </h3>
+                            <div class="rounded rating px-8 ml=14 inline-flex text-sm items-center justify-items-center bg-transparent ">
+                                <svg class="fill-current text-orange-500 w-4 mr-1" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z" data-name="star"/></g></svg> 
+                                9.0
+                            </div>
+                        </div>
+                        <h5 class="text-xs">Written by <a href="/u/Dark+Jedi">Per Gunnar Jonsson</a> on May 12, 2019</h5>
+                    </div>   
+                </div>
+                <div class="teaser w-full pl-20 pt-5">
+                    <p>These kind of movies are among the few movies that I can be bothered to go to an actual theater to watch nowadays. For most movies I just wait until they come out on disk (preferably Ultra HD Blu-ray if it’s available) and watch them on my home theater rig. So this weekend me and the kids went to the theater to watch Avengers: Endgame.</p>
+                </div>
+            </div>
         </div>
     </div> <!-- end movie-cast -->
 @endsection

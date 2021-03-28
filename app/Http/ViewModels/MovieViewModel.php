@@ -3,6 +3,7 @@
 namespace App\ViewModels;
 
 use Spatie\ViewModels\ViewModel;
+use Illuminate\Support\Collection
 
 class MovieViewModel extends ViewModel
 {
@@ -24,8 +25,10 @@ class MovieViewModel extends ViewModel
     			'runtime' => date('g\h i',mktime(0,$this->movie['runtime'])),
     			'crew' => collect($this->movie['credits']['crew'])->take(2),
     			'cast' => collect($this->movie['credits']['cast'])->take(5),
-    			'backdrops' => collect($this->movie['images']['backdrops'])->take(9),
+    			'backdrops' => collect($this->movie['images']['backdrops'])->take(3),
     			'release_year' => substr($this->movie['release_date'],0,4),
+                'reviews' => collect($this->movie['reviews']['results'])->take(5),
+                'author' => collect($this->movie['reviews']['results'][0]['author_details']),
     		])->dump();
     }
 

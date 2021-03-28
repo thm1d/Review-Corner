@@ -87,7 +87,7 @@ class MoviesController extends Controller
     {
 
         $movie = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/movie/'.$id.'?append_to_response=credits,videos,images,review')
+            ->get('https://api.themoviedb.org/3/movie/'.$id.'?append_to_response=credits,videos,images,reviews')
             ->json();
 
         $apikey = 'ef1c5717';
