@@ -9,6 +9,7 @@ class MovieViewModel extends ViewModel
 	public $movie;
 	public $imdb;
 
+
     public function __construct($movie, $imdb)
     {
         $this->movie = $movie;
@@ -26,6 +27,7 @@ class MovieViewModel extends ViewModel
     			'cast' => collect($this->movie['credits']['cast'])->take(5),
     			'backdrops' => collect($this->movie['images']['backdrops'])->take(9),
     			'release_year' => substr($this->movie['release_date'],0,4),
+                'reviews' => collect($this->movie['reviews']['results']),
     		])->dump();
     }
 

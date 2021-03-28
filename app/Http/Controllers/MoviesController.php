@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Collection;
 use App\ViewModels\MoviesViewModel;
 use App\ViewModels\MovieViewModel;
+use App\ViewModels\ReviewViewModel;
 
 class MoviesController extends Controller
 {
@@ -101,9 +102,7 @@ class MoviesController extends Controller
             $imdb = $movie;
         }
         
-
-        
-        //dump($movie);
+        //dump($reviews);
 
         $viewModel = new MovieViewModel(
             $movie, 
