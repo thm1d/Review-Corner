@@ -24,6 +24,8 @@ class TvShowViewModel extends ViewModel
     			'cast' => collect($this->tvShow['credits']['cast'])->take(5),
     			'backdrops' => collect($this->tvShow['images']['backdrops'])->take(9),
     			'release_year' => substr($this->tvShow['first_air_date'],0,4),
+                'reviews' => collect($this->tvShow['reviews']['results']),
+                'similarTvShows' => collect($this->tvShow['similar']['results'])->take(5),
     		])->dump();
     }
 }

@@ -28,6 +28,8 @@ class MovieViewModel extends ViewModel
     			'backdrops' => collect($this->movie['images']['backdrops'])->take(9),
     			'release_year' => substr($this->movie['release_date'],0,4),
                 'reviews' => collect($this->movie['reviews']['results']),
+                'similarMovies' => collect($this->movie['similar']['results'])->take(5),
+                
     		])->dump();
     }
 

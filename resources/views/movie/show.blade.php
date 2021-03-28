@@ -168,6 +168,29 @@
         </div>
     </div> <!-- end movie-images -->
 
+    <div class="similar-movies-container border-b border-gray-800">
+        <div class="container mx-auto px-4 py-16 block">
+            <h2 class="text-4xl font-semibold">Similar Movies</h2>
+            <div class="similar-games grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                @foreach ($movie['similarMovies'] as $similarMovie)
+                    <div class="game mt-8">
+                        <div class="relative inline-block">
+                            <a href="{{ route('movies.show', $similarMovie['id']) }}">
+                                <img src="{{ 'https://image.tmdb.org/t/p/w500/'. $similarMovie['poster_path'] }}" alt="movie cover" class="hover:opacity-75 transition ease-in-out duration-150">
+                            </a>
+                            
+                        </div>
+                        <a href="{{ route('movies.show', $similarMovie['id']) }}" class="block text-lg font-semibold leading-tight hover:text-gray-400 mt-8">{{ $similarMovie['title'] }}</a>
+                        <div class="text-gray-400 mt-1">
+                            {{ \Carbon\Carbon::parse($similarMovie['release_date'])->format('M d, Y') }}
+                        </div>
+                    </div>
+                @endforeach
+
+            </div> <!-- end similar-movies -->
+        </div>
+    </div> <!-- end similar-movies-container -->
+
     <div class="movie-review border-b border-gray-800">
         <div class="container mx-auto px-4 py-16 block">
             <div class="flex flex-row ">
@@ -175,7 +198,7 @@
                 <h3 class="text-2xl font-normal py-3 ">Reviews</h3>
             </div>
 
-            <div class="review-box box-border border border-white border-opacity-25 h-auto w-full px-8 mt-8">
+            <div class="review-box box-border border border-white border-opacity-25 border-l-0 border-r-0 h-auto w-full px-8 mt-8"> 
                 @foreach ($movie['reviews'] as $review)
                 <?php 
                 if ($review['author_details']['avatar_path'] === null) {
@@ -197,9 +220,6 @@
                             </a>
                         </div>
                         <div class="info w-full">
-                            <div class="">
-                                <h4>Featured Review</h4>
-                            </div>
                             <div class="rating_wrapper w-full flex flex-wrap items-baseline justify-start">
                                 <h3 class="font-bold">
                                     A review by {{ $review['author_details']['username'] }}.
@@ -209,7 +229,7 @@
                                     {{ $review['author_details']['rating'] }}
                                 </div>
                             </div>
-                            <h5 class="text-xs">Written by <a href="/u/Dark+Jedi">{{ $review['author'] }}</a> on {{ $review['created_at'] }}</h5>
+                            <h5 class="text-xs">Written by <a href="/u/Dark+Jedi">{{ $review['author'] }}</a> on {{ \Carbon\Carbon::parse($review['created_at'])->format('M d, Y') }}</h5>
                         </div>   
                     </div>
                     <div class="teaser overflow-ellipsis overflow-hidden w-full h-40 pl-20 pt-5 " style="">
@@ -219,5 +239,5 @@
                 @endforeach
             </div>
         </div>
-    </div> <!-- end movie-cast -->
+    </div> <!-- end movie-review -->
 @endsection

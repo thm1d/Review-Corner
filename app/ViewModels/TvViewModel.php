@@ -51,7 +51,7 @@ class TvViewModel extends ViewModel
     			'poster_path' => 'https://image.tmdb.org/t/p/w500'. $tvShow['poster_path'],
     			'first_air_date' => \Carbon\Carbon::parse($tvShow['first_air_date'])->format('M d, Y'),
     			'genres' => $genresFormatted,
-    		])->dump();
+    		]);
     	});
     }
 }
