@@ -1,4 +1,4 @@
-<div wire:init="loadMostAnticipated" class="most-anticipated-container space-y-10 mt-8">
+<div wire:init="loadMostAnticipated" wire:loading.class="animate-pulse" class="most-anticipated-container space-y-10 mt-8">
     @forelse ($mostAnticipated as $game)
         <x-game-card-small :game="$game" />
     @empty

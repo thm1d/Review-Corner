@@ -31,27 +31,65 @@
         >
             <ul>
                 @if ($searchResults->count() > 0)
+                   
                     @foreach ($searchResults as $result)
-                        <li class="border-b border-gray-700">
-                            <a 
-                                href="{{ route('movies.show', $result['id']) }}" 
-                                class="block hover:bg-gray-700 px-3 py-3 flex items-center"
-                                @if ($loop->last)
-                                    @keydown.tab="isOpen = false"
-                                @endif
-                            >
-                                @if($result['poster_path'])
-                                    <img src="https://image.tmdb.org/t/p/w92/{{ $result['poster_path'] }}" alt="poster" class="w-8">
-                                @else
-                                    <img src="https://via.placeholder.com/50x75" alt="poster" class="w-8">
-                                @endif
-                                <span class="ml-4">{{ $result['title'] }}</span>
+                        @if ($result['media_type'] === 'movie')
+                            <li class="border-b border-gray-700">
+                                <a 
+                                    href="{{ route('movies.show', $result['id']) }}" 
+                                    class="block hover:bg-gray-700 px-3 py-3 flex items-center"
+                                    @if ($loop->last)
+                                        @keydown.tab="isOpen = false"
+                                    @endif
+                                >
+                                    @if($result['poster_path'])
+                                        <img src="https://image.tmdb.org/t/p/w92/{{ $result['poster_path'] }}" alt="poster" class="w-8">
+                                    @else
+                                        <img src="https://via.placeholder.com/50x75" alt="poster" class="w-8">
+                                    @endif
+                                    <span class="ml-4">{{ $result['title'] }}</span>
 
-                            </a>
-                        </li>
+                                </a>
+                            </li>
+                        @elseif ($result['media_type'] === 'tv')
+                            <li class="border-b border-gray-700">
+                                <a 
+                                    href="{{ route('tv.show', $result['id']) }}" 
+                                    class="block hover:bg-gray-700 px-3 py-3 flex items-center"
+                                    @if ($loop->last)
+                                        @keydown.tab="isOpen = false"
+                                    @endif
+                                >
+                                    @if($result['poster_path'])
+                                        <img src="https://image.tmdb.org/t/p/w92/{{ $result['poster_path'] }}" alt="poster" class="w-8">
+                                    @else
+                                        <img src="https://via.placeholder.com/50x75" alt="poster" class="w-8">
+                                    @endif
+                                    <span class="ml-4">{{ $result['name'] }}</span>
+
+                                </a>
+                            </li>
+                        @elseif ($result['media_type'] === 'person')
+                            <li class="border-b border-gray-700">
+                                <a 
+                                    href="{{ route('actors.show', $result['id']) }}" 
+                                    class="block hover:bg-gray-700 px-3 py-3 flex items-center"
+                                    @if ($loop->last)
+                                        @keydown.tab="isOpen = false"
+                                    @endif
+                                >
+                                    @if($result['profile_path'])
+                                        <img src="https://image.tmdb.org/t/p/w92/{{ $result['profile_path'] }}" alt="poster" class="w-8">
+                                    @else
+                                        <img src="https://via.placeholder.com/50x75" alt="poster" class="w-8">
+                                    @endif
+                                    <span class="ml-4">{{ $result['name'] }}</span>
+                                </a>
+                            </li>
+                        @endif
                     @endforeach
-                @else 
-                    <div class="px-3 py-3 text-sm">No Result for {{ $search  }}</div>
+                @else
+                    <div class="px-3 py-3 text-sm">No Result for "{{ $search  }}"</div>
                 @endif  
             </ul>
         </div>

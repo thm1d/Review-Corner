@@ -27,7 +27,7 @@ class PopularGames extends Component
                     & first_release_date < {$after}
                     & total_rating_count > 5);
                     sort total_rating_count desc;
-                    limit 12;", "text/plain"
+                    limit 15;", "text/plain"
                 )->post(config('services.igdb.endpoint'))
                 ->json();
         });

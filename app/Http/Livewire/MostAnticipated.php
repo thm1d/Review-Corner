@@ -24,7 +24,7 @@ class MostAnticipated extends Component
                     & (first_release_date >= {$current}
                     & first_release_date < {$afterFourMonths}
                     );
-                    sort total_rating_count desc;
+                    
                     limit 4;", "text/plain"
             )->post(config('services.igdb.endpoint'))
             ->json();

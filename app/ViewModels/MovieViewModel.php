@@ -37,4 +37,5 @@ class MovieViewModel extends ViewModel
     {
     	return $this->imdb;
     }
+    
 }

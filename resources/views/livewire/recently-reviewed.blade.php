@@ -1,4 +1,4 @@
-<div wire:init="loadRecentlyReviewed" class="recently-reviewed-container space-y-12 mt-8">
+<div wire:init="loadRecentlyReviewed" wire:loading.class="animate-pulse" class="recently-reviewed-container space-y-12 mt-8">
     @forelse ($recentlyReviewed as $game)
         <div class="game bg-gray-800 rounded-lg shadow-md flex px-6 py-6">
             <div class="relative flex-none">
