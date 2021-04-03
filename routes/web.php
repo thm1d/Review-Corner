@@ -5,6 +5,7 @@ use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\TvController;
 use App\Http\Controllers\GamesController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,9 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/', [MoviesController::class, 'index'])->name('movies.index');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
+
+Route::get('/movies', [MoviesController::class, 'index'])->name('movies.index');
 Route::get('/movies/{movie}', [MoviesController::class, 'show'])->name('movies.show');
 
 Route::get('/tv', [TvController::class, 'index'])->name('tv.index');

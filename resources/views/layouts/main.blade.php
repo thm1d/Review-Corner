@@ -4,15 +4,17 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Review Corner</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ URL::asset('/css/main.css') }}">
         <link href="https://unpkg.com/tailwindcss@^1.9/dist/tailwind.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
         <livewire:styles />
         
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.x/dist/alpine.min.js" defer></script>
+        <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
     </head>
     <body class="font-sans bg-gray-900 text-white antialiased">
         <nav class="border-b border-gray-800">
@@ -24,6 +26,9 @@
                         </a>
                     </li>
                     <li class="md:ml-16 mt-3 md:mt-0">
+                        <a href="{{ route('home.index') }}" class="hover:text-gray-300">Home</a>
+                    </li>
+                    <li class="md:ml-6 mt-3 md:mt-0">
                         <a href="{{ route('movies.index') }}" class="hover:text-gray-300">Movies</a>
                     </li>
                     <li class="md:ml-6 mt-3 md:mt-0">

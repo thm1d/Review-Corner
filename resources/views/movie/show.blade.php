@@ -131,7 +131,7 @@
             <h2 class="text-4xl font-semibold">Images</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                 @foreach ($movie['backdrops'] as $image)
-                    <div class="mt-8">
+                    <div class="mt-8 ">
                         <a
                             @click.prevent="
                                 isOpen = true
@@ -147,7 +147,7 @@
 
             <div
                 style="background-color: rgba(0, 0, 0, .5);"
-                class="fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto"
+                class="fixed top-0 left-0 w-full h-full flex items-center shadow-lg overflow-y-auto z-50"
                 x-show="isOpen"
             >
                 <div class="container mx-auto lg:px-32 rounded-lg overflow-y-auto">
