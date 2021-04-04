@@ -82,7 +82,7 @@
                 </div>
 
                 <p class="mt-12">{{ $game['summary'] }}</p>
-
+                
                 <div class="mt-12" x-data="{ isTrailerModalVisible: false }">
                     <button
                         @click="isTrailerModalVisible = true"

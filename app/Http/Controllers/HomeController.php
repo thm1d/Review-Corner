@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
+use App\ViewModels\HomeViewModel;
 
 class HomeController extends Controller
 {
@@ -15,6 +18,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $release_date1 = Carbon::now()->subMonths(1)->format('Y-m-d');
+        $release_date2 = Carbon::now()->format('Y-m-d');
+        $release_date3 = Carbon::now()->subDays(7)->format('Y-m-d');
+
         $upcomingMovies = http::withToken(config('services.tmdb.token'))
         ->get('https://api.themoviedb.org/3/movie/upcoming')
         ->json()['results'];
@@ -23,8 +30,8 @@ class HomeController extends Controller
 
         foreach ($upcomingMovies as $movie) {
             $video = http::withToken(config('services.tmdb.token'))
-        ->get('https://api.themoviedb.org/3/movie/'. $movie['id']. '/videos')
-        ->json()['results'];
+            ->get('https://api.themoviedb.org/3/movie/'. $movie['id']. '/videos')
+            ->json()['results'];
 
             $videos[] = $video[0];
             if (count($videos) >10) {
@@ -32,11 +39,7 @@ class HomeController extends Controller
             }
         }
 
-        dump($videos);
-
-        $release_date1 = Carbon::now()->subMonths(1)->format('Y-m-d');
-        $release_date2 = Carbon::now()->format('Y-m-d');
-        $release_date3 = Carbon::now()->subDays(7)->format('Y-m-d');
+        //dump($videos);
 
         $moviesInTheater = http::withToken(config('services.tmdb.token'))
         ->get('https://api.themoviedb.org/3/discover/movie?primary_release_date.gte='. $release_date1 .'&primary_release_date.lte='. $release_date2)
@@ -46,24 +49,32 @@ class HomeController extends Controller
             ->get('https://api.themoviedb.org/3/genre/movie/list')
             ->json()['genres'];
 
-        // $genres = collect($genresArray)->mapWithKeys(function ($genre) {
-        //     return [$genre['id'] => $genre['name']];
-        // });
-
-        //dump($moviesInTheater);
-
         $showsOnTv = http::withToken(config('services.tmdb.token'))
             ->get('https://api.themoviedb.org/3/discover/tv?&air_date.gte='. $release_date3. '&air_date.lte='. $release_date2)
             ->json()['results'];
 
         //dump($showsOnTv);
 
-        return view('home',[
-            'videos' => $videos,
-            'moviesInTheater' => $moviesInTheater,
-            //'genres' => $genres,
-            'showsOnTv' => $showsOnTv,
-        ]);
+        $games = Http::withHeaders(config('services.igdb.headers'))
+            ->withBody(
+                "fields name, cover.url, first_release_date, total_rating, platforms.abbreviation, release_dates.date, release_dates.human, slug;
+                    where release_dates.date < 1617523652 &  release_dates.date > 1616917710 & total_rating != null;
+                    limit 8;
+                    sort total_rating desc;", "text/plain"
+            )->post(config('services.igdb.endpoint'))
+            ->json();
+
+        abort_if(!$games, 404);
+
+        $viewModel = new HomeViewModel(
+            $videos,
+            $moviesInTheater, 
+            $genresArray, 
+            $showsOnTv, 
+            $games,
+        );
+
+        return view('home', $viewModel);
     }
 
     /**
@@ -130,5 +141,16 @@ class HomeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function formatForView($games)
+    {
+        return collect($games)->map(function ($game) {
+            return collect($game)->merge([
+                'coverImageUrl' => Str::replaceFirst('thumb', 'cover_big', $game['cover']['url']),
+                'rating' => isset($game['rating']) ? round($game['rating']) : null,
+                'platforms' => collect($game['platforms'])->pluck('abbreviation')->implode(', '),
+            ]);
+        })->toArray();
     }
 }

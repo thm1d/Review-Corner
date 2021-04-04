@@ -16,32 +16,6 @@ class GamesController extends Controller
      */
     public function index()
     {
-        // For Multi Query
-        // $client = new \GuzzleHttp\Client(['base_uri' => 'https://api-v3.igdb.com/']);
-
-        // $response = $client->request('POST', 'multiquery', [
-        //     'headers' => [
-        //         'user-key' => env('IGDB_KEY'),
-        //     ],
-        //     'body' => '
-        //         query games "Playstation" {
-        //             fields name, popularity, platforms.name, first_release_date;
-        //             where platforms = {6,48,130,49};
-        //             sort popularity desc;
-        //             limit 2;
-        //         };
-
-        //         query games "Switch" {
-        //             fields name, popularity, platforms.name, first_release_date;
-        //             where platforms = {6,48,130,49};
-        //             sort popularity desc;
-        //             limit 6;
-        //         };
-        //         '
-        // ]);
-
-        // $body = $response->getBody();
-        // dd(json_decode($body));
 
         return view('game.index');
     }
@@ -93,6 +67,7 @@ class GamesController extends Controller
 
     private function formatGameForView($game)
     {
+        $game['videos'] = array_key_exists('videos', $game) ? $game['videos'][0]['video_id'] : null;
         return collect($game)->merge([
             'coverImageUrl' => Str::replaceFirst('thumb', 'cover_big', $game['cover']['url']),
             'genres' => collect($game['genres'])->pluck('name')->implode(', '),
@@ -100,7 +75,7 @@ class GamesController extends Controller
             'platforms' => collect($game['platforms'])->pluck('abbreviation')->implode(', '),
             'memberRating' => array_key_exists('rating', $game) ? round($game['rating']) : '0',
             'criticRating' => array_key_exists('aggregated_rating', $game) ? round($game['aggregated_rating']) : '0',
-            'trailer' => 'https://youtube.com/embed/'.$game['videos'][0]['video_id'],
+            'trailer' => 'https://youtube.com/embed/'. $game['videos'],
             'screenshots' => collect($game['screenshots'])->map(function ($screenshot) {
                 return [
                     'big' => Str::replaceFirst('thumb', 'screenshot_big', $screenshot['url']),

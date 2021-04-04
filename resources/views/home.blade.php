@@ -4,7 +4,7 @@
 	<div class="container mx-auto px-4 pt-16">
 		<div class="trailer">
         	<div class="container mx-auto">
-            	<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-8">Upcoming Movie Trailers</h2>
+            	<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-8">Featured Movie Trailers</h2>
 				<div class="main-carousel h-4/6 " data-flickity='{ "autoPlay": true, "wrapAround": true }'>
 					@foreach ($videos as $video)
 						@if (!@strripos($video['name'],"Restricted"))
@@ -18,19 +18,15 @@
 		<div class="movies-in-theater pt-24">
 			<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Movies In Theater</h2>
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8">
-				@php ($index = 0)
+				
 				@foreach ($moviesInTheater as $movie)
-					@php ($index++)
-					@if ($index > 8)
-						@break
-					@endif
 					<div class="mt-8">
 						<a href="{{ route('movies.show', ['movie'=>$movie['id'], 'title'=>$movie['title']]) }}">
-							<img src="{{ 'https://image.tmdb.org/t/p/w500/'. $movie['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
+							<img src="{{ $movie['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
 						</a>
 						<div class="mt-2">
 							<a href="{{ route('movies.show', $movie['id']) }}" class="text-lg mt-2 hover:text-gray:300">{{ $movie['title'] }}</a><br>
-							<span class="text-sm text-gray-400">{{ \Carbon\Carbon::parse($movie['release_date'])->format('M d, Y') }}</span>
+							<span class="text-sm text-gray-400">{{ $movie['release_date'] }}</span>
 						</div>
 					</div>
 				@endforeach
@@ -40,24 +36,29 @@
 		<div class="shows-on-tv py-24">
 			<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Shows On TV</h2>
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8">
-				@php ($index = 0)
+				
 				@foreach ($showsOnTv as $tvShow)
-					@php ($index++)
-					@if ($index > 8)
-						@break
-					@endif
 					<div class="mt-8">
 						<a href="{{ route('tv.show', $tvShow['id']) }}">
-							<img src="{{ 'https://image.tmdb.org/t/p/w500/'. $tvShow['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
+							<img src="{{ $tvShow['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
 						</a>
 						<div class="mt-2">
 							<a href="{{ route('tv.show', $tvShow['id']) }}" class="text-lg mt-2 hover:text-gray-300">{{ $tvShow['name'] }}</a><br>
-							<span class="text-sm text-gray-400">{{ \Carbon\Carbon::parse($tvShow['first_air_date'])->format('M d, Y') }}</span>
+							<span class="text-sm text-gray-400">{{ $tvShow['first_air_date'] }}</span>
 						</div>
 					</div>
 				@endforeach
 			</div>
 		</div> <!-- tvshows-on-tv -->
+
+		<div class="recently-released-games">
+	        <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Recently Released Games</h2>
+			<div class="new-games text-sm grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 xl:grid-cols-8 gap-8 pb-16 ">
+			    @foreach ($games as $game)
+			        <x-game-card :game="$game" />
+			    @endforeach
+			</div>
+		</div>
 
 	</div>
 

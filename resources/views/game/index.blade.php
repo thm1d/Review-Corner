@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mx-auto px-4">
-        <h2 class="text-blue-500 uppercase tracking-wide font-semibold">Popular Games</h2>
+        <h2 class="text-blue-500 uppercase tracking-wide font-semibold pt-16">Popular Games</h2>
         <livewire:popular-games>
         <div class="flex flex-col lg:flex-row my-10">
             <div class="recently-reviewed w-full lg:w-3/4 mr-0 lg:mr-32">

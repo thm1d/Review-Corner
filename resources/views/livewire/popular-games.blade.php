@@ -1,8 +1,8 @@
-<div wire:init="loadPopularGames" wire:loading.class="animate-pulse" class="popular-games text-sm grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 xl:grid-cols-5 gap-12 border-b border-gray-800 pb-16 ">
+<div wire:init="loadPopularGames" wire:loading.class="animate-pulse" class="popular-games text-sm grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5 gap-12 border-b border-gray-800 pb-16 ">
     @forelse ($popularGames as $game)
         <x-game-card :game="$game" />
     @empty
-        @foreach (range(1, 12) as $game)
+        @foreach (range(1, 15) as $game)
             <div class="game mt-8">
                 <div class="relative inline-block">
                     <div class="bg-gray-700 w-44 h-56"></div>

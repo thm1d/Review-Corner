@@ -14,15 +14,15 @@ class MostAnticipated extends Component
     public function loadMostAnticipated()
     {
         $current = Carbon::now()->timestamp;
-        $afterFourMonths = Carbon::now()->addMonths(4)->timestamp;
+        $afterTwoMonths = Carbon::now()->addMonths(2)->timestamp;
 
         // Most Anticipated is not very accurate without the popularity field anymore :(
         $mostAnticipatedUnformatted = Http::withHeaders(config('services.igdb.headers'))
             ->withBody(
-                "fields name, cover.url, first_release_date, total_rating_count, platforms.abbreviation, rating, rating_count, summary, slug;
+                "fields name, cover.url, first_release_date, total_rating_count, platforms.abbreviation, total_rating, rating_count, summary, slug;
                     where platforms = (48,49,130,6)
                     & (first_release_date >= {$current}
-                    & first_release_date < {$afterFourMonths}
+                    & first_release_date < {$afterTwoMonths}
                     );
                     
                     limit 4;", "text/plain"
