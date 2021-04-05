@@ -25,6 +25,8 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/genres/{key}', [HomeController::class, 'showGenre'])->name('home.genre');
+Route::get('/years/{year}', [HomeController::class, 'showYear'])->name('home.year');
 
 Route::get('/movies', [MoviesController::class, 'index'])->name('movies.index');
 Route::get('/movies/{movie}', [MoviesController::class, 'show'])->name('movies.show');

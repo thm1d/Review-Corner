@@ -34,7 +34,7 @@ class HomeController extends Controller
             ->json()['results'];
 
             $videos[] = $video[0];
-            if (count($videos) >10) {
+            if (count($videos) > 20) {
                 break;
             }
         }
@@ -74,7 +74,7 @@ class HomeController extends Controller
             $games,
         );
 
-        return view('home', $viewModel);
+        return view('home.home', $viewModel);
     }
 
     /**
@@ -143,14 +143,30 @@ class HomeController extends Controller
         //
     }
 
-    private function formatForView($games)
+    public function showGenre($id)
     {
-        return collect($games)->map(function ($game) {
-            return collect($game)->merge([
-                'coverImageUrl' => Str::replaceFirst('thumb', 'cover_big', $game['cover']['url']),
-                'rating' => isset($game['rating']) ? round($game['rating']) : null,
-                'platforms' => collect($game['platforms'])->pluck('abbreviation')->implode(', '),
-            ]);
-        })->toArray();
+        $genreWiseMovies = Http::withToken(config('services.tmdb.token'))
+        ->get('https://api.themoviedb.org/3/discover/movie?with_genres='. $id. '&sort_by=popularity.desc')
+        ->json()['results'];
+
+        dump($genreWiseMovies);
+
+        return view('home.genre',[
+            'genreWiseMovies' => $genreWiseMovies,
+        ]);
     }
+
+    public function showYear($id)
+    {
+        $yearWiseMovies = Http::withToken(config('services.tmdb.token'))
+        ->get('https://api.themoviedb.org/3/discover/movie?primary_release_year='. $id. '&sort_by=popularity.desc')
+        ->json()['results'];
+
+        dump($yearWiseMovies);
+
+        return view('home.year',[
+            'yearWiseMovies' => $yearWiseMovies,
+        ]);
+    }
+
 }

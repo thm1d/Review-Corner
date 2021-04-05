@@ -170,7 +170,7 @@
         <div class="container mx-auto px-4 py-16 block">
             <div class="flex flex-row ">
                 <h2 class="text-4xl font-semibold mr-8">Social</h2>
-                <h3 class="text-2xl font-normal py-3 ">Reviews</h3>
+                <h3 class="text-2xl font-normal py-3 ">Reviews ({{ $tvShow['reviews']->count() }})</h3>
             </div>
 
             <div class="review-box box-border border border-white border-opacity-25 border-l-0 border-r-0 h-auto w-full px-8 mt-8"> 

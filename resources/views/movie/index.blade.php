@@ -7,8 +7,12 @@
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 				@foreach ($trendingMovies as $movie)
 					<div class="mt-8">
-						<a href="{{ route('movies.show', ['movie'=>$movie['id'], 'title'=>$movie['title']]) }}">
-							<img src="{{ $movie['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
+						<a href="{{ route('movies.show', ['movie'=>$movie['id']]) }}">
+							@if ($movie['poster_path'] != null)
+								<img src="{{ $movie['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
+							@else
+								<img src="{{ 'https://via.placeholder.com/500x750/808080/000000?text='. $movie['title'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
+							@endif
 						</a>
 						<div class="mt-2">
 							<a href="{{ route('movies.show', $movie['id']) }}" class="text-lg mt-2 hover:text-gray-300">{{ $movie['title'] }}</a>
@@ -32,8 +36,12 @@
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 				@foreach ($popularMovies as $movie)
 					<div class="mt-8">
-						<a href="{{ route('movies.show', ['movie'=>$movie['id'], 'title'=>$movie['title']]) }}">
-							<img src="{{ $movie['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
+						<a href="{{ route('movies.show', ['movie'=>$movie['id']]) }}">
+							@if ($movie['poster_path'] != null)
+								<img src="{{ $movie['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
+							@else
+								<img src="{{ 'https://via.placeholder.com/500x750/808080/000000?text='. $movie['title'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
+							@endif
 						</a>
 						<div class="mt-2">
 							<a href="{{ route('movies.show', $movie['id']) }}" class="text-lg mt-2 hover:text-gray:300">{{ $movie['title'] }}</a>
@@ -57,8 +65,12 @@
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 				@foreach ($nowPlayingMovies as $movie)
 					<div class="mt-8">
-						<a href="{{ route('movies.show', ['movie'=>$movie['id'], 'title'=>$movie['title']]) }}">
-							<img src="{{ $movie['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
+						<a href="{{ route('movies.show', ['movie'=>$movie['id']]) }}">
+							@if ($movie['poster_path'] != null)
+								<img src="{{ $movie['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
+							@else
+								<img src="{{ 'https://via.placeholder.com/500x750/808080/000000?text='. $movie['title'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
+							@endif
 						</a>
 						<div class="mt-2">
 							<a href="{{ route('movies.show', ['movie'=>$movie['id'], 'title'=>$movie['title']]) }}" class="text-lg mt-2 hover:text-gray:300">{{ $movie['title'] }}</a>

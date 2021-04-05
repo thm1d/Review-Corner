@@ -7,9 +7,9 @@
             	<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-8">Featured Movie Trailers</h2>
 				<div class="main-carousel h-4/6 " data-flickity='{ "autoPlay": true, "wrapAround": true }'>
 					@foreach ($videos as $video)
-						@if (!@strripos($video['name'],"Restricted"))
-							<iframe class="mx-4" src="https://www.youtube.com/embed/{{ $video['key'] }}"></iframe> 
-						@endif        
+						@if ($video['trailer'] != null)
+							<iframe class="mx-4" src="{{ $video['trailer'] }}"></iframe> 
+						@endif     
 				  	@endforeach
 				</div>
 			</div>
@@ -57,6 +57,32 @@
 			    @foreach ($games as $game)
 			        <x-game-card :game="$game" />
 			    @endforeach
+			</div>
+		</div>
+
+		<div class="by-genres-and-by-year py-24 ">
+			<div class="grid grid-cols-2 gap-12 w-full">
+				<div class="by-genres border border-transparent rounded h-max" style="background-color: rgb(62, 76, 94); ">
+					<div class="bg-gray-900 m-1">
+						<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold p-2">Genres</h2>
+						@foreach ($genresArray as $key => $value)
+						<ul>
+							<li class="border-t border-gray-300 p-2 mx-4 hover:text-gray-300"><a href="{{ route('home.genre', $key) }}">{{ $value }}</a></li>
+						</ul>
+						@endforeach
+					</div>
+				</div>
+
+				<div class="by-year border border-transparent rounded h-max" style="background-color: rgb(62, 76, 94); ">
+					<div class="bg-gray-900 m-1">
+						<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold p-2">Years</h2>
+						@foreach (@range(0,18) as $diff)
+						<ul>
+							<li class="border-t border-gray-300 p-2 mx-4 hover:text-gray-300"><a href="{{ route('home.year', ( date('Y') - $diff )) }}">{{ date('Y') - $diff }}</a></li>
+						</ul>
+						@endforeach
+					</div>
+				</div>
 			</div>
 		</div>
 
