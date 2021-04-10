@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Collection;
 use App\ViewModels\TvViewModel;
 use App\ViewModels\TvShowViewModel;
+use App\Models\User;
+use App\Models\Rating;
+use App\Models\Tv;
+use Illuminate\Support\Facades\Auth;
 
 class TvController extends Controller
 {
@@ -65,9 +70,31 @@ class TvController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $tv_id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'rating' => 'required',
+
+        ]);
+
+        if ($validator->fails()) {
+
+            return redirect('/tv/'. $tv_id)
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $tv = Tv::where('tv_id', $tv_id)->first();
+
+        //dd($movie);
+
+        //dd($tv);
+
+
+        $tv->rateOnce($request->rating);
+        Tv::first()->ratings;
+
+        return redirect()->back();
     }
 
     /**
@@ -83,9 +110,57 @@ class TvController extends Controller
             ->json();
 
         //dump($movie);
+        $apikey = 'ef1c5717';
+
+        if ($tvShow['external_ids']['imdb_id'] != "") {
+            $imdb = Http::get('http://www.omdbapi.com/?i='.$tvShow['external_ids']['imdb_id'].'&apikey='.$apikey)
+            ->Json();
+        }
+        else {
+            $imdb = $tvShow;
+        }
+
+        $user_id = Auth::user();
+        //dd($user_id->id);
+        $rating = "N/A";
+
+        if($user_id !== null) {
+
+            $tvID = Tv::where('tv_id', $id)->first();
+
+            if ($tvID === null) {
+                $tvID = Tv::create([
+                    'tv_id' => $id,
+                    'title' => $tvShow['name'],
+                ]);
+
+                $rating = "N/A";  
+            }
+            else {
+                $checkID = $tvID['id'];
+
+                $rating = Rating::where([
+                    ['rateable_id', '=', $checkID],
+                    ['rateable_type', '=', 'App\Models\Tv'],
+                    ['user_id', '=', $user_id->id]
+                    ])->first();
+
+                if ($rating == null) {
+                    $rating = "N/A";
+                }
+                else {
+                    $rating = $rating->rating;
+                }
+                //dd($rating);
+
+            }
+
+        }
 
         $viewModel = new TvShowViewModel(
             $tvShow, 
+            $imdb,
+            $rating,
         );
 
         return view('tv.show', $viewModel);
@@ -123,5 +198,25 @@ class TvController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function storeList($id)
+    {
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+        //dd($user);
+        $prevList = $user->watchlist_tv;
+        $newList = array($id);
+        //dd($prevList, $newList, array_merge($prevList,$newList));
+        if(!in_array($id, $prevList)) {
+            
+            $user->watchlist_tv = array_merge($prevList,$newList);
+            $user->save();
+            return redirect()->back()->with('message', 'Added to the List!');
+        }
+        else {
+            return redirect()->back()->with('message', 'This Item is Already Added!');
+        }
+        
     }
 }

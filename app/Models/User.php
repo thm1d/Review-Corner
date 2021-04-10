@@ -6,10 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use willvincent\Rateable\Rateable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Rateable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'watchlist_movie',
+        'watchlist_tv',
     ];
 
     /**
@@ -39,5 +42,25 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'watchlist_movie' => 'array',
+        'watchlist_tv' => 'array',
     ];
+
+    // public function ratings() {
+  
+    //     return $this->hasMany(Rating::class);
+     
+    // }
+
+    public function movie()
+    {
+        return $this->hasMany(Movie::class);
+    }
+
+    public function tv()
+    {
+        return $this->hasMany(Tv::class);
+    }
+
+    
 }

@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Collection;
 use App\ViewModels\MoviesViewModel;
 use App\ViewModels\MovieViewModel;
 use App\ViewModels\ReviewViewModel;
+use App\Models\User;
+use App\Models\Rating;
+use App\Models\Movie;
+use Illuminate\Support\Facades\Auth;
 
 class MoviesController extends Controller
 {
@@ -21,7 +26,7 @@ class MoviesController extends Controller
         $trendingMovies = http::withToken(config('services.tmdb.token'))
         ->get('https://api.themoviedb.org/3/trending/movie/week')
         ->json()['results'];
-
+        
         $popularMovies = http::withToken(config('services.tmdb.token'))
         ->get('https://api.themoviedb.org/3/movie/popular')
         ->json()['results'];
@@ -73,9 +78,61 @@ class MoviesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $movie_id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'rating' => 'required',
+
+        ]);
+
+        if ($validator->fails()) {
+
+            return redirect('/movies/'. $movie_id)
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $movie = Movie::where('movie_id', $movie_id)->first();
+
+        //dd($movie);
+
+        if (is_null($movie)) {
+            $movie = Movie::create([
+                'user_id' => auth()->user()->id,
+                'movie_id' => $movie_id,
+                'rating' => $request->rating,
+                'title' => $request->title,
+            ]);
+
+            
+        }
+
+        $movie->rateOnce($request->rating);
+        Movie::first()->ratings;
+
+        return redirect()->back();
+
+        
+
+        // //$movie2 = Movie::find($movie_id)->where('user_id', auth()->user()->id)->first();
+        // //dd($movie);
+
+        
+        // $rating = $movie->ratings()->where('user_id', auth()->user()->id)->first();
+        // //dd($rating);
+
+        // if(!is_null($rating)){
+        //     $rating = new Rating();
+        //     $rating->rating =  $request['rating'];
+        //     $rating->user_id = auth()->user()->id;
+        //     $movie->ratings()->save($rating);
+        //     return redirect()->back();
+        // }
+        // else{
+        //     return redirect()->back()->with("You already made a review");
+        // }
+
+        //return redirect('/movies/'. $id);
     }
 
     /**
@@ -101,12 +158,50 @@ class MoviesController extends Controller
         else {
             $imdb = $movie;
         }
-        
-        //dump($reviews);
+
+        $user_id = Auth::user();
+        //dd($user_id->id);
+        $rating = "N/A";
+
+        if($user_id !== null) {
+
+            $movieID = Movie::where('movie_id', $id)->first();
+
+            if ($movieID === null) {
+                $movieID = Movie::create([
+                    'movie_id' => $id,
+                    'title' => $movie['title'],
+                ]);
+
+                $rating = "N/A";  
+            }
+            else {
+                $checkID = $movieID['id'];
+
+                $rating = Rating::where([
+                    ['rateable_id', '=', $checkID],
+                    ['rateable_type', '=', 'App\Models\Movie'],
+                    ['user_id', '=', $user_id->id]
+                    ])->first();
+
+                if ($rating == null) {
+                    $rating = "N/A";
+                }
+                else {
+                    $rating = $rating->rating;
+                }
+                //dd($rating);
+
+            }
+
+        }
+
 
         $viewModel = new MovieViewModel(
             $movie, 
             $imdb,
+            $rating,
+            
         );
 
         return view('movie.show', $viewModel);
@@ -144,5 +239,25 @@ class MoviesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function storeList($id)
+    {
+        $user_id = Auth::user()->id;
+        $user = User::find($user_id);
+        //dd($user);
+        $prevList = $user->watchlist_movie;
+        $newList = array($id);
+        //dd($prevList, $newList, array_merge($prevList,$newList));
+        if(!in_array($id, $prevList)) {
+            
+            $user->watchlist_movie = array_merge($prevList,$newList);
+            $user->save();
+            return redirect()->back()->with('message', 'Added to the List!');
+        }
+        else {
+            return redirect()->back()->with('message', 'This Item is Already added!');
+        }
+        
     }
 }

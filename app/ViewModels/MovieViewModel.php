@@ -8,12 +8,14 @@ class MovieViewModel extends ViewModel
 {
 	public $movie;
 	public $imdb;
+    public $rating;
 
 
-    public function __construct($movie, $imdb)
+    public function __construct($movie, $imdb, $rating)
     {
         $this->movie = $movie;
         $this->imdb = $imdb;
+        $this->rating = $rating;
     }
 
     public function movie()
@@ -36,6 +38,13 @@ class MovieViewModel extends ViewModel
     public function imdb()
     {
     	return $this->imdb;
+    }
+
+    public function rating()
+    {
+        
+        return $this->rating;
+
     }
     
 }

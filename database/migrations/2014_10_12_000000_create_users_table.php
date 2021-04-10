@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->json('watchlist_movie')->nullable();
+            $table->json('watchlist_tv')->nullable();
             $table->timestamps();
         });
     }

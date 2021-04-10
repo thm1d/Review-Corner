@@ -7,10 +7,14 @@ use Spatie\ViewModels\ViewModel;
 class TvShowViewModel extends ViewModel
 {
     public $tvShow;
+    public $imdb;
+    public $rating;
 
-    public function __construct($tvShow)
+    public function __construct($tvShow, $imdb, $rating)
     {
         $this->tvShow = $tvShow;
+        $this->imdb = $imdb;
+        $this->rating = $rating;
     }
 
     public function tvShow()
@@ -27,5 +31,17 @@ class TvShowViewModel extends ViewModel
                 'reviews' => collect($this->tvShow['reviews']['results']),
                 'similarTvShows' => collect($this->tvShow['similar']['results'])->take(5),
     		])->dump();
+    }
+
+    public function imdb()
+    {
+        return $this->imdb;
+    }
+
+    public function rating()
+    {
+        
+        return $this->rating;
+
     }
 }
