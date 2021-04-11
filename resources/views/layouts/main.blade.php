@@ -46,7 +46,7 @@
                     @if (Route::has('login'))
                         <div class="hidden top-0 right-0 py-4 sm:block md:ml-4 mt-3 md:mt-0">
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="text-sm hover:text-gray-300 underline">Dashboard</a>
+                                <a href="{{ route('dashboard') }}" class="text-sm hover:text-gray-300 underline">Dashboard</a>
                             @else
                                 <a href="{{ route('login') }}" class="text-sm hover:text-gray-300 underline">Login</a>
 
@@ -60,6 +60,11 @@
             </div>
         </nav>
         @yield('content') 
+        <footer class="border border-t border-gray-800">
+            <div class="container mx-auto text-sm px-4 py-6">
+                Powered by <a href="https://www.themoviedb.org/documentation/api" class="underline hover:text-gray-300">TMDb API</a>
+            </div>
+        </footer>
         <livewire:scripts />
     </body>
 </html>

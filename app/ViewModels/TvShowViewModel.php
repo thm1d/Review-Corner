@@ -40,7 +40,7 @@ class TvShowViewModel extends ViewModel
 
     public function rating()
     {
-        
+        dump($this->imdb);
         return $this->rating;
 
     }

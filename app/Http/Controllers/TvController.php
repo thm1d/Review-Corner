@@ -76,13 +76,16 @@ class TvController extends Controller
             'rating' => 'required',
 
         ]);
+        //dd($validator);
 
         if ($validator->fails()) {
 
             return redirect('/tv/'. $tv_id)
                         ->withErrors($validator)
-                        ->withInput();
+                        ->withInput()->with('msg', '*Enter Your Rating!');
         }
+
+
 
         $tv = Tv::where('tv_id', $tv_id)->first();
 
@@ -149,7 +152,7 @@ class TvController extends Controller
                     $rating = "N/A";
                 }
                 else {
-                    $rating = $rating->rating;
+                    $rating = $rating->rating. '/5';
                 }
                 //dd($rating);
 

@@ -9,27 +9,37 @@
             <div class="md:ml-24">
                 <div class="grid grid-cols-2">
                     <div class="title-and-ratings md:mr-4">
-                        <h2 class="text-4xl mt-4 md:mt-0 font-semibold">{{ $tvShow['name'] }} ({{ $tvShow['release_year'] }})</h2>
+                        <h2 class="text-4xl mt-4 md:mt-0 font-semibold">{{ $tvShow['name'] }} ({{ $imdb['Year'] }})</h2>
                         <div class="flex flex-wrap items-center text-gray-400 text-sm">
-                            <svg class="fill-current text-orange-500 w-4" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z" data-name="star"/></g></svg>
-                            <span class="">{{ $tvShow['vote_average'] }}</span>
-                            <span class="mx-2">|</span>
-                            <img src="{{ URL::asset('/img/profile_avatar.png') }}" class="w-6">
-                            <span class="ms-2 ml-2 mr-2">{{ $rating }}</span>
+                            @if ($tvShow != $imdb)
+                                <span>{{ $imdb['Rated'] }}</span>
+                                <span class="mx-2">|</span>
+                            @endif
                             <!-- <span>{{ $tvShow['episode_run_time'] }}min</span> -->
-                            <span class="mx-2">|</span>
                             <span>{{ ($tvShow['first_air_date']) }}</span>
                             <span class="mx-2">|</span>
                             <span>{{ $tvShow['genres'] }}</span>
+                        </div>
+                        <div class="flex items-center text-gray-400 text-sm mt-2">
+                            <svg class="fill-current text-orange-500 w-4" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z" data-name="star"/></g></svg>
+                            <span class="ml-1">{{ $tvShow['vote_average'] }}</span>
+                            <span class="mx-2">|</span>
+                            <a href="https://www.imdb.com/title/{{ $imdb['imdbID'] }}" target="_blank">
+                                <img src="{{ URL::asset('/img/imdb-seeklogo.com.svg') }}" class="w-10">
+                            </a>
+                            <span class="ms-2 ml-2 mr-2">{{ $imdb['imdbRating'] }} ({{ $imdb['imdbVotes'] }})</span>
+                            <span class="mx-2">|</span>
+                            <img src="{{ URL::asset('/img/profile_avatar.png') }}" class="w-6">
+                            <span class="ms-2 ml-2 mr-2">{{ $rating }}</span>
                         </div>
                     </div>
 
                     @auth
                         <div class="watchlist-and-add-rating flex justify-end justify-items-end grid grid-rows-2">
-                            <div class="watchlist">
+                            <div class="watchlist my-auto">
                                 <form method="POST" action="{{ route('tv.add', ['tv'=>$tvShow['id']]) }}">
                                     @csrf
-                                    <button class="mt-4 mb-1 flex inline-flex items-center bg-transparent border-2 text-sm text-gray-900 rounded font-semibold px-3 py-2 hover:bg-gray-300 transition ease-in-out duration-150" style="border-color: #3c8b84;">
+                                    <button class="mt-4 flex inline-flex items-center bg-transparent border-2 text-sm text-gray-900 rounded font-semibold px-3 py-2 hover:bg-gray-300 active:bg-black transition ease-in-out duration-150" style="border-color: #3c8b84;">
                                         <svg  class="w-6 mr-2 fill-current " style="color: #00838f;" viewBox="0 0 24 24"><g data-name="Layer 14"><path d="M2,5.5A.5.5,0,0,1,2.5,5H4V3.5a.5.5,0,0,1,1,0V5H6.5a.5.5,0,0,1,0,1H5V7.5a.5.5,0,0,1-1,0V6H2.5A.5.5,0,0,1,2,5.5ZM9.5,6h13a.5.5,0,0,0,0-1H9.5a.5.5,0,0,0,0,1Zm13,7H2.5a.5.5,0,0,0,0,1h20a.5.5,0,0,0,0-1Zm0,8H2.5a.5.5,0,0,0,0,1h20a.5.5,0,0,0,0-1Z"/></g></svg>
                                         <span class="" style="color: #00838f;">Add To Watchlist</span>
                                     </button>
@@ -60,6 +70,11 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        @if(session()->has('msg'))
+                                            <div class="text-sm text-red-600 text-center">
+                                                {{ session()->get('msg') }}
+                                            </div>
+                                        @endif
 
                                     </div>
                                 </form>  
@@ -68,11 +83,12 @@
                     @endauth
                 </div>
 
-                <p class="text-gray-300 mt-8">
+                <p class="text-gray-300 mt-2">
                     {{ $tvShow['overview'] }}
                 </p>
 
                 <div class="mt-12">
+                    <h4 class="text-white text-lg font-semibold">Featured Crew</h4>
                     <div class="flex mt-4">
                         @foreach ($tvShow['created_by'] as $creator)
                             <div class="mr-8">

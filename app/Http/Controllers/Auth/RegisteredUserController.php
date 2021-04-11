@@ -42,8 +42,8 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'watchlist_movie' => ['399566'],
-            'watchlist_tv' => ['1399'],
+            'watchlist_movie' => ['000000'],
+            'watchlist_tv' => ['000000'],
         ]));
 
         event(new Registered($user));

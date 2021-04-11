@@ -188,7 +188,7 @@ class MoviesController extends Controller
                     $rating = "N/A";
                 }
                 else {
-                    $rating = $rating->rating;
+                    $rating = $rating->rating. '/5';
                 }
                 //dd($rating);
 

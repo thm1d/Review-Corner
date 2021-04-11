@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\TvController;
@@ -18,11 +19,12 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [ProfileController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::get('/profile/your_watchlist', [ProfileController::class, 'showList'])->name('profile.list');
+Route::get('/profile/your_ratings', [ProfileController::class, 'showRatings'])->name('profile.rating');
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/genres/{key}', [HomeController::class, 'showGenre'])->name('home.genre');

@@ -49,10 +49,10 @@
 
                     @auth
                         <div class="watchlist-and-add-rating flex justify-end justify-items-end grid grid-rows-2">
-                            <div class="watchlist">
+                            <div class="watchlist my-auto">
                                 <form method="POST" action="{{ route('movies.add', ['movie'=>$movie['id']]) }}">
                                     @csrf
-                                    <button class="mt-4 mb-1 flex inline-flex items-center bg-transparent border-2 text-sm text-gray-900 rounded font-semibold px-3 py-2 hover:bg-gray-300 transition ease-in-out duration-150" style="border-color: #3c8b84;">
+                                    <button class="mt-4 flex inline-flex items-center bg-transparent border-2 text-sm text-gray-900 rounded font-semibold px-3 py-2 hover:bg-gray-300 active:bg-gray-900 transition ease-in-out duration-150" style="border-color: #3c8b84;">
                                         <svg  class="w-6 mr-2 fill-current " style="color: #00838f;" viewBox="0 0 24 24"><g data-name="Layer 14"><path d="M2,5.5A.5.5,0,0,1,2.5,5H4V3.5a.5.5,0,0,1,1,0V5H6.5a.5.5,0,0,1,0,1H5V7.5a.5.5,0,0,1-1,0V6H2.5A.5.5,0,0,1,2,5.5ZM9.5,6h13a.5.5,0,0,0,0-1H9.5a.5.5,0,0,0,0,1Zm13,7H2.5a.5.5,0,0,0,0,1h20a.5.5,0,0,0,0-1Zm0,8H2.5a.5.5,0,0,0,0,1h20a.5.5,0,0,0,0-1Z"/></g></svg>
                                         <span class="" style="color: #00838f;">Add To Watchlist</span>
                                     </button>
@@ -95,7 +95,7 @@
 
                 </div>
 
-                <p class="text-gray-300 mt-8">
+                <p class="text-gray-300 mt-2">
                     {{ $movie['overview'] }}
                 </p>
 

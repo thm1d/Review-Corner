@@ -25,7 +25,7 @@
 							<img src="{{ $movie['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
 						</a>
 						<div class="mt-2">
-							<a href="{{ route('movies.show', $movie['id']) }}" class="text-lg mt-2 hover:text-gray:300">{{ $movie['title'] }}</a><br>
+							<a href="{{ route('movies.show', $movie['id']) }}" class="text-lg mt-2 text-white hover:text-gray:500">{{ $movie['title'] }}</a><br>
 							<span class="text-sm text-gray-400">{{ $movie['release_date'] }}</span>
 						</div>
 					</div>
