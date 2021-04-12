@@ -88,5 +88,6 @@
 				@endforeach
 			</div>
 		</div> <!-- end now-playing-movies -->
+		<input type="text" name="" class="h-40 w-full rounded-lg" style="z-index: 99999">
 	</div>
 @endsection

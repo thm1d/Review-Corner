@@ -149,10 +149,16 @@ class HomeController extends Controller
         ->get('https://api.themoviedb.org/3/discover/movie?with_genres='. $id. '&sort_by=popularity.desc')
         ->json()['results'];
 
-        dump($genreWiseMovies);
+        $genreWiseTvShows = Http::withToken(config('services.tmdb.token'))
+        ->get('https://api.themoviedb.org/3/discover/tv?with_genres='. $id. '&sort_by=popularity.desc')
+        ->json()['results'];
+
+
+        //dump($genreWiseTvShows);
 
         return view('home.genre',[
             'genreWiseMovies' => $genreWiseMovies,
+            'genreWiseTvShows' => $genreWiseTvShows,
         ]);
     }
 
@@ -162,10 +168,15 @@ class HomeController extends Controller
         ->get('https://api.themoviedb.org/3/discover/movie?primary_release_year='. $id. '&sort_by=popularity.desc')
         ->json()['results'];
 
-        dump($yearWiseMovies);
+        $yearWiseTvShows = Http::withToken(config('services.tmdb.token'))
+        ->get('https://api.themoviedb.org/3/discover/tv?first_air_date_year='. $id. '&sort_by=popularity.desc')
+        ->json()['results'];
+
+        //dump($yearWiseMovies);
 
         return view('home.year',[
             'yearWiseMovies' => $yearWiseMovies,
+            'yearWiseTvShows' => $yearWiseTvShows,
         ]);
     }
 

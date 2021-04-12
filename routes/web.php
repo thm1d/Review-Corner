@@ -34,6 +34,7 @@ Route::get('/movies', [MoviesController::class, 'index'])->name('movies.index');
 Route::get('/movies/{movie}', [MoviesController::class, 'show'])->name('movies.show');
 Route::post('/movies/{movie}', [MoviesController::class, 'store'])->name('movies.rate');
 Route::post('/movies/{movie}/list', [MoviesController::class, 'storeList'])->name('movies.add');
+Route::post('/movies/{movie}/review', [MoviesController::class, 'storeReview'])->name('review.add');
 
 Route::get('/tv', [TvController::class, 'index'])->name('tv.index');
 Route::get('/tv/{tv}', [TvController::class, 'show'])->name('tv.show');

@@ -9,13 +9,15 @@ class MovieViewModel extends ViewModel
 	public $movie;
 	public $imdb;
     public $rating;
+    public $userReviews;
 
 
-    public function __construct($movie, $imdb, $rating)
+    public function __construct($movie, $imdb, $rating, $userReviews)
     {
         $this->movie = $movie;
         $this->imdb = $imdb;
         $this->rating = $rating;
+        $this->userReviews = $userReviews;
     }
 
     public function movie()
@@ -32,7 +34,7 @@ class MovieViewModel extends ViewModel
                 'reviews' => collect($this->movie['reviews']['results']),
                 'similarMovies' => collect($this->movie['similar']['results'])->take(5),
                 
-    		])->dump();
+    		]);
     }
 
     public function imdb()
@@ -44,6 +46,13 @@ class MovieViewModel extends ViewModel
     {
         
         return $this->rating;
+
+    }
+
+    public function userReviews()
+    {
+        
+        return $this->userReviews;
 
     }
     

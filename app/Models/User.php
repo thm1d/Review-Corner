@@ -62,5 +62,8 @@ class User extends Authenticatable
         return $this->hasMany(Tv::class);
     }
 
-    
+    public function review()
+    {
+        return $this->hasOne(Review::class);
+    }
 }

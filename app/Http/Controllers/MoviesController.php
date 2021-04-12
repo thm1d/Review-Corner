@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use App\ViewModels\MoviesViewModel;
 use App\ViewModels\MovieViewModel;
 use App\ViewModels\ReviewViewModel;
 use App\Models\User;
 use App\Models\Rating;
 use App\Models\Movie;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Review;
+
 
 class MoviesController extends Controller
 {
@@ -196,11 +198,37 @@ class MoviesController extends Controller
 
         }
 
+        $reviews = Review::where([['item_id', '=', $id],
+            ['item_type', '=', 'movie'],
+            ])->get();
+
+        if ($reviews != null) {
+            $reviews = $reviews->toArray();
+        } 
+        else {
+            $reviews = null;
+        }
+
+        $userReviews = [];
+        foreach ($reviews as $review) {
+            $user = User::find($review['user_id'])->first();
+            //dump($user->name);
+
+            $userReviews[] = collect($review)->merge([
+                'user_name' => $user->name,
+                'created_at' => \Carbon\Carbon::parse($review['created_at'])->format('M d, Y'),
+            ])->toArray();   
+            //dump($review);
+        }
+
+        dump($userReviews);
+
 
         $viewModel = new MovieViewModel(
             $movie, 
             $imdb,
             $rating,
+            $userReviews,
             
         );
 
@@ -260,4 +288,19 @@ class MoviesController extends Controller
         }
         
     }
+
+    public function storeReview(Request $request, $id)
+    {
+        $user_id = Auth::user()->id;
+
+        $review = Review::create([
+                'user_id' => $user_id,
+                'item_id' => $id,
+                'item_type' => $request->type,
+                'review' => $request->review,
+            ]);
+        return redirect()->back();
+        
+    }
+
 }

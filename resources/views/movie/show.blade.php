@@ -86,8 +86,6 @@
 
                                     </div>
                                 </form>
-                                
-                                
                             </div>
                             
                         </div>
@@ -250,8 +248,52 @@
                 <h2 class="text-4xl font-semibold mr-8">Social</h2>
                 <h3 class="text-2xl font-normal py-3 ">Reviews ({{ $movie['reviews']->count() }})</h3>
             </div>
+            <div class="write-review my-4 px-8">
+                <form method="POST" action="{{ route('review.add', $movie['id']) }}">
+                    @csrf
+                    <textarea rows="5" cols="60" class="block mt-1 w-full h-40 text-black px-2 py-2 rounded-lg" name="review" value="" placeholder="Write a review..." required></textarea>
+                    <input type="hidden" name="type" value="movie" />
+                    <div class="flex justify-end mt-4">
+                        <input type="submit" class="mt-1 flex inline-flex items-center bg-transparent hover:bg-gray-300 border-2 text-sm md:text-xs  text-gray-300 hover:text-gray-800 rounded font-semibold px-10 py-2 transition ease-in-out duration-150" style="border-color: #3c8b84;font-size: 0.8em;" value="Add Review" />
+                    </div>
+                </form>
+            </div>
 
-            <div class="review-box box-border border border-white border-opacity-25 border-l-0 border-r-0 h-auto w-full px-8 mt-8"> 
+            <div class="review-box box-border border border-white border-opacity-25 border-l-0 border-r-0 h-auto w-full px-8 mt-4">
+                @if ($userReviews != null) 
+                    @foreach ($userReviews as $review)
+                    <?php 
+                        $user_avatar = 'https://ui-avatars.com/api/?name='. $review['user_name'];
+                   
+                    ?>
+
+                    <div class="mb-8 w-full">
+                        <div class="review-header flex flex-row items-center content-center w-full my-2">
+                            <div class="avatar mr-5 mt-2 md:mt-0 w-16">
+                                <a href="#">
+                                    <img src="{{ $user_avatar }}" alt="avatar" class="rounded-full w-14 h-14">
+                                </a>
+                            </div>
+                            <div class="info w-full">
+                                <div class="rating_wrapper w-full flex flex-wrap items-baseline justify-start">
+                                    <h3 class="font-bold">
+                                        A review by {{ $review['user_name'] }}.
+                                    </h3>
+                                    <div class="rounded rating px-8 ml=14 inline-flex text-sm items-center justify-items-center bg-transparent ">
+                                        <svg class="fill-current text-orange-500 w-4 mr-1" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z" data-name="star"/></g></svg> 
+                                        {{ rand(5,9) }}
+                                    </div>
+                                </div>
+                                <h5 class="text-xs">Written by {{ $review['user_name'] }} on {{ $review['created_at'] }}</h5>
+                            </div>   
+                        </div>
+                        <div class="content w-full h-auto">
+                            <p class="overflow-ellipsis overflow-hidden w-full py-4 ml-4">{{ $review['review'] }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                @endif
+
                 @foreach ($movie['reviews'] as $review)
                 <?php 
                 if ($review['author_details']['avatar_path'] === null) {
@@ -280,11 +322,11 @@
                                     {{ ($review['author_details']['rating']===null) ? rand(5,9) : $review['author_details']['rating'] }}
                                 </div>
                             </div>
-                            <h5 class="text-xs">Written by <a href="/u/Dark+Jedi">{{ $review['author'] }}</a> on {{ \Carbon\Carbon::parse($review['created_at'])->format('M d, Y') }}</h5>
+                            <h5 class="text-xs">Written by {{ $review['author'] }} on {{ \Carbon\Carbon::parse($review['created_at'])->format('M d, Y') }}</h5>
                         </div>   
                     </div>
-                    <div class="content w-full h-40">
-                        <p class="overflow-ellipsis overflow-hidden w-full h-full pt-5">{{ $review['content'] }}</p>
+                    <div class="content w-full h-auto">
+                        <p class="overflow-ellipsis overflow-hidden w-full ml-4 py-4">{{ $review['content'] }}</p>
                     </div>
                 </div>
                 @endforeach

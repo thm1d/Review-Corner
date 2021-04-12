@@ -29,14 +29,14 @@ class HomeViewModel extends ViewModel
     		if (!strripos($video['name'],"Restricted")) {
             	return collect($video)->merge([
                 	'trailer' => 'https://www.youtube.com/embed/'. $video['key'],
-            	]);
+            	])->only(['trailer']);
             }
             else {
             	return collect($video)->merge([
                 	'trailer' => null,
-            	]);
+            	])->only(['trailer']);
             }
-        })->take(15);
+        })->take(15)->dump();
     }
 
     public function moviesInTheater()
@@ -72,7 +72,7 @@ class HomeViewModel extends ViewModel
     			'poster_path' => 'https://image.tmdb.org/t/p/w500/'. $movie['poster_path'],
     			'release_date' => \Carbon\Carbon::parse($movie['release_date'])->format('M d, Y'),
     			'genres' => $genresFormatted,
-    		]);
+    		])->only(['poster_path', 'id', 'genres', 'title', 'vote_average', 'release_date']);
     	})->take(8);
     }
 
@@ -87,7 +87,7 @@ class HomeViewModel extends ViewModel
     			'poster_path' => 'https://image.tmdb.org/t/p/w500'. $tvShow['poster_path'],
     			'first_air_date' => \Carbon\Carbon::parse($tvShow['first_air_date'])->format('M d, Y'),
     			'genres' => $genresFormatted,
-    		]);
+    		])->only(['poster_path', 'id', 'genres', 'name', 'vote_average', 'first_air_date']);
     	})->take(8);
     }
 
