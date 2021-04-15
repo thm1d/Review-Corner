@@ -7,9 +7,12 @@
             	<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-8">Featured Movie Trailers</h2>
 				<div class="main-carousel h-4/6 " data-flickity='{ "autoPlay": true, "wrapAround": true }'>
 					@foreach ($videos as $video)
-						@if ($video['trailer'] != null)
-							<iframe class="mx-4" src="{{ $video['trailer'] }}"></iframe> 
-						@endif     
+						<div x-data="{ isOpen: false }">
+							@if ($video['trailer'] != null)
+								<button @click="isOpen = true" class="z-50"><iframe  class="mx-4 px-1" src="{{ $video['trailer'] }}"></iframe></button>
+								
+							@endif  
+						</div>   
 				  	@endforeach
 				</div>
 			</div>
@@ -67,7 +70,7 @@
 						<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold p-2">Genres</h2>
 						@foreach ($genresArray as $key => $value)
 						<ul>
-							<li class="border-t border-gray-300 p-2 mx-4 hover:text-gray-300"><a href="{{ route('home.genre', $key) }}">{{ $value }}</a></li>
+							<li class="border-t border-gray-300 p-2 mx-4 hover:text-gray-400"><a href="{{ route('home.genre', $key) }}">{{ $value }}</a></li>
 						</ul>
 						@endforeach
 					</div>
@@ -78,7 +81,7 @@
 						<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold p-2">Years</h2>
 						@foreach (@range(0,18) as $diff)
 						<ul>
-							<li class="border-t border-gray-300 p-2 mx-4 hover:text-gray-300"><a href="{{ route('home.year', ( date('Y') - $diff )) }}">{{ date('Y') - $diff }}</a></li>
+							<li class="border-t border-gray-300 p-2 mx-4 hover:text-gray-400"><a href="{{ route('home.year', ( date('Y') - $diff )) }}">{{ date('Y') - $diff }}</a></li>
 						</ul>
 						@endforeach
 					</div>

@@ -3,12 +3,12 @@
 @section('content')
 
 <div class="container mx-auto mb-4">
-	<div class="your-ratings-container mx-0 md:mx-0 sm:mx-0 lg:mx-40 xl:mx-40 border-2 border-t-0 border-gray-600 h-auto min-h-screen text-white">
+	<div class="your-watchlist-container mx-0 md:mx-0 sm:mx-0 lg:mx-40 xl:mx-40 border-2 border-t-0 border-gray-600 h-auto min-h-screen text-white">
 		<div class="mx-4 my-4 border border-opacity-25 border-gray-600 rounded-lg min-h-screen">
 			<div class="watchlist-movies border-b" style="min-height: 50vh;">
 				<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold ml-4 mt-4 px-2 py-4">Movies</h2>
 				@if ($movies != null)
-					<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+					<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-4 py-4">
 						@foreach ($movies as $movie)
 							<div class="mt-8">
 								<a href="{{ route('movies.show', ['movie'=>$movie['id']]) }}">
@@ -40,7 +40,7 @@
 			<div class="watchlist-tvshows py-4" style="min-height: 380px;">
 				<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold ml-4 mt-4 px-2 py-4">Tv Shows</h2>
 				@if ($tvShows != null)
-					<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+					<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-4 py-4">
 						@foreach ($tvShows as $tvShow)
 							<div class="mt-8">
 								<a href="{{ route('tv.show', ['tv'=>$tvShow['id']]) }}">

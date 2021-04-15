@@ -24,7 +24,7 @@ class RecentlyReviewed extends Component
                     & first_release_date < {$current}
                     & rating_count > 5);
                     sort total_rating desc;
-                    limit 3;
+                    limit 5;
                 ", "text/plain"
             )->post(config('services.igdb.endpoint'))
             ->json();

@@ -62,6 +62,11 @@ class User extends Authenticatable
         return $this->hasMany(Tv::class);
     }
 
+    public function game()
+    {
+        return $this->hasMany(Game::class);
+    }
+
     public function review()
     {
         return $this->hasOne(Review::class);

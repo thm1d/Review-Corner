@@ -27,10 +27,12 @@
                             <a href="https://www.imdb.com/title/{{ $imdb['imdbID'] }}" target="_blank">
                                 <img src="{{ URL::asset('/img/imdb-seeklogo.com.svg') }}" class="w-10">
                             </a>
-                            <span class="ms-2 ml-2 mr-2">{{ $imdb['imdbRating'] }} ({{ $imdb['imdbVotes'] }})</span>
-                            <span class="mx-2">|</span>
-                            <img src="{{ URL::asset('/img/profile_avatar.png') }}" class="w-6">
-                            <span class="ms-2 ml-2 mr-2">{{ $rating }}</span>
+                            <span class="ml-2">{{ $imdb['imdbRating'] }} ({{ $imdb['imdbVotes'] }})</span>
+                            @auth
+                                <span class="mx-2">|</span>
+                                <img src="{{ URL::asset('/img/profile_avatar.png') }}" class="w-6">
+                                <span class="ms-2 ml-2 mr-2">{{ $rating }}</span>
+                            @endauth
                         </div>
                     </div>
 
@@ -39,10 +41,12 @@
                             <div class="watchlist my-auto">
                                 <form method="POST" action="{{ route('tv.add', ['tv'=>$tvShow['id']]) }}">
                                     @csrf
-                                    <button class="mt-4 flex inline-flex items-center bg-transparent border-2 text-sm text-gray-900 rounded font-semibold px-3 py-2 hover:bg-gray-300 active:bg-black transition ease-in-out duration-150" style="border-color: #3c8b84;">
-                                        <svg  class="w-6 mr-2 fill-current " style="color: #00838f;" viewBox="0 0 24 24"><g data-name="Layer 14"><path d="M2,5.5A.5.5,0,0,1,2.5,5H4V3.5a.5.5,0,0,1,1,0V5H6.5a.5.5,0,0,1,0,1H5V7.5a.5.5,0,0,1-1,0V6H2.5A.5.5,0,0,1,2,5.5ZM9.5,6h13a.5.5,0,0,0,0-1H9.5a.5.5,0,0,0,0,1Zm13,7H2.5a.5.5,0,0,0,0,1h20a.5.5,0,0,0,0-1Zm0,8H2.5a.5.5,0,0,0,0,1h20a.5.5,0,0,0,0-1Z"/></g></svg>
-                                        <span class="" style="color: #00838f;">Add To Watchlist</span>
-                                    </button>
+                                    <div class="text-gray-300 hover:text-gray-800">
+                                        <button class="mt-4 flex inline-flex items-center bg-transparent border-2 text-sm  rounded font-semibold px-3 py-2 hover:bg-gray-300 active:bg-black transition ease-in-out duration-150" style="border-color: #3c8b84;">
+                                        <svg  class="w-6 mr-2 fill-current" viewBox="0 0 24 24"><g data-name="Layer 14"><path d="M2,5.5A.5.5,0,0,1,2.5,5H4V3.5a.5.5,0,0,1,1,0V5H6.5a.5.5,0,0,1,0,1H5V7.5a.5.5,0,0,1-1,0V6H2.5A.5.5,0,0,1,2,5.5ZM9.5,6h13a.5.5,0,0,0,0-1H9.5a.5.5,0,0,0,0,1Zm13,7H2.5a.5.5,0,0,0,0,1h20a.5.5,0,0,0,0-1Zm0,8H2.5a.5.5,0,0,0,0,1h20a.5.5,0,0,0,0-1Z"/></g></svg>
+                                        <span class="">Add To Watchlist</span>
+                                        </button>
+                                    </div>
                                     
                                 </form>
                                 @if(session()->has('message'))
@@ -57,16 +61,18 @@
                                     @csrf
                                     <input type="hidden" name="title" id="title" value="{{ $tvShow['name'] }}">
                                     <div class="grid grid=rows-2">
-                                        <button class="mt-1 flex inline-flex items-center bg-transparent hover:bg-gray-300 border-2 text-sm md:text-xs  text-gray-600 hover:text-gray-300 rounded font-semibold px-10 py-2 transition ease-in-out duration-150" style="border-color: #3c8b84;">
-                                            <svg width="24" height="24" class="mr-2" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" style="color: #00838f;"><path d="M15.668 8.626l8.332 1.159-6.065 5.874 1.48 8.341-7.416-3.997-7.416 3.997 1.481-8.341-6.064-5.874 8.331-1.159 3.668-7.626 3.669 7.626zm-6.67.925l-6.818.948 4.963 4.807-1.212 6.825 6.068-3.271 6.069 3.271-1.212-6.826 4.964-4.806-6.819-.948-3.002-6.241-3.001 6.241z"/></svg>
-                                            <span class="" style="color: #00838f;">Rate This</span>
-                                        </button>
+                                        <div class="text-gray-300 hover:text-gray-800">
+                                            <button class="mt-1 flex inline-flex items-center bg-transparent hover:bg-gray-300 border-2 text-sm md:text-xs rounded font-semibold px-10 py-2 transition ease-in-out duration-150" style="border-color: #3c8b84;">
+                                                <svg width="24" height="24" class="mr-2" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M15.668 8.626l8.332 1.159-6.065 5.874 1.48 8.341-7.416-3.997-7.416 3.997 1.481-8.341-6.064-5.874 8.331-1.159 3.668-7.626 3.669 7.626zm-6.67.925l-6.818.948 4.963 4.807-1.212 6.825 6.068-3.271 6.069 3.271-1.212-6.826 4.964-4.806-6.819-.948-3.002-6.241-3.001 6.241z"/></svg>
+                                                <span class="">Rate This</span>
+                                            </button>
+                                        </div>
                                         
                                         <div class="rating-select flex justify-self-center">
-                                            <select name="rating" id="rating" class="w-full mt-1 md:mt-2 sm:mt-2  form-select text-gray-300 border border-gray-300 ml-1 px-4" style="border-color: #3c8b84;border-width: 3px;#2c3e50;background-color: #2c3e50;">
+                                            <select name="rating" id="rating" style="border-color: #3c8b84;border-width: 3px;#2c3e50;background-color: #2c3e50;" class="w-full mt-1 md:mt-2 sm:mt-2  form-select text-gray-300 border hover:bg-gray-300 ml-1 px-4" >
                                                 <option selected="select" disabled=""> </option>
                                                 @foreach (range(1,5) as $star)
-                                                    <option value="{{$star}}"><svg class="mr-2 fill-current text-orange-500 w-4" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z" data-name="star"/></g></svg>{{ $star }}</option>
+                                                    <option value="{{$star}}">{{ $star }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -236,10 +242,57 @@
         <div class="container mx-auto px-4 py-16 block">
             <div class="flex flex-row ">
                 <h2 class="text-4xl font-semibold mr-8">Social</h2>
-                <h3 class="text-2xl font-normal py-3 ">Reviews ({{ $tvShow['reviews']->count() }})</h3>
+                <h3 class="text-2xl font-normal py-3 ">Reviews ({{ $tvShow['reviews']->count() + count($userReviews) }})</h3>
             </div>
+            @auth
+                <div class="write-review my-4 px-8">
+                    <form method="POST" action="{{ route('tv.review', $tvShow['id']) }}">
+                        @csrf
+                        <textarea rows="5" cols="60" class="block mt-1 w-full h-40 text-black px-2 py-2 rounded-lg" name="review" value="" placeholder="Write a review..." required></textarea>
+                        <input type="hidden" name="type" value="tv" />
+                        <div class="flex justify-end mt-4">
+                            <input type="submit" class="mt-1 flex inline-flex items-center bg-transparent hover:bg-gray-300 border-2 text-sm md:text-xs  text-gray-300 hover:text-gray-800 rounded font-semibold px-10 py-2 transition ease-in-out duration-150" style="border-color: #3c8b84;font-size: 0.8em;" value="Add Review" />
+                        </div>
+                    </form>
+                </div>
+            @endauth
 
             <div class="review-box box-border border border-white border-opacity-25 border-l-0 border-r-0 h-auto w-full px-8 mt-8"> 
+                @if ($userReviews != null) 
+                    @foreach ($userReviews as $review)
+                    <?php 
+                        $user_avatar = 'https://ui-avatars.com/api/?name='. $review['user_name'];
+                   
+                    ?>
+
+                    <div class="my-8 w-full border border-gray-600 rounded-lg shadow-2xl">
+                        <div class="review-header flex flex-row items-center content-center w-full px-2 py-2">
+                            <div class="avatar mr-5 mt-2 md:mt-0 w-16">
+                                <a href="#">
+                                    <img src="{{ $user_avatar }}" alt="avatar" class="rounded-full w-14 h-14">
+                                </a>
+                            </div>
+                            <div class="info w-full flex">
+                                <div class="rating_wrapper w-full  items-baseline justify-start">
+                                    <h3 class="font-bold">
+                                        A review by {{ $review['user_name'] }}.
+                                    </h3>
+                                    <h5 class="text-xs">Written by {{ $review['user_name'] }} on {{ $review['created_at'] }}</h5>
+                                </div>
+                                
+                                <div class="rounded rating px-8 ml=14 flex text-sm items-center justify-items-center bg-transparent ">
+                                    <svg class="fill-current text-orange-500 w-4 mr-1" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z" data-name="star"/></g></svg> 
+                                    {{ rand(5,9) }}
+                                </div>
+                            </div>  
+                        </div>
+                        <div class="content w-min h-auto">
+                        <p class="overflow-ellipsis overflow-hidden break-words px-4 py-4">{{ $review['review'] }}</p>
+                    </div>
+                    </div>
+                    @endforeach
+                @endif
+
                 @foreach ($tvShow['reviews'] as $review)
                 <?php 
                 if ($review['author_details']['avatar_path'] === null) {
@@ -253,28 +306,28 @@
                 if ($review['author_details']['rating'] === null) {
                     $review['author_details']['rating'] = rand(5,9);
                 } ?>
-                <div class="mb-8 w-full">
-                    <div class="review-header flex flex-row items-center content-center w-full my-2">
+                <div class="my-8 w-full border border-gray-600 rounded-lg shadow-2xl">
+                    <div class="review-header flex flex-row items-center content-center w-full px-2 py-2">
                         <div class="avatar mr-5 mt-2 md:mt-0 w-16">
                             <a href="#">
-                                <img src="{{ $user_avatar }}" alt="avatar" class="rounded-full w-16 h-16">
+                                <img src="{{ $user_avatar }}" alt="avatar" class="rounded-full w-14 h-14">
                             </a>
                         </div>
-                        <div class="info w-full">
-                            <div class="rating_wrapper w-full flex flex-wrap items-baseline justify-start">
+                        <div class="info w-full flex">
+                            <div class="rating_wrapper w-full items-baseline justify-start">
                                 <h3 class="font-bold">
                                     A review by {{ $review['author_details']['username'] }}.
                                 </h3>
-                                <div class="rounded rating px-8 ml=14 inline-flex text-sm items-center justify-items-center bg-transparent ">
-                                    <svg class="fill-current text-orange-500 w-4 mr-1" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z" data-name="star"/></g></svg> 
-                                    {{ $review['author_details']['rating'] }}
-                                </div>
+                                <h5 class="text-xs">Written by {{ $review['author'] }} on {{ \Carbon\Carbon::parse($review['created_at'])->format('M d, Y') }}</h5>
                             </div>
-                            <h5 class="text-xs">Written by <a href="/u/Dark+Jedi">{{ $review['author'] }}</a> on {{ \Carbon\Carbon::parse($review['created_at'])->format('M d, Y') }}</h5>
-                        </div>   
+                            <div class="rounded rating px-8 ml=14 flex text-sm items-center justify-items-center bg-transparent ">
+                                <svg class="fill-current text-orange-500 w-4 mr-1" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z" data-name="star"/></g></svg> 
+                                {{ ($review['author_details']['rating']===null) ? rand(5,9) : $review['author_details']['rating'] }}
+                            </div>
+                        </div> 
                     </div>
-                    <div class="teaser overflow-ellipsis overflow-hidden w-full h-40 pl-20 pt-5 " style="">
-                        <p>{{ $review['content'] }}</p>
+                    <div class="content w-min h-auto">
+                        <p class="overflow-ellipsis overflow-hidden break-words px-4 py-4">{{ $review['content'] }}</p>
                     </div>
                 </div>
                 @endforeach

@@ -9,12 +9,15 @@ class TvShowViewModel extends ViewModel
     public $tvShow;
     public $imdb;
     public $rating;
+    public $userReviews;
 
-    public function __construct($tvShow, $imdb, $rating)
+
+    public function __construct($tvShow, $imdb, $rating, $userReviews)
     {
         $this->tvShow = $tvShow;
         $this->imdb = $imdb;
         $this->rating = $rating;
+        $this->userReviews = $userReviews;
     }
 
     public function tvShow()
@@ -42,6 +45,13 @@ class TvShowViewModel extends ViewModel
     {
         dump($this->imdb);
         return $this->rating;
+
+    }
+
+    public function userReviews()
+    {
+        
+        return $this->userReviews;
 
     }
 }

@@ -23,7 +23,7 @@ class ComingSoon extends Component
                     & (first_release_date >= {$current}
                     );
                     sort first_release_date asc;
-                    limit 4;
+                    limit 5;
                 ", "text/plain"
             )->post(config('services.igdb.endpoint'))
             ->json();
@@ -40,8 +40,9 @@ class ComingSoon extends Component
     {
         return collect($games)->map(function ($game) {
             return collect($game)->merge([
-                'coverImageUrl' => Str::replaceFirst('thumb','cover_small', $game['cover']['url']),
-                'releaseDate' => Carbon::parse($game['first_release_date'])->format('M d, Y'),
+                'coverImageUrl' => Str::replaceFirst('thumb', 'cover_big', $game['cover']['url']),
+                'rating' => isset($game['rating']) ? round($game['rating']) : null,
+                'platforms' => collect($game['platforms'])->pluck('abbreviation')->implode(', '),
             ]);
         })->toArray();
     }

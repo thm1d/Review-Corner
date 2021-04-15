@@ -221,7 +221,7 @@ class MoviesController extends Controller
             //dump($review);
         }
 
-        dump($userReviews);
+        //dump($userReviews);
 
 
         $viewModel = new MovieViewModel(

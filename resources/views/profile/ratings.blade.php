@@ -9,7 +9,7 @@
 			<div class="h-auto mx-6 my-4 px-2 py-2 text-sm border border-gray-700 border-opacity-10 bg-gray-800">{{ count($movies)+count($tvShows) }} Titles</div>
 			<div class="rating-index mx-6 my-4 ">
 				@foreach ($movies as $movie)
-					<div class="mb-4 border-b">
+					<div class="mb-4 pb-2 border-b">
 						<div class="flex items-center">
 							<img src="{{ 'https://image.tmdb.org/t/p/w342/'. $movie['poster_path'] }}" alt="poster" class="w-36">
 							<div class="desc mx-8">

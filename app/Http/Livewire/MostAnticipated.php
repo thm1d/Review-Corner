@@ -19,13 +19,13 @@ class MostAnticipated extends Component
         // Most Anticipated is not very accurate without the popularity field anymore :(
         $mostAnticipatedUnformatted = Http::withHeaders(config('services.igdb.headers'))
             ->withBody(
-                "fields name, cover.url, first_release_date, total_rating_count, platforms.abbreviation, total_rating, rating_count, summary, slug;
+                "fields name, cover.url, first_release_date, total_rating_count, platforms.abbreviation, total_rating, rating_count, summary, rating, slug;
                     where platforms = (48,49,130,6)
                     & (first_release_date >= {$current}
                     & first_release_date < {$afterTwoMonths}
                     );
-                    
-                    limit 4;", "text/plain"
+                    sort rating_count desc;
+                    limit 5;", "text/plain"
             )->post(config('services.igdb.endpoint'))
             ->json();
 
@@ -41,8 +41,10 @@ class MostAnticipated extends Component
     {
         return collect($games)->map(function ($game) {
             return collect($game)->merge([
-                'coverImageUrl' => Str::replaceFirst('thumb','cover_small', $game['cover']['url']),
+                'coverImageUrl' => Str::replaceFirst('thumb','cover_big', $game['cover']['url']),
                 'releaseDate' => Carbon::parse($game['first_release_date'])->format('M d, Y'),
+                'platforms' => collect($game['platforms'])->pluck('abbreviation')->implode(', '),
+                'rating' => isset($game['rating']) ? round($game['rating']) : null,
             ]);
         })->toArray();
     }

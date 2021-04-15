@@ -6,6 +6,12 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Game;
+use App\Models\Rating;
+use App\Models\Review;
 
 class GamesController extends Controller
 {
@@ -36,9 +42,39 @@ class GamesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $game_slug)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'rating' => 'required',
+
+        ]);
+
+        if ($validator->fails()) {
+
+            return redirect('/games/'. $game_slug)
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $game = Game::where('game_slug', $game_slug)->first();
+
+        //dump($game);
+
+        if (is_null($game)) {
+            $game = Game::create([
+                'user_id' => auth()->user()->id,
+                'game_slug' => $game_slug,
+                'rating' => $request->rating,
+                'title' => $request->title,
+            ]);
+
+            
+        }
+
+        $game->rateOnce($request->rating);
+        Game::first()->ratings;
+
+        return redirect()->back();
     }
 
     /**
@@ -51,7 +87,7 @@ class GamesController extends Controller
     {
         $game = Http::withHeaders(config('services.igdb.headers'))
             ->withBody(
-                "fields name, cover.url, first_release_date, platforms.abbreviation, rating,
+                "fields name, id, cover.url, first_release_date, platforms.abbreviation, rating,
                     slug, involved_companies.company.name, genres.name, aggregated_rating, summary, websites.*, videos.*, screenshots.*, similar_games.cover.url, similar_games.name, similar_games.rating,similar_games.platforms.abbreviation, similar_games.slug;
                     where slug=\"{$slug}\";
                 ", "text/plain"
@@ -59,9 +95,74 @@ class GamesController extends Controller
             ->json();
 
         abort_if(!$game, 404);
+        //dump($game[0]['id']);
+
+        $user_id = Auth::user();
+        //dd($user_id->id);
+        $rating = "N/A";
+
+        if($user_id !== null) {
+
+            $gameID = Game::where('game_slug', $game[0]['slug'])->first();
+
+            if ($gameID === null) {
+                $gameID = Game::create([
+                    'game_slug' => $game[0]['slug'],
+                    'title' => $game[0]['name'],
+                ]);
+
+                $rating = "N/A";  
+            }
+            else {
+                $checkID = $gameID['id'];
+
+                $rating = Rating::where([
+                    ['rateable_id', '=', $checkID],
+                    ['rateable_type', '=', 'App\Models\Game'],
+                    ['user_id', '=', $user_id->id]
+                    ])->first();
+
+                if ($rating == null) {
+                    $rating = "N/A";
+                }
+                else {
+                    $rating = $rating->rating. '/5';
+                }
+                //dd($rating);
+
+            }
+
+        }
+
+        $reviews = Review::where([['item_id', '=', $game[0]['id']],
+            ['item_type', '=', 'game'],
+            ])->get();
+
+        if ($reviews != null) {
+            $reviews = $reviews->toArray();
+        } 
+        else {
+            $reviews = null;
+        }
+        //dump($game[0]['id']);
+
+        $userReviews = [];
+        foreach ($reviews as $review) {
+            $user = User::find($review['user_id'])->first();
+            //dump($user->name);
+
+            $userReviews[] = collect($review)->merge([
+                'user_name' => $user->name,
+                'created_at' => \Carbon\Carbon::parse($review['created_at'])->format('M d, Y'),
+            ])->toArray();   
+            //dump($review);
+        }
+        //dump($userReviews);
 
         return view('game.show', [
             'game' => $this->formatGameForView($game[0]),
+            'userReviews' => $userReviews,
+            'rating' => $rating,
         ]);
     }
 
@@ -140,5 +241,21 @@ class GamesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function storeReview(Request $request, $slug)
+    {
+        $user_id = Auth::user()->id;
+
+        //dump($request);
+
+        $review = Review::create([
+                'user_id' => $user_id,
+                'item_id' => $request->game_id,
+                'item_type' => $request->type,
+                'review' => $request->review,
+            ]);
+        return redirect()->back();
+        
     }
 }

@@ -9,12 +9,16 @@ class ActorViewModel extends ViewModel
 	public $actor;
 	public $social;
 	public $credits;
+    public $rating;
+    public $userReviews;
 
-    public function __construct($actor, $social, $credits)
+    public function __construct($actor, $social, $credits, $rating, $userReviews)
     {
         $this->actor = $actor;
         $this->social = $social;
         $this->credits = $credits;
+        $this->rating = $rating;
+        $this->userReviews = $userReviews;
     }
 
     public function actor()
@@ -93,6 +97,18 @@ class ActorViewModel extends ViewModel
                 'title' => $title,
                 'character' => isset($movie['character']) ? $movie['character'] : '',
             ]);
-        })->sortByDesc('release_date')->dump();
+        })->sortByDesc('release_date');
+    }
+
+    public function rating()
+    {
+        return $this->rating;
+    }
+
+    public function userReviews()
+    {
+        
+        return $this->userReviews;
+
     }
 }

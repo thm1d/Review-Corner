@@ -180,4 +180,9 @@ class HomeController extends Controller
         ]);
     }
 
+    public function comingSoon()
+    {
+        return view('comingsoon');
+    }
+
 }
