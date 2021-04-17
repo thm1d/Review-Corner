@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use App\Models\User;
 use App\Models\Movie;
 use App\Models\Tv;
@@ -244,5 +245,63 @@ class ProfileController extends Controller
                 'movies' => $movies,
                 'tvShows' => $tvShows,
         ]);
+    }
+
+    public function rankUpdate(Request $request)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $prevBalance = $user->balance;
+        $newBalance1 = $prevBalance - $request->rank;
+        $newBalance2 = $prevBalance + ($user->rank_value - $request->rank) / 2;
+        $rankName = 'bronze';
+        if ($request->email !== $user->email) {
+            return redirect()->back()->with('message', 'Email is not correct');
+        } else if ($newBalance1 < 0) {
+            return redirect()->back()->with('message', 'Not Enough Balance');
+        } else if ( $request->rank <= $user->rank_value ) {
+            if ($request->rank === '200') {
+                $rankName = 'silver';
+            } else if ($request->rank === '300') {
+                $rankName = 'gold';
+            } else if ($request->rank === '500') {
+                $rankName = 'platinum';
+            } else if ($request->rank === '800') {
+                $rankName = 'diamond';
+            }
+
+            $user->update([
+                'rank' => $rankName,
+                'rank_value' => $request->rank,
+                'balance' => $newBalance2,
+            ]);
+
+            $url = URL::route('rank.update', ['#2']);
+
+            $msg = 'Congratulations! You are now a '. ucfirst($rankName) .' Member.';
+            return redirect()->to($url)->with('message', $msg);
+        } else {
+
+            if ($request->rank === '200') {
+                $rankName = 'silver';
+            } else if ($request->rank === '300') {
+                $rankName = 'gold';
+            } else if ($request->rank === '500') {
+                $rankName = 'platinum';
+            } else if ($request->rank === '800') {
+                $rankName = 'diamond';
+            }
+
+            $user->update([
+                'rank' => $rankName,
+                'rank_value' => $request->rank,
+                'balance' => $newBalance1,
+            ]);
+
+            $url = URL::route('rank.update', ['#2']);
+
+            $msg = 'Congratulations! You are now a '. ucfirst($rankName) .' Member.';
+            return redirect()->to($url)->with('message', $msg);
+        }
     }
 }

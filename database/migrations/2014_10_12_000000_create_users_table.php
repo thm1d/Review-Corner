@@ -22,6 +22,9 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->json('watchlist_movie')->nullable();
             $table->json('watchlist_tv')->nullable();
+            $table->string('rank');
+            $table->integer('rank_value');
+            $table->integer('balance');
             $table->timestamps();
         });
     }

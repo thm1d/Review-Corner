@@ -81,5 +81,10 @@
             </div>
         </footer>
         <livewire:scripts />
+        <script>
+        function alertFunction(msg) {
+            alert(msg);
+        }
+    </script>
     </body>
 </html>

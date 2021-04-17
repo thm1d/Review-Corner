@@ -23,6 +23,9 @@ class User extends Authenticatable
         'password',
         'watchlist_movie',
         'watchlist_tv',
+        'rank',
+        'rank_value',
+        'balance'
     ];
 
     /**

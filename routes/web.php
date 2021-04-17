@@ -59,7 +59,5 @@ Route::get('/membership', function () {
     return view('membership');
 	})->name('member.index');
 
-Route::post('/membership', function () {
-    return view('membership');
-	})->name('member.store');
+Route::post('/membership', [ProfileController::class, 'rankUpdate'])->name('rank.update');
 
