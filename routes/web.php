@@ -7,6 +7,7 @@ use App\Http\Controllers\ActorController;
 use App\Http\Controllers\TvController;
 use App\Http\Controllers\GamesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,10 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/dashboard', [ProfileController::class, 'index'])->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', [ProfileController::class, 'index'])->middleware(['auth'])->name('dashboard');
+Route::group(['middleware' => ['auth']], function() {
+	Route::get('/dashboard', [ProfileController::class, 'index'])->name('dashboard');
+});
 
 require __DIR__.'/auth.php';
 

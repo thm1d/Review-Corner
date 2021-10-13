@@ -94,6 +94,8 @@ class MoviesController extends Controller
                         ->withInput();
         }
 
+        //dd($request);
+
         $movie = Movie::where('movie_id', $movie_id)->first();
 
         //dd($movie);

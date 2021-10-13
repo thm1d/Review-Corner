@@ -4,6 +4,7 @@
 
 	<div class="container mx-auto px-4 py-16">
 		<div class="genre-wise-movies">
+			<h2 class="uppercase tracking-wider text-orange-500 text-4xl font-semibold py-2">Genre: Action</h2>
 			<h2 class="uppercase tracking-wider text-orange-500 text-2xl font-semibold">Movies</h2>
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 				@foreach ($genreWiseMovies as $movie)
@@ -31,7 +32,7 @@
 		</div> <!-- end genre-wise-movies -->
 
 		<div class="genre-wise-tvshows my-16">
-			<h2 class="uppercase tracking-wider text-orange-500 text-2xl font-semibold">Tv Shows</h2>
+			<h2 class="uppercase tracking-wider text-orange-500 text-2xl font-semibold">Tv Shows (Action)</h2>
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 				@foreach ($genreWiseTvShows as $tvShow)
 					<div class="mt-8">

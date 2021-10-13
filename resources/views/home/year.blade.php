@@ -4,6 +4,7 @@
 
 	<div class="container mx-auto px-4 py-16">
 		<div class="year-wise-movies">
+			<h2 class="uppercase tracking-wider text-orange-500 text-4xl font-semibold py-2">Year: 2021</h2>
 			<h2 class="uppercase tracking-wider text-orange-500 text-2xl font-semibold">Movies</h2>
 			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 				@foreach ($yearWiseMovies as $movie)

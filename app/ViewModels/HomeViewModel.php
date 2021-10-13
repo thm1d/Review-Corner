@@ -26,17 +26,10 @@ class HomeViewModel extends ViewModel
     public function videos()
     {
     	return collect($this->videos)->map(function ($video) {
-    		if (!strripos($video['name'],"Restricted")) {
             	return collect($video)->merge([
                 	'trailer' => 'https://www.youtube.com/embed/'. $video['key'],
-            	])->only(['trailer']);
-            }
-            else {
-            	return collect($video)->merge([
-                	'trailer' => null,
-            	])->only(['trailer']);
-            }
-        })->take(15)->dump();
+            	]);
+        })->take(15);
     }
 
     public function moviesInTheater()

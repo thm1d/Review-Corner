@@ -11,6 +11,8 @@ use App\Models\User;
 use App\Models\Movie;
 use App\Models\Tv;
 use App\Models\Rating;
+use App\Models\Review;
+
 
 class ProfileController extends Controller
 {
@@ -21,12 +23,33 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $user = Auth::user()->toArray();
-        dump($user);
+        if(Auth::user()->hasRole('user')) {
+            $user = Auth::user()->toArray();
+            dump($user);
 
-        return view('profile.dashboard', [
-            'user' => $user,
-        ]);
+            return view('profile.dashboard', [
+                'user' => $user,
+            ]);
+        } elseif(Auth::user()->hasRole('admin')) {
+            $users = User::all();
+            if(!is_null($users)) {
+                $users = $users->toArray();
+            }
+            dump($users);
+
+            $reviews = Review::all();
+            if(!is_null($reviews)) {
+                $reviews = $reviews->toArray();
+            }
+            dump($reviews);
+
+            return view('admin.dashboard', [
+                'users' => $users,
+                'reviews' => $reviews,
+            ]);
+        } elseif(Auth::user()->hasRole('superadmin')) {
+            return view('superadmin.dashboard');
+        }
     }
 
     /**
@@ -276,7 +299,7 @@ class ProfileController extends Controller
                 'balance' => $newBalance2,
             ]);
 
-            $url = URL::route('rank.update', ['#2']);
+            $url = URL::route('rank.update');
 
             $msg = 'Congratulations! You are now a '. ucfirst($rankName) .' Member.';
             return redirect()->to($url)->with('message', $msg);
@@ -298,7 +321,7 @@ class ProfileController extends Controller
                 'balance' => $newBalance1,
             ]);
 
-            $url = URL::route('rank.update', ['#2']);
+            $url = URL::route('rank.update');
 
             $msg = 'Congratulations! You are now a '. ucfirst($rankName) .' Member.';
             return redirect()->to($url)->with('message', $msg);

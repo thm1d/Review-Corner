@@ -4,20 +4,24 @@
     <div class="flex items-center justify-center h-auto my-16 bg-gray-900">
 	    <div class="container">
 	    	<div class="tab bg-gray-800 mx-0 sm:mx-0 md:mx-10 lg:mx-40 xl:mx-40 px-8 py-8 my-8 border border-gray-700 rounded-lg shadow-lg h-auto">
-		    	<div x-data="{tab: 0 }" class="h-auto pb-10 mb-2">
+		    	<div x-data="{tab: window.location.hash ? window.location.hash.substring(1) : 0 }" class="h-auto pb-10 mb-2">
+		    		<!-- <div>
+				        <br>Hash:<p x-text="window.location.hash"> </p><br>Tab:<p x-text="tab"> </p>
+				    </div> -->
 				    <div class="flex border border-gray-800 overflow-hidden">
 
 				        <button class="px-4 py-2 w-full" x-bind:class="{'bg-gray-900 text-white': tab === 0}" @click.prevent="tab = 0;window.location.hash = 0" href="#">Facilities</a></button>
 				        <button class="px-4 py-2 w-full" x-bind:class="{'bg-gray-900 text-white': tab === 1}" @click.prevent="tab = 1;window.location.hash = 1" ><a href="#">Method</a></button>
 				        <button class="px-4 py-2 w-full" x-bind:class="{'bg-gray-900 text-white': tab === 2}" @click.prevent="tab = 2;window.location.hash = 2" ><a href="#">Form</a></button>
 				        <button class="px-4 py-2 w-full" x-bind:class="{'bg-gray-900 text-white': tab === 3}" @click.prevent="tab = 3;window.location.hash = 3" ><a href="#">FAQ</a></button>
+
 				 
 				    </div>
 				    <div class="bg-gray-900 bg-opacity-10 border border-gray-800 h-auto mb-8">
-				        <div class="p-4 space-y-2" x-show="tab === 0"
+				        <div class="p-4 space-y-2" x-show="tab === 0" 
 				            x-transition:enter="transition ease-out duration-300"
 				            x-transition:enter-start="opacity-0 transform scale-90"
-				            x-transition:enter-end="opacity-100 transform scale-100">
+				            x-transition:enter-end="opacity-100 transform scale-100">  <!-- TAB 0 -->
 				            <div class="flex flex-wrap justify-between my-8 px-1 sm:px-0 md:px-2 lg:px-4 xl:px-4 py-4">
 				            	<div class="silver w-full sm:w-full md:w-2/5 xl:w-2/5 lg:w-2/5 pl-4 py-4 text-start mx-4 my-4 bg-gray-800">
 				            		<h1 class="text-center font-semibold text-lg my-2">SILVER (200 UC)</h1>
@@ -51,7 +55,7 @@
 				        <div class="p-4 space-y-2" x-show="tab === 1"
 				            x-transition:enter="transition ease-out duration-300"
 				            x-transition:enter-start="opacity-0 transform scale-90"
-				            x-transition:enter-end="opacity-100 transform scale-100">
+				            x-transition:enter-end="opacity-100 transform scale-100"> <!-- TAB 1 -->
 				            <div class="my-8 px-1 sm:px-0 md:px-2 lg:px-4 xl:px-4 py-4 flex flex-col justify-center">
 				            	<div class="flex justify-center items-center bg-gray-800 w-min h-auto py-8">
 				            		<div class="flex flex-col justify-center items-center">
@@ -59,9 +63,14 @@
 				            			<h3 class="">UC Top Up</h3>
 				            		</div>
 				            	</div>
+				            	<div class="flex flex-col text-white justify-center items-center bg-gray-800 w-min h-auto py-8">
+				            		<label for="code">Enter 12 Digit Code</label>
+
+                					<input id="code" class="block mt-1 w-1/2 text-black pl-2 rounded-lg" type="text" name="code" value="" required autofocus />
+				            	</div>
 			            		<div class="flex flex-col justify-center items-center mt-8 text-red-500">
-			            			<p>Please top up UC(Unknown Cash) from your nearest Review Corner outlet or contact any admin for online top up.   </p><br>
-			            			<p>In case of Rank Downgrade, 50% UC will be returned to your account.</p>
+			            			<p>Please buy UC(Unknown Cash) recharge card from your nearest Review Corner outlet. You can contact any admin for help.   </p><br>
+			            			<p>*In case of Rank Downgrade, 50% UC will be returned to your account.</p>
 			            		</div>
 				            	
 				            </div>
@@ -69,7 +78,7 @@
 				        <div class="p-4 space-y-2" x-show="tab === 2"
 				            x-transition:enter="transition ease-out duration-300"
 				            x-transition:enter-start="opacity-0 transform scale-90"
-				            x-transition:enter-end="opacity-100 transform scale-100">
+				            x-transition:enter-end="opacity-100 transform scale-100"> <!-- TAB 2 -->
 				            <div class="my-8 px-0 sm:px-0 md:px-2 lg:px-4 xl:px-4 py-4 flex flex-col justify-center">
 				            	<div class="bg-gray-800 h-auto py-4">
 				            		@unless(Auth::check())
@@ -104,7 +113,7 @@
 				        <div class="p-4 space-y-2" x-show="tab === 3"
 				            x-transition:enter="transition ease-out duration-300"
 				            x-transition:enter-start="opacity-0 transform scale-90"
-				            x-transition:enter-end="opacity-100 transform scale-100">
+				            x-transition:enter-end="opacity-100 transform scale-100"> <!-- TAB 3 -->
 				            <div class="my-8 px-1 sm:px-0 md:px-2 lg:px-4 xl:px-4 py-4 flex flex-col justify-center">
 				            	<div class="">
 				            		<h3 class="border border-gray-800 bg-black px-4 py-2 shadow-lg hover:text-gray-400">Why become a member?</h3>
@@ -125,7 +134,7 @@
 					      x-data="{ show: false }"
 					          x-init="() => {
 					            setTimeout(() => show = true, 500);
-					            setTimeout(() => show = false, 5000);
+					            setTimeout(() => show = false, 7500);
 					          }"
 					      x-show="show" 
 					      x-description="Notification panel, show/hide based on alert state." 

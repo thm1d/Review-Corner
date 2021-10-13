@@ -25,10 +25,7 @@
     </head>
     <body class="font-sans bg-gray-900 antialiased">
         <div class="min-h-screen">
-            @include('layouts.navigation')
-
-
-            <!-- Page Content -->
+            @include('admin.navigation')
             <main>
                 @yield('content')
             </main>

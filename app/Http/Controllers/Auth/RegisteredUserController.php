@@ -49,8 +49,10 @@ class RegisteredUserController extends Controller
             'balance' => '1000',
         ]));
 
+        $user->attachRole('user');
+
         event(new Registered($user));
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::PROFILE);
     }
 }
