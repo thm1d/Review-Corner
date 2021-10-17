@@ -21,12 +21,13 @@ class ComingSoon extends Component
                 "fields name, cover.url, first_release_date, platforms.abbreviation, rating, rating_count, summary, slug;
                     where platforms = (48,49,130,6)
                     & (first_release_date >= {$current}
-                    );
+                    ) & cover != null;
                     sort first_release_date asc;
                     limit 5;
                 ", "text/plain"
             )->post(config('services.igdb.endpoint'))
             ->json();
+        
 
         $this->comingSoon = $this->formatForView($comingSoonUnformatted);
     }

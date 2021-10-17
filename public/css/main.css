@@ -8,6 +8,22 @@
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 
+/* external css: flickity.css */
+
+.carousel {
+  background: transparent;
+}
+
+.carousel-cell {
+  width: 20%;
+  height: 450px;
+  margin-right: 50px;
+  border-radius: 5px;
+}
+
+
+
+
 html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
