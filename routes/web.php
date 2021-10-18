@@ -6,9 +6,8 @@ use App\Http\Controllers\MoviesController;
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\TvController;
 use App\Http\Controllers\GamesController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\HomeController2;
+use App\Http\Controllers\HomePageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,10 +30,9 @@ require __DIR__.'/auth.php';
 Route::get('/profile/your_watchlist', [ProfileController::class, 'showList'])->name('profile.list');
 Route::get('/profile/your_ratings', [ProfileController::class, 'showRatings'])->name('profile.rating');
 
-Route::get('/', [HomeController::class, 'index'])->name('home.index');
-Route::get('/genres/{key}', [HomeController::class, 'showGenre'])->name('home.genre');
-Route::get('/years/{year}', [HomeController::class, 'showYear'])->name('home.year');
-Route::get('/home', [HomeController2::class, 'index'])->name('home2.index');
+Route::get('/', [HomePageController::class, 'index'])->name('home.index');
+Route::get('/genres/{key}', [HomePageController::class, 'showGenre'])->name('home.genre');
+Route::get('/years/{year}', [HomePageController::class, 'showYear'])->name('home.year');
 
 Route::get('/movies', [MoviesController::class, 'index'])->name('movies.index');
 Route::get('/movies/{movie}', [MoviesController::class, 'show'])->name('movies.show');
@@ -59,7 +57,7 @@ Route::get('/games/{slug}', [GamesController::class, 'show'])->name('games.show'
 Route::post('/games/{slug}', [GamesController::class, 'store'])->name('games.rate');
 Route::post('/games/{slug}/review', [GamesController::class, 'storeReview'])->name('games.review');
 
-Route::get('/slug', [HomeController::class, 'comingSoon'])->name('home.temp');
+Route::get('/slug', [HomePageController::class, 'comingSoon'])->name('home.temp');
 
 Route::get('/membership', function () {
     return view('membership');
