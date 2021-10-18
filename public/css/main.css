@@ -12,11 +12,11 @@
 
 .carousel {
   background: transparent;
+  height: auto;
 }
 
 .carousel-cell {
   width: 20%;
-  height: 450px;
   margin-right: 50px;
   border-radius: 5px;
 }

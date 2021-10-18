@@ -1,94 +1,52 @@
 <?php
 $age = [
   [
-    "name" => "Final Trailer",
-    "key" => "w0HgHet0sxg",
-    "title" => "Dune"
-  ],
-  [
-    "name" => "Official Trailer",
-    "key" => "hL6R3HmQfPc",
-    "title" => "Halloween Kills"
-  ],
-  [
     "name" => "The Last Duel | 20th Century Studios",
     "key" => "QTBSb0i09kI",
-    "title" => "The Last Duel"
+    "title" => "The Last Duel",
+    "poster_path" => "/b69kfBhuztkodJfWe9qHx7Gjwe1.jpg"
   ],
   [
-    "name" => "Official Trailer",
-    "key" => "8I8nMtzN05s",
-    "title" => "Ron's Gone Wrong"
+    "name" => "Maya and the Three | Official Trailer | Netflix",
+    "key" => "QrPMlYSbkEQ",
+    "title" => "Maya and the Three",
+    "poster_path" => "/zUBixNeHU0cbSUH7JMktl9OMEMV.jpg",
   ],
   [
-    "name" => "COURAGEOUS Movie Trailer",
-    "key" => "i9VT_NBIVfs",
-    "title" => "Courageous"
+    "name" => "NO TIME TO DIE | Final US Trailer",
+    "key" => "N_gD9-Oa0fg",
+    "title" => "No Time to Die",
+    "poster_path" => "/iUgygt3fscRoKWCV1d0C7FbM9TP.jpg",
   ],
   [
-    "name" => "ANTLERS | Official Trailer [HD] | FOX Searchlight",
-    "key" => "2aiYxwVuZ1o",
-    "title" => "Antlers"
-  ],
-  [
-    "name" => "LAST NIGHT IN SOHO - Official Trailer [HD] - Only in Theaters October 29",
-    "key" => "AcVnFrxjPjI",
-    "title" => "Last Night in Soho"
-  ],
-  [
-    "name" => "Arts and Artists",
-    "key" => "qrpbzEwPNyE",
-    "title" => "The French Dispatch"
-  ],
-  [
-    "name" => "Jeepers Creepers Reborn A look at the creeper stunt",
-    "key" => "pxrw6sDzNSo",
-    "title" => "Jeepers Creepers: Reborn"
-  ],
-  [
-    "name" => "Metrograph Pictures presents POSSESSION [4K Restoration, Official Trailer]",
-    "key" => "Ah4Z1yIAoFM",
-    "title" => "Possession"
-  ],
-  [
-    "name" => "Hard Luck Love Song  | Official Trailer  |  In Theaters October 15",
-    "key" => "lP5OX-zEgrw",
-    "title" => "Hard Luck Love Song"
-  ],
-  [
-    "name" => "The Velvet Underground — Official Trailer | Apple TV+",
-    "key" => "hWq7a8Tin8g",
-    "title" => "The Velvet Underground"
-  ],
-  [
-    "name" => "Official Trailer",
-    "key" => "nrlVHVid-20",
-    "title" => "Bergman Island"
-  ],
-  [
-    "name" => "The Harder They Fall | Official Trailer | Netflix",
-    "key" => "Poc55U2RPMw",
-    "title" => "The Harder They Fall"
+    "name" => "The Black Phone - Official Trailer",
+    "key" => "3eGP6im8AZA",
+    "title" => "The Black Phone",
+    "poster_path" => "/wd6WxLLR2w8aAXmLPDW5CN0iSB3.jpg",
   ],
   [
     "name" => "Needle in a Timestack (2021 Movie) Teaser Trailer – Leslie Odom Jr., Cynthia Erivo, Orlando Bloom",
     "key" => "ZPKL9aSgbCw",
-    "title" => "Needle in a Timestack"
+    "title" => "Needle in a Timestack",
+    "poster_path" => "/rjGYOszxlaUAe6EC5yZ4Q8l3aVL.jpg",
   ],
   [
-    "name" => "The Grand Duke of Corsica | Official Trailer (HD) | Vertical Entertainment",
-    "key" => "WRPx0a3Tv_8",
-    "title" => "The Grand Duke Of Corsica"
+    "name" => "The Matrix Resurrections – Official Trailer 1",
+    "key" => "9ix7TUGVYIo",
+    "title" => "The Matrix Resurrections",
+    "poster_path" => "/tOqTTslEfjyvoBoBM4B29aeqntt.jpg",
   ],
   [
-    "name" => "Introducing, Selma Blair | In Theaters Oct 15 | Streaming Oct 21 on discovery+",
-    "key" => "pSJey-ieiU0",
-    "title" => "Introducing, Selma Blair"
+    "name" => ""In The Beginning" Featurette | Marvel Studios’ Eternals",
+    "key" => "PcPIlVJ35R0",
+    "title" => "Eternals",
+    "poster_path" => "/6AdXwFTRTAzggD2QUTt5B7JFGKL.jpg"
   ],
   [
-    "name" => "The Blazing World | Official Trailer (HD) | Vertical Entertainment",
-    "key" => "3PFP2XlOeTY",
-    "title" => "The Blazing World"
+    "name" => "THE BATMAN – Main Trailer",
+    "key" => "mqqft2x_Aa4",
+    "title" => "The Batman",
+    "poster_path" => "/7YncShtIGNJP5euTPSZGxGsImaN.jpg",
   ]
 ];
 echo json_encode($age);
