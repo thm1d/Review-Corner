@@ -23,7 +23,7 @@ class TvShowViewModel extends ViewModel
     public function tvShow()
     {
     	return collect($this->tvShow)->merge([
-    			'poster_path' => 'https://image.tmdb.org/t/p/w500/'. $this->tvShow['poster_path'],
+    			'poster_path' => $this->tvShow['poster_path'] != null ? 'https://image.tmdb.org/t/p/w500/'. $this->tvShow['poster_path'] : ($this->tvShow['external_ids']['imdb_id'] != null ? ($this->imdb['Poster'] == "N/A" ? 'https://ui-avatars.com/api/?size=300&name='. $this->tvShow['name'] : $this->imdb['Poster']) : 'https://ui-avatars.com/api/?size=300&name='. $this->tvShow['name']),
     			'first_air_date' => \Carbon\Carbon::parse($this->tvShow['first_air_date'])->format('M d, Y'),
     			'genres' => collect($this->tvShow['genres'])->pluck('name')->flatten()->implode(', '),
     			'episode_run_time' => collect($this->tvShow['episode_run_time']),
@@ -33,19 +33,20 @@ class TvShowViewModel extends ViewModel
     			'release_year' => substr($this->tvShow['first_air_date'],0,4),
                 'reviews' => collect($this->tvShow['reviews']['results']),
                 'similarTvShows' => collect($this->tvShow['similar']['results'])->take(5),
-    		])->dump();
+                'vote_average' => $this->tvShow['vote_average'] == 0 ? "N/A" : $this->tvShow['vote_average'],
+    		]);
     }
 
     public function imdb()
     {
-        return $this->imdb;
+        return collect($this->imdb)->merge([
+            'Year' => isset($this->imdb['Year']) ? $this->imdb['Year'] : substr($this->tvShow['first_air_date'], 0, 4),
+            ]);
     }
 
     public function rating()
     {
-        dump($this->imdb);
         return $this->rating;
-
     }
 
     public function userReviews()

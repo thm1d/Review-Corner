@@ -11,7 +11,7 @@
                     <div class="title-and-ratings md:mr-4">
                         <h2 class="text-4xl mt-4 md:mt-0 font-semibold">{{ $tvShow['name'] }} ({{ $imdb['Year'] }})</h2>
                         <div class="flex flex-wrap items-center text-gray-400 text-sm">
-                            @if ($tvShow != $imdb)
+                            @if ($tvShow['external_ids']['imdb_id'] != null || $tvShow['external_ids']['imdb_id'] != "")
                                 <span>{{ $imdb['Rated'] }}</span>
                                 <span class="mx-2">|</span>
                             @endif
@@ -23,11 +23,13 @@
                         <div class="flex items-center text-gray-400 text-sm mt-2">
                             <svg class="fill-current text-orange-500 w-4" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z" data-name="star"/></g></svg>
                             <span class="ml-1">{{ $tvShow['vote_average'] }}</span>
-                            <span class="mx-2">|</span>
+                            @if ($tvShow['external_ids']['imdb_id'] != null || $tvShow['external_ids']['imdb_id'] != "")
+                            <span class="mx-2">|</span> 
                             <a href="https://www.imdb.com/title/{{ $imdb['imdbID'] }}" target="_blank">
                                 <img src="{{ URL::asset('/img/imdb-seeklogo.com.svg') }}" class="w-10">
                             </a>
                             <span class="ml-2">{{ $imdb['imdbRating'] }} ({{ $imdb['imdbVotes'] }})</span>
+                            @endif
                             @auth
                                 <span class="mx-2">|</span>
                                 <img src="{{ URL::asset('/img/profile_avatar.png') }}" class="w-6">
@@ -89,7 +91,8 @@
                     @endauth
                 </div>
 
-                <p class="text-gray-300 mt-2">
+                <h4 class="text-white font-semibold mt-2">Overview</h4>
+                <p class="text-gray-300 mt-4 w-full">
                     {{ $tvShow['overview'] }}
                 </p>
 
@@ -155,8 +158,8 @@
                     <div class="mt-8">
                         <a href="{{ route('actors.show', $cast['id']) }}">
                             @if ($cast['profile_path'] == null )
-                                <div class="mb-12">
-                                    <img src="{{ URL::asset('/img/Null_avatar.png') }}" alt="" class="hover:opacity-75 transition ease-in-out duration-150">
+                                <div class="">
+                                    <img src="https://via.placeholder.com/300x450?text={{ $cast['name'] }}" alt="" class="hover:opacity-75 transition ease-in-out duration-150">
                                 </div>
                             @endif
                             <img src="{{ 'https://image.tmdb.org/t/p/w300/'.$cast['profile_path'] }}" alt="" class="hover:opacity-75 transition ease-in-out duration-150">
@@ -223,7 +226,11 @@
                     <div class="game mt-8">
                         <div class="relative inline-block">
                             <a href="{{ route('tv.show', $similarTvShow['id']) }}">
+                                @if ($similarTvShow['poster_path'] != null)
                                 <img src="{{ 'https://image.tmdb.org/t/p/w500/'. $similarTvShow['poster_path'] }}" alt="tvshow cover" class="hover:opacity-75 transition ease-in-out duration-150">
+                                @else
+                                <img src="https://via.placeholder.com/300x450?text={{ $similarTvShow['name'] }}" alt="tvshow cover" class="hover:opacity-75 transition ease-in-out duration-150">
+                                @endif
                             </a>
                             
                         </div>

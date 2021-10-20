@@ -11,7 +11,7 @@
                     <div class="title-and-ratings md:mr-4">
                         <h2 class="text-4xl mt-4 md:mt-0 font-semibold">{{ $movie['title'] }} ({{ $movie['release_year'] }})</h2>
                         <div class="flex flex-wrap items-center text-gray-400 text-sm">
-                            @if ($movie != $imdb)
+                            @if ($movie['imdb_id'] != null)
                                 <span>{{ $imdb['Rated'] }}</span>
                                 <span class="mx-2">|</span>
                             @endif
@@ -25,6 +25,7 @@
                             <svg class="fill-current text-orange-500 w-4" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z" data-name="star"/></g></svg>
                             <span class="ml-1 mr-2">{{ $movie['vote_average'] }}</span>
                             <div class="flex items-center">
+                                @if ($movie['imdb_id'] != null)
                                 @foreach ($imdb['Ratings'] as $ratings)
                                     @if ($ratings['Source'] == "Internet Movie Database")
 
@@ -43,6 +44,7 @@
                                         @endif
                                     
                                 @endforeach
+                                @endif
                                 @auth
                                     <img src="{{ URL::asset('/img/profile_avatar.png') }}" class="w-6">
                                     <span class="ms-2 ml-2 mr-2">{{ $rating }}</span>
@@ -132,7 +134,7 @@
 
                 </div>
 
-                <h4 class="text-white font-semibold">Overview</h4>
+                <h4 class="text-white font-semibold mt-2">Overview</h4>
                 <p class="text-gray-300 mt-4 w-full">
 
                     {{ $movie['overview'] }}
@@ -200,8 +202,8 @@
                     <div class="mt-8">
                         <a href="{{ route('actors.show', $cast['id']) }}">
                             @if ($cast['profile_path'] == null )
-                                <div class="mb-12">
-                                    <img src="{{ URL::asset('/img/Null_avatar.png') }}" alt="" class="hover:opacity-75 transition ease-in-out duration-150">
+                                <div class="">
+                                    <img src="https://via.placeholder.com/300x450?text={{ $cast['name'] }}" alt="" class="hover:opacity-75 transition ease-in-out duration-150">
                                 </div>
                             @endif
                             <img src="{{ 'https://image.tmdb.org/t/p/w300/'.$cast['profile_path'] }}" alt="" class="hover:opacity-75 transition ease-in-out duration-150">
@@ -268,7 +270,11 @@
                     <div class="game mt-8">
                         <div class="relative inline-block">
                             <a href="{{ route('movies.show', $similarMovie['id']) }}">
+                                @if ($similarTvShow['poster_path'] != null)
                                 <img src="{{ 'https://image.tmdb.org/t/p/w500/'. $similarMovie['poster_path'] }}" alt="movie cover" class="hover:opacity-75 transition ease-in-out duration-150">
+                                @else
+                                <img src="https://via.placeholder.com/300x450?text={{ $similarMovie['title'] }}" alt="movie cover" class="hover:opacity-75 transition ease-in-out duration-150">
+                                @endif
                             </a>
                             
                         </div>

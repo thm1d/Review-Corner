@@ -178,7 +178,7 @@ class HomePageController extends Controller
         ->json()['results'];
 
         $moviesInTheater = http::withToken(config('services.tmdb.token'))
-        ->get('https://api.themoviedb.org/3/discover/movie?primary_release_date.gte='. $release_date1 .'&primary_release_date.lte='. $release_date2.'&page=1')
+        ->get('https://api.themoviedb.org/3/discover/movie?primary_release_date.gte='. $release_date1 .'&primary_release_date.lte='. $release_date2.'&page=2')
         ->json()['results'];
 
         $genresArray = Http::withToken(config('services.tmdb.token'))
@@ -186,7 +186,7 @@ class HomePageController extends Controller
             ->json()['genres'];
 
         $showsOnTv = http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/discover/tv?&air_date.gte='. $release_date3. '&air_date.lte='. $release_date2.'&page=1')
+            ->get('https://api.themoviedb.org/3/tv/on_the_air?page=1')
             ->json()['results'];
 
         //dump($showsOnTv);

@@ -10,7 +10,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ URL::asset('/css/main.css') }}">
         <link href="https://unpkg.com/tailwindcss@^1.9/dist/tailwind.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
         <livewire:styles />
         
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.x/dist/alpine.min.js" defer></script>

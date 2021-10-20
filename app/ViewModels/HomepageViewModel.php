@@ -76,7 +76,7 @@ class HomepageViewModel extends ViewModel
                 'release_date' => \Carbon\Carbon::parse($movie['release_date'])->format('M d, Y'),
                 'genres' => $genresFormatted,
             ])->only(['poster_path', 'id', 'genres', 'title', 'vote_average', 'release_date']);
-        })->take(8);
+        });
     }
 
     private function formatTv($tv) 
@@ -91,7 +91,7 @@ class HomepageViewModel extends ViewModel
                 'first_air_date' => \Carbon\Carbon::parse($tvShow['first_air_date'])->format('M d, Y'),
                 'genres' => $genresFormatted,
             ])->only(['poster_path', 'id', 'genres', 'name', 'vote_average', 'first_air_date']);
-        })->take(8);
+        })->take(12);
     }
 
     private function formatForView($games)

@@ -116,7 +116,7 @@ class TvController extends Controller
         //dump($movie);
         $apikey = 'ef1c5717';
 
-        if ($tvShow['external_ids']['imdb_id'] != "") {
+        if ($tvShow['external_ids']['imdb_id'] != "" || $tvShow['external_ids']['imdb_id'] != null) {
             $imdb = Http::get('http://www.omdbapi.com/?i='.$tvShow['external_ids']['imdb_id'].'&apikey='.$apikey)
             ->Json();
         }
@@ -183,8 +183,6 @@ class TvController extends Controller
             ])->toArray();   
             //dump($review);
         }
-
-        dump($userReviews);
 
         $viewModel = new TvShowViewModel(
             $tvShow, 

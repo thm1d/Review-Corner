@@ -23,7 +23,7 @@ class MovieViewModel extends ViewModel
     public function movie()
     {
     	return collect($this->movie)->merge([
-    			'poster_path' => $this->movie['poster_path'] != null ? 'https://image.tmdb.org/t/p/w500/'. $this->movie['poster_path'] : $this->imdb['Poster'],
+    			'poster_path' => $this->movie['poster_path'] != null ? 'https://image.tmdb.org/t/p/w500/'. $this->movie['poster_path'] : ($this->movie['imdb_id'] != null ? ($this->imdb['Poster'] == "N/A" ? 'https://ui-avatars.com/api/?size=300&name='. $this->movie['title'] : $this->imdb['Poster']) : 'https://ui-avatars.com/api/?size=300&name='. $this->movie['title']),
     			'release_date' => \Carbon\Carbon::parse($this->movie['release_date'])->format('M d, Y'),
     			'genres' => collect($this->movie['genres'])->pluck('name')->flatten()->implode(', '),
     			'runtime' => date('g\h i',mktime(0,$this->movie['runtime'])),

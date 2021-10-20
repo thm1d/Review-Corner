@@ -6,7 +6,7 @@
         	<div class="container mx-auto">
             	<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-8">Editor's Picks</h2>
 				<!-- Flickity HTML init -->
-				<div class="carousel mb-8" data-flickity='{ "groupCells": true, "wrapAround": true, "autoPlay": true }'>
+				<div class="carousel mb-8" data-flickity='{ "groupCells": true, "wrapAround": true, "autoPlay": true, "imagesLoaded": true }'>
 					@foreach ($lists as $list)
 					<div class="carousel-cell">
 						@if ($list['type'] == 'movie')
@@ -85,14 +85,14 @@
 					<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-4 px-4 pt-4">Trending This Week</h2>
 					<div class="flex flex-row flex-wrap">
 						@foreach ($trendings as $trending)
-						<div class="my-2 ms-2">
+						<div class="my-2 mx-2">
 							@if ($trending['media_type'] == 'movie')
 							<a href="{{ route('movies.show', ['movie'=>$trending['id']]) }}">
-								<img src="{{ $trending['poster_path'] }}" alt="Poster" class="my-1 mx-1 w-48 hover:opacity-75 transition ease-in-out duration-150">
+								<img src="{{ $trending['poster_path'] }}" alt="Poster" class="my-1 mx-1 w-44 hover:opacity-75 transition ease-in-out duration-150">
 							</a>
 							@else
 							<a href="{{ route('tv.show', $trending['id']) }}">
-								<img src="{{ $trending['poster_path'] }}" alt="Poster" class="my-1 mx-1 w-48 hover:opacity-75 transition ease-in-out duration-150">
+								<img src="{{ $trending['poster_path'] }}" alt="Poster" class="my-1 mx-1 w-44 hover:opacity-75 transition ease-in-out duration-150">
 							</a>
 							@endif
 							<div class="mt-2">
@@ -111,21 +111,48 @@
 
 		<div class="movies-in-theater p-1 z-10">
 			<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Movies In Theater</h2>
-			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8">
-				
-				@foreach ($moviesInTheater as $movie)
-					<div class="mt-8">
-						<a href="{{ route('movies.show', ['movie'=>$movie['id'], 'title'=>$movie['title']]) }}">
-							<img src="{{ $movie['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
-						</a>
-						<div class="mt-2">
-							<a href="{{ route('movies.show', $movie['id']) }}" class="text-lg mt-2 text-white hover:text-gray:500">{{ $movie['title'] }}</a><br>
-							<span class="text-sm text-gray-400">{{ $movie['release_date'] }}</span>
+				<div class="carousel2 mb-8" data-flickity='{ "groupCells": true, "wrapAround": false, "autoPlay": false, "imagesLoaded": true }'>
+					@foreach ($moviesInTheater as $movie)
+						<div class="carousel-cell2 mt-8">
+							<a href="{{ route('movies.show', ['movie'=>$movie['id'], 'title'=>$movie['title']]) }}">
+								<img src="{{ $movie['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
+							</a>
+							<div class="mt-2">
+								<a href="{{ route('movies.show', $movie['id']) }}" class="text-lg mt-2 text-white hover:text-gray:500">{{ $movie['title'] }}</a><br>
+								<span class="text-sm text-gray-400">{{ $movie['release_date'] }}</span>
+							</div>
 						</div>
-					</div>
-				@endforeach
-			</div>
+					@endforeach
+				</div>
 		</div> <!-- end-movies-in-theater -->
+
+		<div class=" py-16">
+			<div class="grid grid-cols-2 gap-12 w-3/5">
+				<div class=" border border-transparent rounded h-max" style="background-color: rgb(62, 76, 94); ">
+					<div class="bg-gray-900 m-1">
+						<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold p-2">Genres</h2>
+						@foreach ($showsOnTv as $tvShow)
+						<ul>
+							<li class="border-t border-gray-300 p-2 mx-4 hover:text-gray-400">
+								<a href="{{ route('tv.show', $tvShow['id']) }}" class="text-lg mt-2 hover:text-gray-300">{{ $tvShow['name'] }}</a><br>
+							</li>
+						</ul>
+						@endforeach
+					</div>
+				</div>
+
+				<div class="by-year border border-transparent rounded h-max" style="background-color: rgb(62, 76, 94); ">
+					<div class="bg-gray-900 m-1">
+						<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold p-2">Years</h2>
+						@foreach (@range(0,12) as $diff)
+						<ul>
+							<li class="border-t border-gray-300 p-2 mx-4 hover:text-gray-400"><a href="{{ route('home.year', ( date('Y') - $diff )) }}">{{ date('Y') - $diff }}</a></li>
+						</ul>
+						@endforeach
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<div class="shows-on-tv py-16">
 			<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Shows On TV</h2>
