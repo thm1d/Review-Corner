@@ -270,7 +270,7 @@
                     <div class="game mt-8">
                         <div class="relative inline-block">
                             <a href="{{ route('movies.show', $similarMovie['id']) }}">
-                                @if ($similarTvShow['poster_path'] != null)
+                                @if ($similarMovie['poster_path'] != null)
                                 <img src="{{ 'https://image.tmdb.org/t/p/w500/'. $similarMovie['poster_path'] }}" alt="movie cover" class="hover:opacity-75 transition ease-in-out duration-150">
                                 @else
                                 <img src="https://via.placeholder.com/300x450?text={{ $similarMovie['title'] }}" alt="movie cover" class="hover:opacity-75 transition ease-in-out duration-150">

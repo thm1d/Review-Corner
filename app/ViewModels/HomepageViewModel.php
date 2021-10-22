@@ -15,8 +15,9 @@ class HomepageViewModel extends ViewModel
     public $genresArray;
     public $showsOnTv;
     public $games;
+    public $popular_reviews;
 
-    public function __construct($lists, $trailers, $trendings, $moviesInTheater, $genresArray, $showsOnTv, $games)
+    public function __construct($lists, $trailers, $trendings, $moviesInTheater, $genresArray, $showsOnTv, $games, $popular_reviews)
     {
         $this->lists = $lists;
         $this->trailers = $trailers;
@@ -25,6 +26,7 @@ class HomepageViewModel extends ViewModel
         $this->genresArray = $genresArray;
         $this->showsOnTv = $showsOnTv;
         $this->games = $games;
+        $this->popular_reviews = $popular_reviews;
     }
 
     public function lists()
@@ -64,6 +66,11 @@ class HomepageViewModel extends ViewModel
         return $this->formatForView($this->games);
     }
 
+    public function popular_reviews()
+    {
+        return $this->popular_reviews;
+    }
+
     private function formatMovies($movies) 
     { 
         return collect($movies)->map(function($movie) {
@@ -91,7 +98,7 @@ class HomepageViewModel extends ViewModel
                 'first_air_date' => \Carbon\Carbon::parse($tvShow['first_air_date'])->format('M d, Y'),
                 'genres' => $genresFormatted,
             ])->only(['poster_path', 'id', 'genres', 'name', 'vote_average', 'first_air_date']);
-        })->take(12);
+        })->take(8);
     }
 
     private function formatForView($games)
