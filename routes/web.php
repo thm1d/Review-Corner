@@ -31,7 +31,7 @@ Route::get('/profile/your_watchlist', [ProfileController::class, 'showList'])->n
 Route::get('/profile/your_ratings', [ProfileController::class, 'showRatings'])->name('profile.rating');
 
 Route::get('/', [HomePageController::class, 'index'])->name('home.index');
-Route::get('/genres/{key}', [HomePageController::class, 'showGenre'])->name('home.genre');
+Route::get('/genres/{key}/{value}', [HomePageController::class, 'showGenre'])->name('home.genre');
 Route::get('/years/{year}', [HomePageController::class, 'showYear'])->name('home.year');
 
 Route::get('/movies', [MoviesController::class, 'index'])->name('movies.index');

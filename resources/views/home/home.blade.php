@@ -38,8 +38,8 @@
 		</div> <!-- end-editor-picks-section -->
 
 		<div class="my-16">
-			<div class="flex flex-row mt-8">
-				<div class="trailer w-2/5">
+			<div class="flex flex-col md:flex-col sm:flex-col lg:flex-row xl:flex-row mt-8">
+				<div class="trailer lg:w-2/5 xl:w-2/5 md:w-full sm:w-full">
 			        <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-4 px-4 pt-4">Latest Trailers</h2>
 			        @foreach ($trailers as $trailer)
 			        <div class="px-4" x-data="{ isOpen: false }">
@@ -81,7 +81,7 @@
 			        </div>
                     @endforeach	
 				</div>
-				<div class="trending ml-4 w-3/5">
+				<div class="trending ml-4 lg:w-3/5 xl:w-3/5 md:w-full sm:w-full md:mt-8 sm:mt-8 lg:mt-0 xl:mt-0">
 					<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold mb-4 px-4 pt-4">Trending This Week</h2>
 					<div class="flex flex-row flex-wrap">
 						@foreach ($trendings as $trending)
@@ -111,32 +111,31 @@
 
 		<div class="movies-in-theater p-1 z-10">
 			<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Movies In Theater</h2>
-				<div class="carousel2 mb-8" data-flickity='{ "groupCells": true, "wrapAround": false, "autoPlay": false, "imagesLoaded": true }'>
-					@foreach ($moviesInTheater as $movie)
-						<div class="carousel-cell2 mt-8">
-							<a href="{{ route('movies.show', ['movie'=>$movie['id'], 'title'=>$movie['title']]) }}">
-								<img src="{{ $movie['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
-							</a>
-							<div class="mt-2">
-								<a href="{{ route('movies.show', $movie['id']) }}" class="text-lg mt-2 text-white hover:text-gray:500">{{ $movie['title'] }}</a><br>
-								<span class="text-sm text-gray-400">{{ $movie['release_date'] }}</span>
-							</div>
+			<div class="carousel2 mb-8" data-flickity='{ "groupCells": true, "wrapAround": true, "autoPlay": false, "imagesLoaded": true }'>
+				@foreach ($moviesInTheater as $movie)
+					<div class="carousel-cell2 mt-8">
+						<a href="{{ route('movies.show', ['movie'=>$movie['id'], 'title'=>$movie['title']]) }}">
+							<img src="{{ $movie['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
+						</a>
+						<div class="mt-2">
+							<a href="{{ route('movies.show', $movie['id']) }}" class="text-lg mt-2 text-white hover:text-gray:500">{{ $movie['title'] }}</a><br>
+							<span class="text-sm text-gray-400">{{ $movie['release_date'] }}</span>
 						</div>
-					@endforeach
-				</div>
+					</div>
+				@endforeach
+			</div>
 		</div> <!-- end-movies-in-theater -->
 
 		<div class="shows-on-tv py-16">
 			<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Shows On TV</h2>
-			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8">
-				
+			<div class="carousel2 mb-8" data-flickity='{ "groupCells": true, "wrapAround": true, "autoPlay": false, "imagesLoaded": true }'>
 				@foreach ($showsOnTv as $tvShow)
-					<div class="mt-8">
+					<div class="carousel-cell2 mt-8">
 						<a href="{{ route('tv.show', $tvShow['id']) }}">
 							<img src="{{ $tvShow['poster_path'] }}" alt="Poster" class="hover:opacity-75 transition ease-in-out duration-150">
 						</a>
 						<div class="mt-2">
-							<a href="{{ route('tv.show', $tvShow['id']) }}" class="text-lg mt-2 hover:text-gray-300">{{ $tvShow['name'] }}</a><br>
+							<a href="{{ route('tv.show', $tvShow['id']) }}" class="text-lg mt-2 text-white hover:text-gray:500">{{ $tvShow['name'] }}</a><br>
 							<span class="text-sm text-gray-400">{{ $tvShow['first_air_date'] }}</span>
 						</div>
 					</div>
@@ -146,9 +145,20 @@
 
 		<div class="recently-released-games">
 	        <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Recently Released Games</h2>
-			<div class="new-games text-sm grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 xl:grid-cols-8 gap-8 pb-16 ">
+			<div class="carousel2 mb-8" data-flickity='{ "groupCells": true, "wrapAround": true, "autoPlay": false, "imagesLoaded": true }'>
 			    @foreach ($games as $game)
-			        <x-game-card :game="$game" />
+			        <div class="carousel-cell2 game mt-8">
+					    <div class="relative inline-block">
+					        <a href="{{ route('games.show', $game['slug']) }}">
+					            <img src="{{ $game['coverImageUrl'] }}" alt="game cover" class="hover:opacity-75 transition ease-in-out duration-150">
+					        </a>
+					        
+					    </div>
+					    <a href="{{ route('games.show', $game['slug']) }}" class="block text-base font-semibold leading-tight hover:text-gray-400 mt-2">{{ $game['name'] }}</a>
+					    <div class="text-gray-400 mt-1">
+					        {{ $game['platforms'] }}
+					    </div>
+					</div>
 			    @endforeach
 			</div>
 		</div>
@@ -191,8 +201,8 @@
 		                            </div>
 			                        
 		                        </div>
-		                        <div class="content w-min h-auto">
-				                    <p class="overflow-ellipsis overflow-hidden break-words py-4 font-thin text-base">{{ $review['review'] }}</p>
+		                        <div class="content w-min h-auto" id="review-height">
+				                    <p class="break-words py-2 font-thin text-base" id="review-content">{{ $review['review_short'] }}<button class="px-2 text-blue-500" id="full-review-button" onclick='showReview(this, "<?php echo $review['review_full'];  ?>");'>read full review</button></p>
 				                </div>
 				            </div>
 		                </div>
@@ -209,7 +219,7 @@
 						<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold p-2">Genres</h2>
 						@foreach ($genresArray as $key => $value)
 						<ul>
-							<li class="border-t border-gray-300 p-2 mx-4 hover:text-gray-400"><a href="{{ route('home.genre', $key) }}">{{ $value }}</a></li>
+							<li class="border-t border-gray-300 p-2 mx-4 hover:text-gray-400"><a href="{{ route('home.genre', [ 'key' => $key, 'value' => $value]) }}">{{ $value }}</a></li>
 						</ul>
 						@endforeach
 					</div>

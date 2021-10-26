@@ -84,6 +84,12 @@
         function alertFunction(msg) {
             alert(msg);
         }
+
+        function showReview(id, review) {
+            var review2 = review;
+            id.parentNode.innerHTML = review2;
+            // console.log(review2);
+        }
     </script>
     </body>
 </html>

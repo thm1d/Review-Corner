@@ -46,7 +46,7 @@
                                 @endforeach
                                 @endif
                                 @auth
-                                    <img src="{{ URL::asset('/img/profile_avatar.png') }}" class="w-6">
+                                    <img src="{{ URL::asset('/img/profile_avatar.png') }}" class="w-6 ">
                                     <span class="ms-2 ml-2 mr-2">{{ $rating }}</span>
                                 @endauth
                             </div>
