@@ -31,11 +31,11 @@ class ActorsViewModel extends ViewModel
 
     public function previous() 
     {
-    	return $this->page > 1 ? $this->page - 1 : 1;
+    	return $this->page > 1 ? $this->page - 1 : 500;
     }
 
     public function next() 
     {
-    	return $this->page < 500 ? $this->page + 1 : 500;
+    	return $this->page < 500 ? $this->page + 1 : 1;
     }
 }

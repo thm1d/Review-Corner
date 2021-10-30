@@ -10,12 +10,17 @@ class TvViewModel extends ViewModel
     public $popularShows;
     public $topRatedShows;
     public $genres;
-    public function __construct($onTheAirShows, $popularShows, $topRatedShows, $genres)
+    public $gcounter;
+    public $ycounter;
+    
+    public function __construct($onTheAirShows, $popularShows, $topRatedShows, $genres, $gcounter, $ycounter)
     {
         $this->onTheAirShows = $onTheAirShows;
 	    $this->popularShows = $popularShows;
 	    $this->topRatedShows = $topRatedShows;
 	    $this->genres = $genres;
+        $this->gcounter = $gcounter;
+        $this->ycounter = $ycounter;
     }
 
     public function onTheAirShows()

@@ -41,6 +41,11 @@ class MoviesController extends Controller
         ->get('https://api.themoviedb.org/3/genre/movie/list')
         ->json()['genres'];
 
+
+        $gcounter = 1;
+        $ycounter = 1;
+
+
         // $genres = collect($genresArray)->mapWithKeys(function ($genre){
         //     return [$genre['id'] => $genre['name']];
         // });
@@ -52,6 +57,8 @@ class MoviesController extends Controller
             $popularMovies, 
             $nowPlayingMovies, 
             $genres,
+            $gcounter,
+            $ycounter,
         );
 
         return view('movie.index', $viewModel);

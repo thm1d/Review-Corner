@@ -237,7 +237,7 @@ class HomePageController extends Controller
             "media_type" => "tv"
           ]
         ];
-        dump($popular_reviews);
+        //dump($popular_reviews);
 
         $trendings = http::withToken(config('services.tmdb.token'))
         ->get('https://api.themoviedb.org/3/trending/all/week?page=1')
@@ -246,10 +246,6 @@ class HomePageController extends Controller
         $moviesInTheater = http::withToken(config('services.tmdb.token'))
         ->get('https://api.themoviedb.org/3/discover/movie?primary_release_date.gte='. $release_date1 .'&primary_release_date.lte='. $release_date2.'&page=1')
         ->json()['results'];
-
-        $genresArray = Http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/genre/movie/list')
-            ->json()['genres'];
 
         $showsOnTv = http::withToken(config('services.tmdb.token'))
             ->get('https://api.themoviedb.org/3/tv/on_the_air?page=1')
@@ -268,13 +264,11 @@ class HomePageController extends Controller
 
         abort_if(!$games, 404);
 
-
         $viewModel = new HomepageViewModel(
             $lists,
             $trailers,
             $trendings,
             $moviesInTheater, 
-            $genresArray, 
             $showsOnTv, 
             $games,
             $popular_reviews,
@@ -350,44 +344,52 @@ class HomePageController extends Controller
 
     public function showGenre(Request $request, $id, $value)
     {
-        $genreWiseMovieList = Http::withToken(config('services.tmdb.token'))
-        ->get('https://api.themoviedb.org/3/discover/movie?with_genres='. $id. '&sort_by=popularity.desc')
-        ->json()['results'];
-
-        $genreWiseTvShows = Http::withToken(config('services.tmdb.token'))
-        ->get('https://api.themoviedb.org/3/discover/tv?with_genres='. $id. '&sort_by=popularity.desc')
-        ->json()['results'];
-
-        $genreWiseMovies = $this->formatMovies($genreWiseMovieList);
-
         //dump($request);
+        
+        $genreWiseList = Http::withToken(config('services.tmdb.token'))
+        ->get('https://api.themoviedb.org/3/discover/'. $request->type .'?with_genres='. $id. '&sort_by=popularity.desc&page='. $request->page)
+        ->json();
+
+        //dump($genreWiseMovieList);
 
 
+        //$genreWiseMovies = $this->formatMovies($genreWiseMovieList);
 
         //dump($genreWiseTvShows);
 
+
+
         return view('home.genre',[
-            'genreWiseMovies' => $genreWiseMovies,
-            'genreWiseTvShows' => $genreWiseTvShows,
-            'genreName' => $value,
+            'genreWiseList' => $genreWiseList['results'],
+            'total_results' => $genreWiseList['total_results'],
+            'type' => $request->type,
+            'value' => $value,
+            'key' => $id,
+            'counter' => $request->page,
         ]);
     }
 
-    public function showYear($id)
+    public function showYear(Request $request, $year)
     {
-        $yearWiseMovies = Http::withToken(config('services.tmdb.token'))
-        ->get('https://api.themoviedb.org/3/discover/movie?primary_release_year='. $id. '&sort_by=popularity.desc')
-        ->json()['results'];
-
-        $yearWiseTvShows = Http::withToken(config('services.tmdb.token'))
-        ->get('https://api.themoviedb.org/3/discover/tv?first_air_date_year='. $id. '&sort_by=popularity.desc')
-        ->json()['results'];
+        if ($request->type == 'movie') {
+            $yearWiseList = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/discover/movie?primary_release_year='. $year. '&sort_by=popularity.desc&page='. $request->page)
+            ->json();
+        }
+        else {
+            $yearWiseList = Http::withToken(config('services.tmdb.token'))
+            ->get('https://api.themoviedb.org/3/discover/tv?first_air_date_year='. $year. '&sort_by=popularity.desc&page='. $request->page)
+            ->json();
+        }
 
         //dump($yearWiseMovies);
 
         return view('home.year',[
-            'yearWiseMovies' => $yearWiseMovies,
-            'yearWiseTvShows' => $yearWiseTvShows,
+            'yearWiseList' => $yearWiseList['results'],
+            'total_results' => $yearWiseList['total_results'],
+            'type' => $request->type,
+            'year' => $year,
+            'counter' => $request->page,
         ]);
     }
 
@@ -415,10 +417,18 @@ class HomePageController extends Controller
             })->implode(', ');
 
         return collect($movie)->merge([
-          'poster_path' => 'https://image.tmdb.org/t/p/w342/'. $movie['poster_path'],
-          'release_date' => \Carbon\Carbon::parse($movie['release_date'])->format('M d, Y'),
           'genres' => $genresFormatted,
-        ]);
+        ])->only(['poster_path', 'id', 'genres', 'title', 'vote_average', 'release_date', 'original_language', 'overview']);
       });
+    }
+
+    public function previous() 
+    {
+      return $this->page > 1 ? $this->page - 1 : 500;
+    }
+
+    public function next() 
+    {
+      return $this->page < 500 ? $this->page + 1 : 1;
     }
 }

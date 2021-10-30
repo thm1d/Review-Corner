@@ -10,13 +10,17 @@ class MoviesViewModel extends ViewModel
 	public $popularMovies;
 	public $nowPlayingMovies;
 	public $genres;
+    public $gcounter;
+    public $ycounter;
 
-    public function __construct($trendingMovies, $popularMovies, $nowPlayingMovies, $genres)
+    public function __construct($trendingMovies, $popularMovies, $nowPlayingMovies, $genres, $gcounter, $ycounter)
     {
         $this->trendingMovies = $trendingMovies;
         $this->popularMovies = $popularMovies;
         $this->nowPlayingMovies = $nowPlayingMovies;
         $this->genres = $genres;
+        $this->gcounter = $gcounter;
+        $this->ycounter = $ycounter;
     }
 
     public function trendingMovies()

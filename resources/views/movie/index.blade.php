@@ -88,5 +88,31 @@
 				@endforeach
 			</div>
 		</div> <!-- end now-playing-movies -->
+
+		<div class="by-genres-and-by-year py-16">
+			<div class="grid grid-cols-2 gap-12 w-full">
+				<div class="by-genres border border-transparent rounded h-max" style="background-color: rgb(62, 76, 94); ">
+					<div class="bg-gray-900 m-1">
+						<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold p-2">Genres</h2>
+						@foreach ($genres as $key => $value)
+						<ul>
+							<li class="border-t border-gray-300 p-2 mx-4 hover:text-gray-400"><a href="{{ route('home.genre', [ 'key' => $key, 'value' => $value]).'?'.http_build_query(['page' => $gcounter, 'type' => 'movie']) }}">{{ $value }}</a></li>
+						</ul>
+						@endforeach
+					</div>
+				</div>
+
+				<div class="by-year border border-transparent rounded h-max" style="background-color: rgb(62, 76, 94); ">
+					<div class="bg-gray-900 m-1">
+						<h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold p-2">Years</h2>
+						@foreach (@range(0,18) as $diff)
+						<ul>
+							<li class="border-t border-gray-300 p-2 mx-4 hover:text-gray-400"><a href="{{ route('home.year', [ 'year' => ( date('Y') - $diff )]).'?'.http_build_query(['page' => $ycounter, 'type' => 'movie']) }}">{{ date('Y') - $diff }}</a></li>
+						</ul>
+						@endforeach
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 @endsection

@@ -39,6 +39,10 @@ class TvController extends Controller
         ->get('https://api.themoviedb.org/3/genre/tv/list')
         ->json()['genres'];
 
+        $gcounter = 1;
+        $ycounter = 1;
+
+
         // $genres = collect($genresArray)->mapWithKeys(function ($genre){
         //     return [$genre['id'] => $genre['name']];
         // });
@@ -50,6 +54,8 @@ class TvController extends Controller
             $popularShows, 
             $topRatedShows, 
             $genres,
+            $gcounter,
+            $ycounter,
         );
 
         return view('tv.index', $viewModel);

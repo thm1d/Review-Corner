@@ -16,8 +16,9 @@ class HomepageViewModel extends ViewModel
     public $showsOnTv;
     public $games;
     public $popular_reviews;
+    public $counter;
 
-    public function __construct($lists, $trailers, $trendings, $moviesInTheater, $genresArray, $showsOnTv, $games, $popular_reviews)
+    public function __construct($lists, $trailers, $trendings, $moviesInTheater, $genresArray, $showsOnTv, $games, $popular_reviews, $counter)
     {
         $this->lists = $lists;
         $this->trailers = $trailers;
@@ -27,6 +28,7 @@ class HomepageViewModel extends ViewModel
         $this->showsOnTv = $showsOnTv;
         $this->games = $games;
         $this->popular_reviews = $popular_reviews;
+        $this->counter = $counter;
     }
 
     public function lists()
