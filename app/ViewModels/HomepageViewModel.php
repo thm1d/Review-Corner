@@ -5,35 +5,32 @@ namespace App\ViewModels;
 use Spatie\ViewModels\ViewModel;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class HomepageViewModel extends ViewModel
 {
-	public $lists;
+    public $lists;
     public $trailers;
     public $trendings;
     public $moviesInTheater;
-    public $genresArray;
     public $showsOnTv;
     public $games;
     public $popular_reviews;
-    public $counter;
 
-    public function __construct($lists, $trailers, $trendings, $moviesInTheater, $genresArray, $showsOnTv, $games, $popular_reviews, $counter)
+    public function __construct($lists, $trailers, $trendings, $moviesInTheater, $showsOnTv, $games, $popular_reviews)
     {
         $this->lists = $lists;
         $this->trailers = $trailers;
         $this->trendings = $trendings;
         $this->moviesInTheater = $moviesInTheater;
-        $this->genresArray = $genresArray;
         $this->showsOnTv = $showsOnTv;
         $this->games = $games;
         $this->popular_reviews = $popular_reviews;
-        $this->counter = $counter;
     }
 
     public function lists()
     {
-    	return $this->formatLists($this->lists);
+        return $this->formatLists($this->lists);
     }
 
     public function trailers()
@@ -49,13 +46,6 @@ class HomepageViewModel extends ViewModel
     public function moviesInTheater()
     {
         return $this->formatMovies($this->moviesInTheater);
-    }
-
-    public function genresArray()
-    {
-        return collect($this->genresArray)->mapWithKeys(function ($genre){
-            return [$genre['id'] => $genre['name']];
-        });
     }
 
     public function showsOnTv()
@@ -76,30 +66,22 @@ class HomepageViewModel extends ViewModel
     private function formatMovies($movies) 
     { 
         return collect($movies)->map(function($movie) {
-            $genresFormatted = collect($movie['genre_ids'])->mapWithKeys(function($value) {
-                return [$value => $this->genresArray()->get($value)];
-            })->implode(', ');
 
             return collect($movie)->merge([
                 'poster_path' => 'https://image.tmdb.org/t/p/w500/'. $movie['poster_path'],
                 'release_date' => \Carbon\Carbon::parse($movie['release_date'])->format('M d, Y'),
-                'genres' => $genresFormatted,
-            ])->only(['poster_path', 'id', 'genres', 'title', 'vote_average', 'release_date']);
+            ])->only(['poster_path', 'id', 'title', 'vote_average', 'release_date']);
         });
     }
 
     private function formatTv($tv) 
-    { 
+    {
         return collect($tv)->map(function($tvShow) {
-            $genresFormatted = collect($tvShow['genre_ids'])->mapWithKeys(function($value) {
-                return [$value => $this->genresArray()->get($value)];
-            })->implode(', ');
 
             return collect($tvShow)->merge([
                 'poster_path' => 'https://image.tmdb.org/t/p/w500'. $tvShow['poster_path'],
                 'first_air_date' => \Carbon\Carbon::parse($tvShow['first_air_date'])->format('M d, Y'),
-                'genres' => $genresFormatted,
-            ])->only(['poster_path', 'id', 'genres', 'name', 'vote_average', 'first_air_date']);
+            ])->only(['poster_path', 'id', 'name', 'vote_average', 'first_air_date']);
         })->take(8);
     }
 
@@ -116,12 +98,12 @@ class HomepageViewModel extends ViewModel
 
     private function formatLists($lists) 
     { 
-    	return collect($lists)->map(function($list) {
-    		return collect($list)->merge([
-    			'poster_path' => 'https://image.tmdb.org/t/p/w500'. $list['poster_path'],
-    			'release_date' => \Carbon\Carbon::parse($list['release_date'])->format('M d, Y'),
-    		]);
-    	});
+        return collect($lists)->map(function($list) {
+            return collect($list)->merge([
+                'poster_path' => 'https://image.tmdb.org/t/p/w500'. $list['poster_path'],
+                'release_date' => \Carbon\Carbon::parse($list['release_date'])->format('M d, Y'),
+            ]);
+        });
     }
 
     private function formatTrailers($trailers) 

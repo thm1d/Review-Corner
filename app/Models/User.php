@@ -25,9 +25,6 @@ class User extends Authenticatable
         'password',
         'watchlist_movie',
         'watchlist_tv',
-        'rank',
-        'rank_value',
-        'balance'
     ];
 
     /**
@@ -75,5 +72,10 @@ class User extends Authenticatable
     public function review()
     {
         return $this->hasOne(Review::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

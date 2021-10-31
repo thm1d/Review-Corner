@@ -251,8 +251,6 @@ class HomePageController extends Controller
             ->get('https://api.themoviedb.org/3/tv/on_the_air?page=1')
             ->json()['results'];
 
-        //dump($showsOnTv);
-
         $games = Http::withHeaders(config('services.igdb.headers'))
             ->withBody(
                 "fields name, cover.url, first_release_date, total_rating, platforms.abbreviation, release_dates.date, release_dates.human, slug;
@@ -262,14 +260,14 @@ class HomePageController extends Controller
             )->post(config('services.igdb.endpoint'))
             ->json();
 
-        abort_if(!$games, 404);
+        //abort_if(!$games, 404);
 
         $viewModel = new HomepageViewModel(
             $lists,
             $trailers,
             $trendings,
             $moviesInTheater, 
-            $showsOnTv, 
+            $showsOnTv,
             $games,
             $popular_reviews,
         );

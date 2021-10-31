@@ -8,6 +8,7 @@ use App\Http\Controllers\TvController;
 use App\Http\Controllers\GamesController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,9 +60,6 @@ Route::post('/games/{slug}/review', [GamesController::class, 'storeReview'])->na
 
 Route::get('/slug', [HomePageController::class, 'comingSoon'])->name('home.temp');
 
-Route::get('/membership', function () {
-    return view('membership');
-	})->name('member.index');
-
-Route::post('/membership', [ProfileController::class, 'rankUpdate'])->name('rank.update');
+Route::get('/donation', [PaymentController::class, 'index'])->name('donate.index');
+Route::post('/donation', [PaymentController::class, 'store'])->name('donate.store');
 
