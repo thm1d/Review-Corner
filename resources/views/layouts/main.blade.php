@@ -47,8 +47,8 @@
                             </button>
                             <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right rounded-md shadow-lg md:w-48">
                                 <div class="px-2 py-2 bg-gray-700 rounded-md shadow">
-                                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-100 hover:bg-gray-900 focus:outline-none focus:shadow-outline break-words" href="{{ route('donate.index') }}">Donation</a>
-                                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-100 hover:bg-gray-900 focus:outline-none focus:shadow-outline" href="{{ route('home.temp') }}">Contact</a>
+                                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-100 hover:bg-gray-900 focus:outline-none focus:shadow-outline break-words" href="{{ route('donate.index') }}">Donate</a>
+                                    <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-100 hover:bg-gray-900 focus:outline-none focus:shadow-outline" href="{{ route('contact.index') }}">Contact</a>
                                     <a class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-100 hover:bg-gray-900 focus:outline-none focus:shadow-outline" href="{{ route('home.temp') }}">About Us</a>
                                 </div>
                             </div>

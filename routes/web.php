@@ -63,3 +63,8 @@ Route::get('/slug', [HomePageController::class, 'comingSoon'])->name('home.temp'
 Route::get('/donation', [PaymentController::class, 'index'])->name('donate.index');
 Route::post('/donation', [PaymentController::class, 'store'])->name('donate.store');
 
+Route::get('/contact', function(){
+	return view('contact');
+})->name('contact.index');
+Route::post('/contact', [HomePageController::class, 'contactController'])->name('contact.store');
+

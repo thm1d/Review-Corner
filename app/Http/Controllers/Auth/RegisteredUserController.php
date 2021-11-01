@@ -44,9 +44,6 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'watchlist_movie' => ['000000'],
             'watchlist_tv' => ['000000'],
-            'rank' => 'bronze',
-            'rank_value' => '100',
-            'balance' => '1000',
         ]));
 
         $user->attachRole('user');

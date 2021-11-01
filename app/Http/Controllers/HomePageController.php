@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\ViewModels\HomepageViewModel;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use App\Models\Contact;
 
 class HomePageController extends Controller
 {
@@ -338,6 +340,33 @@ class HomePageController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function contactController(Request $request)
+    {
+        //dd($request);
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:60',
+            'msg' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            $contact = Contact::create([
+                    'name' =>$request->name,
+                    'email' => $request->email,
+                    'message' => $request->msg,
+                  ]);
+
+            return redirect()->back()
+                    ->with('msg', 'Success!');
+            dd($contact);
+        }
     }
 
     public function showGenre(Request $request, $id, $value)
