@@ -24,6 +24,13 @@ use App\Http\Controllers\PaymentController;
 // Route::get('/dashboard', [ProfileController::class, 'index'])->middleware(['auth'])->name('dashboard');
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('/dashboard', [ProfileController::class, 'index'])->name('dashboard');
+	Route::get('/admin/users', [AdminController::class, 'usersIndex'])->name('admin.users');
+	Route::post('/admin/users/{id}', [AdminController::class, 'userDestroy'])->name('user.destroy');
+	Route::get('/admin/ratings', [AdminController::class, 'ratingsIndex'])->name('admin.ratings');
+	Route::get('/admin/reviews', [AdminController::class, 'reviewIndex'])->name('admin.reviews');
+	Route::post('/admin/reviews/{id}', [AdminController::class, 'reviewDestroy'])->name('review.destroy');
+	Route::get('/admin/messages', [AdminController::class, 'formIndex'])->name('admin.msgs');
+
 });
 
 require __DIR__.'/auth.php';
