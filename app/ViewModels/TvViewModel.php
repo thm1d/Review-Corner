@@ -57,6 +57,6 @@ class TvViewModel extends ViewModel
     			'first_air_date' => \Carbon\Carbon::parse($tvShow['first_air_date'])->format('M d, Y'),
     			'genres' => $genresFormatted,
     		]);
-    	});
+    	})->take(15);
     }
 }

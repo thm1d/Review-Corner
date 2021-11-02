@@ -59,6 +59,6 @@ class MoviesViewModel extends ViewModel
     			'release_date' => \Carbon\Carbon::parse($movie['release_date'])->format('M d, Y'),
     			'genres' => $genresFormatted,
     		]);
-    	});
+    	})->take(15);
     }
 }

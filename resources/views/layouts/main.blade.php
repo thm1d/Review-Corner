@@ -56,7 +56,11 @@
                     </li>
                 </ul>
                 <div class="flex flex-col md:flex-row items-center">
+                    @if (strpos(Request::url(), 'games') !== false)
+                    <livewire:search-dropdown-games>
+                    @else
                     <livewire:search-dropdown>
+                    @endif
                     @if (Route::has('login'))
                         <div class="hidden top-0 right-0 py-4 sm:block md:ml-4 mt-3 md:mt-0">
                             @auth
@@ -74,10 +78,11 @@
             </div>
         </nav>
         @yield('content') 
-        <footer class="border border-t border-gray-800">
+        <footer class="border border-t border-gray-800 flex flex-row justify-between">
             <div class="container mx-auto text-sm px-4 py-6">
                 Powered by <a href="https://www.themoviedb.org/documentation/api" class="underline hover:text-gray-300">TMDb API</a>
             </div>
+            <p class="w-2/6 text-right mx-auto text-sm px-4 py-6">Created by <b>Tahmid Rahman</b>. © 2021</p>
         </footer>
         <livewire:scripts />
         <script>
