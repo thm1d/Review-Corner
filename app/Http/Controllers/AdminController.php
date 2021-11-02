@@ -13,6 +13,7 @@ use App\Models\Tv;
 use App\Models\Rating;
 use App\Models\Review;
 use App\Models\Contact;
+use App\Models\Payment;
 
 
 class AdminController extends Controller
@@ -77,7 +78,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function reviewIndex()
+    public function reviewsIndex()
     {
         $reviews = Review::all();
             if(!is_null($reviews)) {
@@ -85,6 +86,17 @@ class AdminController extends Controller
             }
         return view('admin.reviews', [
             'reviews' => $reviews,
+        ]);
+    }
+
+    public function donationsIndex()
+    {
+        $payment = Payment::all();
+            if(!is_null($payment)) {
+                $payment = $payment->toArray();
+            }
+        return view('admin.donations', [
+            'donations' => $payment,
         ]);
     }
 
@@ -165,6 +177,14 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function donationUpdate(Request $request, $id)
+    {
+        $donation = Payment::where('id', $id)->first();
+        $donation->status = 1;
+        $donation->save();
+        return redirect()->back()->with('msg', 'Donation is Approved'); 
     }
 
     /**

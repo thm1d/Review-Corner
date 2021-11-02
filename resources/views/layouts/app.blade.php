@@ -39,5 +39,12 @@
             </div>
         </footer>
         <livewire:scripts />
+        <script>
+            var msg = '{{Session::get('msg')}}';
+            var exist = '{{Session::has('msg')}}';
+            if(exist){
+                alert(msg);
+            }
+        </script>
     </body>
 </html>

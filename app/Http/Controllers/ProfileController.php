@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Movie;
 use App\Models\Tv;
@@ -26,10 +27,13 @@ class ProfileController extends Controller
     {
         if(Auth::user()->hasRole('user')) {
             $user = Auth::user()->toArray();
-            //dump($user);
+
+            $userName = explode(" ", $user['name']);
+            //dump(Auth::user());
 
             return view('profile.dashboard', [
                 'user' => $user,
+                'userName' => $userName,
             ]);
         } elseif(Auth::user()->hasRole('admin')) {
             return view('admin.index');
@@ -38,79 +42,7 @@ class ProfileController extends Controller
         }
     }
 
-    public function usersIndex()
-    {
-        $users = User::all();
-        if(!is_null($users)) {
-            $users = $users->toArray();
-        }
 
-        return view('admin.users', [
-            'users' => $users,
-        ]);
-    }
-
-    public function ratingsIndex()
-    {
-        $ratings = Rating::all();
-            if(!is_null($ratings)) {
-                $ratings = $ratings->toArray();
-            }
-        return view('admin.ratings', [
-            'ratings' => $ratings,
-        ]);
-    }
-
-    public function tableIndex()
-    {
-        return view('admin.tables');
-    }
-
-    public function formIndex()
-    {
-        $contacts = Contact::all();
-            if(!is_null($contacts)) {
-                $contacts = $contacts->toArray();
-            }
-        return view('admin.forms', [
-            'contacts' => $contacts,
-        ]);
-    }
-
-    public function reviewIndex()
-    {
-        $reviews = Review::all();
-            if(!is_null($reviews)) {
-                $reviews = $reviews->toArray();
-            }
-        return view('admin.reviews', [
-            'reviews' => $reviews,
-        ]);
-    }
-
-    public function demoIndex()
-    {
-        if(Auth::user()->hasRole('user')) {
-            $user = Auth::user()->toArray();
-            dump($user);
-
-            return view('profile.dashboard', [
-                'user' => $user,
-            ]);
-        } elseif(Auth::user()->hasRole('admin')) {
-            $users = User::all();
-            if(!is_null($users)) {
-                $users = $users->toArray();
-            }
-            dump($users);
-
-            return view('admin.users', [
-                'users' => $users,
-            ]);
-        } elseif(Auth::user()->hasRole('superadmin')) {
-            return view('superadmin.dashboard');
-        }
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -164,7 +96,20 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //dump($request);
+
+        if (Auth::user()) {
+            $user = User::whereId($id)->update([
+                'name' => $request->first_name . ' ' . $request->last_name,
+                'email' => $request->email_address,
+                'gender' => $request->gender,
+                'current_address' => $request->current_address,
+                'permanent_address' => $request->permanent_address,
+                'birthday' => $request->birthday,
+                'mobile' => $request->mobile,
+            ]);
+            return redirect()->back()->with('msg', 'Profile Updated!');
+        }
     }
 
     /**
@@ -173,16 +118,9 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function userDestroy($id)
+    public function destroy($id)
     {
-        $user = User::where('id', $id)->firstorfail()->delete();
-        return redirect()->back()->with('msg', 'User Record deleted successfully.');
-    }
-
-    public function reviewDestroy($id)
-    {
-        $review = Review::where('id', $id)->firstorfail()->delete();
-        return redirect()->back()->with('msg', 'Review deleted successfully.');
+        
     }
 
     public function showList()
@@ -200,6 +138,18 @@ class ProfileController extends Controller
             ->get('https://api.themoviedb.org/3/movie/'. $movie)
             ->json();
 
+            $apikey = 'ef1c5717';
+
+
+            if ($movieSingle['imdb_id'] != "") {
+                $imdb = Http::get('http://www.omdbapi.com/?i='.$movieSingle['imdb_id'].'&apikey='.$apikey)
+                ->Json();
+
+                $movieSingle['rated'] = $imdb['Rated'];
+                $movieSingle['imdbRating'] = $imdb['imdbRating'];
+                $movieSingle['Genre'] = $imdb['Genre'];
+                $movieSingle['stars'] = $imdb['Actors'];
+            }
             $movies[] = $movieSingle;
         }
 
@@ -213,6 +163,20 @@ class ProfileController extends Controller
             $tvSingle = http::withToken(config('services.tmdb.token'))
             ->get('https://api.themoviedb.org/3/tv/'. $tvShow)
             ->json();
+
+            $apikey = 'ef1c5717';
+
+
+            if ($tvSingle['external_ids']['imdb_id'] != "") {
+                $imdb = Http::get('http://www.omdbapi.com/?i='.$tvSingle['external_ids']['imdb_id'].'&apikey='.$apikey)
+                ->Json();
+
+                $tvSingle['rated'] = $imdb['Rated'];
+                $tvSingle['imdbRating'] = $imdb['imdbRating'];
+                $tvSingle['Genre'] = $imdb['Genre'];
+                $tvSingle['stars'] = $imdb['Actors'];
+                $tvSingle['runtime'] = $imdb['Runtime'];
+            }
 
             $tvShows[] = $tvSingle;
         }
@@ -331,10 +295,56 @@ class ProfileController extends Controller
         
         //dump($userRatingsTv);
 
+        $userRatings = collect(DB::table('ratings')
+                            ->join('games', 'ratings.rateable_id', '=', 'games.id')->get());
+
+        if ($userRatings != null)
+        {
+            $userRatings = $userRatings->toArray();
+
+            $userRatingsMovie = [];
+            foreach ($userRatings as $key => $value)
+            {
+                if (($value->rateable_type === 'App\Models\Game') and ($value->user_id === $user_id))
+                {
+                    $userRatingsGame[] = json_decode(json_encode($value), true);
+                }
+            }
+        }
+        else 
+        {
+            $userRatingsGame = [];
+        }
+
+        $games = [];
+
+        foreach ($userRatingsGame as $game) {
+            $gameSingle = Http::withHeaders(config('services.igdb.headers'))
+            ->withBody(
+                "fields name, id, cover.url, first_release_date, platforms.abbreviation, rating,
+                    slug, genres.name, aggregated_rating, summary;
+                    where slug=\"{$game['game_slug']}\";
+                ", "text/plain"
+            )->post(config('services.igdb.endpoint'))
+            ->json();
+
+            $gameSingle[0]['rating'] = $game['rating'];
+            $gameSingle[0]['rated_on'] = $game['updated_at'];
+            $gameSingle[0]['coverImageUrl'] = Str::replaceFirst('thumb', 'cover_big', $gameSingle[0]['cover']['url']);
+            $gameSingle[0]['platform'] = collect($gameSingle[0]['platforms'])->pluck('abbreviation')->implode(', ');
+            
+
+            $games[] = $gameSingle[0];
+        }
+
+        //dump($games);
+
         return view('profile.ratings',[
                 'movies' => $movies,
                 'tvShows' => $tvShows,
+                'games' => $games,
         ]);
+
     }
 
 }

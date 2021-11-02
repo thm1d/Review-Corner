@@ -24,10 +24,13 @@ use App\Http\Controllers\PaymentController;
 // Route::get('/dashboard', [ProfileController::class, 'index'])->middleware(['auth'])->name('dashboard');
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('/dashboard', [ProfileController::class, 'index'])->name('dashboard');
+	Route::post('/dashboard/{id}', [ProfileController::class, 'update'])->name('user.update');
 	Route::get('/admin/users', [AdminController::class, 'usersIndex'])->name('admin.users');
 	Route::post('/admin/users/{id}', [AdminController::class, 'userDestroy'])->name('user.destroy');
 	Route::get('/admin/ratings', [AdminController::class, 'ratingsIndex'])->name('admin.ratings');
-	Route::get('/admin/reviews', [AdminController::class, 'reviewIndex'])->name('admin.reviews');
+	Route::get('/admin/donations', [AdminController::class, 'donationsIndex'])->name('admin.donation');
+	Route::post('/admin/donations/{id}', [AdminController::class, 'donationUpdate'])->name('donation.update');
+	Route::get('/admin/reviews', [AdminController::class, 'reviewsIndex'])->name('admin.reviews');
 	Route::post('/admin/reviews/{id}', [AdminController::class, 'reviewDestroy'])->name('review.destroy');
 	Route::get('/admin/messages', [AdminController::class, 'formIndex'])->name('admin.msgs');
 

@@ -24,6 +24,7 @@ class CreatePaymentsTable extends Migration
             $table->integer('depositor_name')->nullable();
             $table->string('bank_name')->nullable();
             $table->integer('bank_account_no')->nullable();
+            $table->integer('status')->default('0');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

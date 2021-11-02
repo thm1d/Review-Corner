@@ -23,6 +23,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'gender',
+        'current_address',
+        'permanent_address',
+        'birthday',
+        'mobile',
         'watchlist_movie',
         'watchlist_tv',
     ];

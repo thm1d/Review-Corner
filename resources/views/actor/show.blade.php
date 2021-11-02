@@ -39,35 +39,6 @@
             <div class="md:ml-24">
                 <div class="flex text-gray-400 text-sm grid grid-cols-2">
                     <h2 class="text-4xl mt-4 md:mt-0 items-center font-semibold">{{ $actor['name'] }}</h2>
-                    @auth
-                        <div class="watchlist-and-add-rating flex justify-end justify-items-end grid grid-rows-1">
-                            <div class="rating">
-                                <form method="POST" action="{{ route('actors.rate', ['actor'=>$actor['id']]) }}">
-                                    @csrf
-                                    <input type="hidden" name="title" id="title" value="{{ $actor['name'] }}">
-                                    <div class="grid grid=rows-2">
-                                        <div class="text-gray-300 hover:text-gray-800">
-                                            <button class="mt-1 flex inline-flex items-center bg-transparent hover:bg-gray-300 border-2 text-sm md:text-xs rounded font-semibold px-10 py-2 transition ease-in-out duration-150" style="border-color: #3c8b84;">
-                                                <svg width="24" height="24" class="mr-2" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" style="color: #00838f;"><path d="M15.668 8.626l8.332 1.159-6.065 5.874 1.48 8.341-7.416-3.997-7.416 3.997 1.481-8.341-6.064-5.874 8.331-1.159 3.668-7.626 3.669 7.626zm-6.67.925l-6.818.948 4.963 4.807-1.212 6.825 6.068-3.271 6.069 3.271-1.212-6.826 4.964-4.806-6.819-.948-3.002-6.241-3.001 6.241z"/></svg>
-                                                <span class="">Rate This</span>
-                                            </button>
-                                        </div>
-                                        
-                                        <div class="rating-select flex justify-self-center">
-                                            <select name="rating" id="rating" class="rounded-lg w-full mt-1 md:mt-2 sm:mt-2  form-select text-gray-300 border border-gray-300 ml-1 px-4" style="border-color: #3c8b84;border-width: 3px;#2c3e50;background-color: #2c3e50;">
-                                                <option selected="select" disabled=""> </option>
-                                                @foreach (range(1,5) as $star)
-                                                    <option value="{{$star}}"><svg class="mr-2 fill-current text-orange-500 w-4" viewBox="0 0 24 24"><g data-name="Layer 2"><path d="M17.56 21a1 1 0 01-.46-.11L12 18.22l-5.1 2.67a1 1 0 01-1.45-1.06l1-5.63-4.12-4a1 1 0 01-.25-1 1 1 0 01.81-.68l5.7-.83 2.51-5.13a1 1 0 011.8 0l2.54 5.12 5.7.83a1 1 0 01.81.68 1 1 0 01-.25 1l-4.12 4 1 5.63a1 1 0 01-.4 1 1 1 0 01-.62.18z" data-name="star"/></g></svg>{{ $star }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                    </div>
-                                </form>
-                            </div>
-                            
-                        </div>
-                    @endauth
                 </div>
                 <div class="flex text-gray-400 text-sm">
                     <div class="flex justify-start justify-items-start">
@@ -77,12 +48,6 @@
                     </div>
 
 
-                </div>
-                <div class="flex mt-2 -ml-1">
-                    @auth
-                        <img src="{{ URL::asset('/img/profile_avatar.png') }}" class=" w-6">
-                        <span class="ml-2 mr-2">{{ $rating }}</span>
-                    @endauth
                 </div>
                 
 

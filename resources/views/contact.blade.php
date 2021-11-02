@@ -545,7 +545,7 @@ Illustration from undraw.co by the amazing Katerina Limpitsouni
             </div>
             @endif
             @if (Session::has('msg'))
-            <div class="text-green-600 my-4 bg-green-200 p-2 text-center">
+            <div class="text-teal-800 my-4 bg-teal-200 p-2 text-center rounded-md">
                 <h3 class="font-bold text-lg">{{ Session::get('msg') }}</h3>
             </div>
             @endif

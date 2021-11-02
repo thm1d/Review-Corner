@@ -174,6 +174,11 @@
 								        </button>
 								    </div>
 								</form>
+								@if (Session::has('msg'))
+					            <div class="text-teal-800 my-4 bg-teal-200 p-2 text-center rounded-md">
+					                <h3 class="font-bold text-lg">{{ Session::get('msg') }}</h3>
+					            </div>
+					            @endif
 								@endauth
 								
 							</div>
