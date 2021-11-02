@@ -10,7 +10,6 @@
     
     <div class="flex ">
         <!-- Responsive Settings Options -->
-
         <div class="pt-4 pb-1 border-t border-gray-200 flex flex-row">
             <div class="flex items-center px-4">
                 <div class="flex-shrink-0">

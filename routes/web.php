@@ -7,6 +7,7 @@ use App\Http\Controllers\ActorController;
 use App\Http\Controllers\TvController;
 use App\Http\Controllers\GamesController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\PaymentController;
 
@@ -25,6 +26,7 @@ use App\Http\Controllers\PaymentController;
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('/dashboard', [ProfileController::class, 'index'])->name('dashboard');
 	Route::post('/dashboard/{id}', [ProfileController::class, 'update'])->name('user.update');
+
 	Route::get('/admin/users', [AdminController::class, 'usersIndex'])->name('admin.users');
 	Route::post('/admin/users/{id}', [AdminController::class, 'userDestroy'])->name('user.destroy');
 	Route::get('/admin/ratings', [AdminController::class, 'ratingsIndex'])->name('admin.ratings');
@@ -33,6 +35,17 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/admin/reviews', [AdminController::class, 'reviewsIndex'])->name('admin.reviews');
 	Route::post('/admin/reviews/{id}', [AdminController::class, 'reviewDestroy'])->name('review.destroy');
 	Route::get('/admin/messages', [AdminController::class, 'formIndex'])->name('admin.msgs');
+
+	Route::get('/superadmin/users', [SuperAdminController::class, 'usersIndex'])->name('super.users');
+	Route::post('/superadmin/users/{id}', [SuperAdminController::class, 'userDestroy'])->name('super.user.destroy');
+	Route::get('/superadmin/admins', [SuperAdminController::class, 'adminsIndex'])->name('super.admins');
+	Route::post('/superadmin/admins/{id}', [SuperAdminController::class, 'adminDestroy'])->name('super.admin.destroy');
+	Route::get('/superadmin/ratings', [SuperAdminController::class, 'ratingsIndex'])->name('super.ratings');
+	Route::get('/superadmin/donations', [SuperAdminController::class, 'donationsIndex'])->name('super.donation');
+	Route::post('/superadmin/donations/{id}', [SuperAdminController::class, 'donationUpdate'])->name('super.update');
+	Route::get('/superadmin/reviews', [SuperAdminController::class, 'reviewsIndex'])->name('super.reviews');
+	Route::post('/superadmin/reviews/{id}', [SuperAdminController::class, 'reviewDestroy'])->name('super.review.destroy');
+	Route::get('/superadmin/messages', [SuperAdminController::class, 'formIndex'])->name('super.msgs');
 
 });
 

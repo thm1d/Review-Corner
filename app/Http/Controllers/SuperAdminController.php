@@ -15,8 +15,7 @@ use App\Models\Review;
 use App\Models\Contact;
 use App\Models\Payment;
 
-
-class AdminController extends Controller
+class SuperAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,10 +34,15 @@ class AdminController extends Controller
         } elseif(Auth::user()->hasRole('admin')) {
             return view('admin.index');
         } elseif(Auth::user()->hasRole('superadmin')) {
-            return view('superadmin.dashboard');
+            return view('superadmin.index');
         }
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function usersIndex()
     {
         $users = collect(DB::table('users')
@@ -46,9 +50,26 @@ class AdminController extends Controller
         if(!is_null($users)) {
             $users = json_decode($users, true);
         }
+        //dump($users);
 
-        return view('admin.users', [
+        return view('superadmin.users', [
             'users' => $users,
+        ]);
+    }
+
+    public function adminsIndex()
+    {
+        $admins = collect(DB::table('users')
+                            ->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', '2')->get());
+
+        
+        if(!is_null($admins)) {
+            $admins = json_decode($admins, true);
+        }
+        //dd($admins);
+
+        return view('superadmin.admins', [
+            'admins' => $admins,
         ]);
     }
 
@@ -58,14 +79,14 @@ class AdminController extends Controller
             if(!is_null($ratings)) {
                 $ratings = $ratings->toArray();
             }
-        return view('admin.ratings', [
+        return view('superadmin.ratings', [
             'ratings' => $ratings,
         ]);
     }
 
     public function tableIndex()
     {
-        return view('admin.tables');
+        return view('superadmin.tables');
     }
 
     public function formIndex()
@@ -74,7 +95,7 @@ class AdminController extends Controller
             if(!is_null($contacts)) {
                 $contacts = $contacts->toArray();
             }
-        return view('admin.forms', [
+        return view('superadmin.forms', [
             'contacts' => $contacts,
         ]);
     }
@@ -85,7 +106,7 @@ class AdminController extends Controller
             if(!is_null($reviews)) {
                 $reviews = $reviews->toArray();
             }
-        return view('admin.reviews', [
+        return view('superadmin.reviews', [
             'reviews' => $reviews,
         ]);
     }
@@ -96,7 +117,7 @@ class AdminController extends Controller
             if(!is_null($payment)) {
                 $payment = $payment->toArray();
             }
-        return view('admin.donations', [
+        return view('superadmin.donations', [
             'donations' => $payment,
         ]);
     }
@@ -200,10 +221,15 @@ class AdminController extends Controller
         return redirect()->back()->with('msg', 'User Record deleted successfully.');
     }
 
+    public function adminDestroy($id)
+    {
+        $user = User::where('id', $id)->firstorfail()->delete();
+        return redirect()->back()->with('msg', 'Admin Record deleted successfully.');
+    }
+
     public function reviewDestroy($id)
     {
         $review = Review::where('id', $id)->firstorfail()->delete();
         return redirect()->back()->with('msg', 'Review deleted successfully.');
     }
-
 }

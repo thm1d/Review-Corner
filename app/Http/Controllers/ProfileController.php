@@ -38,7 +38,7 @@ class ProfileController extends Controller
         } elseif(Auth::user()->hasRole('admin')) {
             return view('admin.index');
         } elseif(Auth::user()->hasRole('superadmin')) {
-            return view('superadmin.dashboard');
+            return view('superadmin.index');
         }
     }
 
