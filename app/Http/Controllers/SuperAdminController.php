@@ -25,16 +25,11 @@ class SuperAdminController extends Controller
     public function index()
     {
         if(Auth::user()->hasRole('user')) {
-            $user = Auth::user()->toArray();
-            //dump($user);
-
-            return view('profile.dashboard', [
-                'user' => $user,
-            ]);
+            return redirect()->back();
         } elseif(Auth::user()->hasRole('admin')) {
             return view('admin.index');
         } elseif(Auth::user()->hasRole('superadmin')) {
-            return view('superadmin.index');
+            return view('superadmin.dashboard');
         }
     }
 
@@ -45,81 +40,100 @@ class SuperAdminController extends Controller
      */
     public function usersIndex()
     {
-        $users = collect(DB::table('users')
-                            ->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', '3')->get());
-        if(!is_null($users)) {
-            $users = json_decode($users, true);
-        }
-        //dump($users);
+        if(Auth::user()->hasRole('user') || Auth::user()->hasRole('admin')) {
+            return redirect()->back();
+        } else {
+            $users = collect(DB::table('users')
+                                ->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', '3')->get());
+            if(!is_null($users)) {
+                $users = json_decode($users, true);
+            }
+            //dump($users);
 
-        return view('superadmin.users', [
-            'users' => $users,
-        ]);
+            return view('superadmin.users', [
+                'users' => $users,
+            ]);
+        }
     }
 
     public function adminsIndex()
     {
-        $admins = collect(DB::table('users')
-                            ->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', '2')->get());
+        if(Auth::user()->hasRole('user') || Auth::user()->hasRole('admin')) {
+            return redirect()->back();
+        } else {
+            $admins = collect(DB::table('users')
+                                ->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', '2')->get());
 
-        
-        if(!is_null($admins)) {
-            $admins = json_decode($admins, true);
+            
+            if(!is_null($admins)) {
+                $admins = json_decode($admins, true);
+            }
+            //dd($admins);
+
+            return view('superadmin.admins', [
+                'admins' => $admins,
+            ]);
         }
-        //dd($admins);
-
-        return view('superadmin.admins', [
-            'admins' => $admins,
-        ]);
     }
 
     public function ratingsIndex()
     {
-        $ratings = Rating::all();
-            if(!is_null($ratings)) {
-                $ratings = $ratings->toArray();
-            }
-        return view('superadmin.ratings', [
-            'ratings' => $ratings,
-        ]);
-    }
-
-    public function tableIndex()
-    {
-        return view('superadmin.tables');
+        if(Auth::user()->hasRole('user') || Auth::user()->hasRole('admin')) {
+            return redirect()->back();
+        } else {
+            $ratings = Rating::all();
+                if(!is_null($ratings)) {
+                    $ratings = $ratings->toArray();
+                }
+            return view('superadmin.ratings', [
+                'ratings' => $ratings,
+            ]);
+        }
     }
 
     public function formIndex()
     {
-        $contacts = Contact::all();
-            if(!is_null($contacts)) {
-                $contacts = $contacts->toArray();
-            }
-        return view('superadmin.forms', [
-            'contacts' => $contacts,
-        ]);
+        if(Auth::user()->hasRole('user') || Auth::user()->hasRole('admin')) {
+            return redirect()->back();
+        } else {
+            $contacts = Contact::all();
+                if(!is_null($contacts)) {
+                    $contacts = $contacts->toArray();
+                }
+            return view('superadmin.forms', [
+                'contacts' => $contacts,
+            ]);
+        }
     }
 
     public function reviewsIndex()
     {
-        $reviews = Review::all();
-            if(!is_null($reviews)) {
-                $reviews = $reviews->toArray();
-            }
-        return view('superadmin.reviews', [
-            'reviews' => $reviews,
-        ]);
+        if(Auth::user()->hasRole('user') || Auth::user()->hasRole('admin')) {
+            return redirect()->back();
+        } else {
+            $reviews = Review::all();
+                if(!is_null($reviews)) {
+                    $reviews = $reviews->toArray();
+                }
+            return view('superadmin.reviews', [
+                'reviews' => $reviews,
+            ]);
+        }
     }
 
     public function donationsIndex()
     {
-        $payment = Payment::all();
-            if(!is_null($payment)) {
-                $payment = $payment->toArray();
-            }
-        return view('superadmin.donations', [
-            'donations' => $payment,
-        ]);
+        if(Auth::user()->hasRole('user') || Auth::user()->hasRole('admin')) {
+            return redirect()->back();
+        } else {
+            $payment = Payment::all();
+                if(!is_null($payment)) {
+                    $payment = $payment->toArray();
+                }
+            return view('superadmin.donations', [
+                'donations' => $payment,
+            ]);
+        }
     }
 
     public function demoIndex()

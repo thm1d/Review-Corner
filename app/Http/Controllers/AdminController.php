@@ -26,12 +26,7 @@ class AdminController extends Controller
     public function index()
     {
         if(Auth::user()->hasRole('user')) {
-            $user = Auth::user()->toArray();
-            //dump($user);
-
-            return view('profile.dashboard', [
-                'user' => $user,
-            ]);
+            return redirect()->back();
         } elseif(Auth::user()->hasRole('admin')) {
             return view('admin.index');
         } elseif(Auth::user()->hasRole('superadmin')) {
@@ -41,64 +36,79 @@ class AdminController extends Controller
 
     public function usersIndex()
     {
-        $users = collect(DB::table('users')
-                            ->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', '3')->get());
-        if(!is_null($users)) {
-            $users = json_decode($users, true);
-        }
+        if(Auth::user()->hasRole('user')) {
+            return redirect()->back();
+        } else {
+            $users = collect(DB::table('users')
+                                ->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', '=', '3')->get());
+            if(!is_null($users)) {
+                $users = json_decode($users, true);
+            }
 
-        return view('admin.users', [
-            'users' => $users,
-        ]);
+            return view('admin.users', [
+                'users' => $users,
+            ]);
+        }
     }
 
     public function ratingsIndex()
     {
-        $ratings = Rating::all();
-            if(!is_null($ratings)) {
-                $ratings = $ratings->toArray();
-            }
-        return view('admin.ratings', [
-            'ratings' => $ratings,
-        ]);
-    }
-
-    public function tableIndex()
-    {
-        return view('admin.tables');
+        if(Auth::user()->hasRole('user')) {
+            return redirect()->back();
+        } else {
+            $ratings = Rating::all();
+                if(!is_null($ratings)) {
+                    $ratings = $ratings->toArray();
+                }
+            return view('admin.ratings', [
+                'ratings' => $ratings,
+            ]);
+        }
     }
 
     public function formIndex()
     {
-        $contacts = Contact::all();
-            if(!is_null($contacts)) {
-                $contacts = $contacts->toArray();
-            }
-        return view('admin.forms', [
-            'contacts' => $contacts,
-        ]);
+        if(Auth::user()->hasRole('user')) {
+            return redirect()->back();
+        } else {
+            $contacts = Contact::all();
+                if(!is_null($contacts)) {
+                    $contacts = $contacts->toArray();
+                }
+            return view('admin.forms', [
+                'contacts' => $contacts,
+            ]);
+        }
     }
 
     public function reviewsIndex()
     {
-        $reviews = Review::all();
-            if(!is_null($reviews)) {
-                $reviews = $reviews->toArray();
-            }
-        return view('admin.reviews', [
-            'reviews' => $reviews,
-        ]);
+        if(Auth::user()->hasRole('user')) {
+            return redirect()->back();
+        } else {
+            $reviews = Review::all();
+                if(!is_null($reviews)) {
+                    $reviews = $reviews->toArray();
+                }
+            return view('admin.reviews', [
+                'reviews' => $reviews,
+            ]);
+        }
     }
 
     public function donationsIndex()
     {
-        $payment = Payment::all();
-            if(!is_null($payment)) {
-                $payment = $payment->toArray();
-            }
-        return view('admin.donations', [
-            'donations' => $payment,
-        ]);
+        if(Auth::user()->hasRole('user')) {
+            return redirect()->back();
+        } else {
+            $payment = Payment::all();
+                if(!is_null($payment)) {
+                    $payment = $payment->toArray();
+                }
+            return view('admin.donations', [
+                'donations' => $payment,
+            ]);
+        }
     }
 
     public function demoIndex()

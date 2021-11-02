@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="mx-5">
-                        <h4 class="text-2xl font-semibold text-gray-700">8,282</h4>
+                        <h4 class="text-2xl font-semibold text-gray-700">282</h4>
                         <div class="text-gray-500">New Users</div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="mx-5">
-                        <h4 class="text-2xl font-semibold text-gray-700">200,521</h4>
+                        <h4 class="text-2xl font-semibold text-gray-700">887,400</h4>
                         <div class="text-gray-500">Total Movies</div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="mx-5">
-                        <h4 class="text-2xl font-semibold text-gray-700">215,542</h4>
+                        <h4 class="text-2xl font-semibold text-gray-700">136,768</h4>
                         <div class="text-gray-500">Total Tv Shows</div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="mx-5">
-                        <h4 class="text-2xl font-semibold text-gray-700">10042</h4>
+                        <h4 class="text-2xl font-semibold text-gray-700">10,042</h4>
                         <div class="text-gray-500">Total Games</div>
                     </div>
                 </div>

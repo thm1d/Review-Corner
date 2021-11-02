@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
             'watchlist_tv' => ['000000'],
         ]));
 
-        $user->attachRole('superadmin');
+        $user->attachRole('user');
 
         event(new Registered($user));
 

@@ -71,7 +71,7 @@ Route::post('/tv/{tv}/list', [TvController::class, 'storeList'])->name('tv.add')
 Route::post('/tv/{tv}/review', [TvController::class, 'storeReview'])->name('tv.review');
 
 Route::get('/actors', [ActorController::class, 'index'])->name('actors.index');
-Route::get('/actors/page/{page?}', [ActorController::class, 'index'])->name('actors.index');
+Route::get('/actors/page/{page?}', [ActorController::class, 'index'])->name('actorsp.index');
 Route::get('/actors/{actor}', [ActorController::class, 'show'])->name('actors.show');
 Route::post('/actors/{actor}', [ActorController::class, 'store'])->name('actors.rate');
 Route::post('/actor/{actor}/review', [ActorController::class, 'storeReview'])->name('actors.review');

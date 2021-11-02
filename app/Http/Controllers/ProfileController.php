@@ -302,7 +302,7 @@ class ProfileController extends Controller
         {
             $userRatings = $userRatings->toArray();
 
-            $userRatingsMovie = [];
+            $userRatingsGame = [];
             foreach ($userRatings as $key => $value)
             {
                 if (($value->rateable_type === 'App\Models\Game') and ($value->user_id === $user_id))

@@ -126,7 +126,7 @@ class GamesController extends Controller
                     $rating = "N/A";
                 }
                 else {
-                    $rating = $rating->rating. '/5';
+                    $rating = $rating->rating;
                 }
                 //dd($rating);
 
