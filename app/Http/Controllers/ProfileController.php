@@ -14,6 +14,7 @@ use App\Models\Tv;
 use App\Models\Rating;
 use App\Models\Review;
 use App\Models\Contact;
+use App\Models\Payment;
 
 
 class ProfileController extends Controller
@@ -345,6 +346,23 @@ class ProfileController extends Controller
                 'games' => $games,
         ]);
 
+    }
+
+    public function showDonations()
+    {
+        $user_id = Auth::user()->id;
+
+        $userDonations = Payment::where('user_id', $user_id)->get();
+        if ($userDonations != null)
+        {
+            $userDonations = $userDonations->toArray();
+        }
+
+        //dump($userDonations);
+
+        return view('profile.donate', [
+            'donations' => $userDonations,
+        ]);
     }
 
 }

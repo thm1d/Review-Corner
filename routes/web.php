@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth']], function() {
 require __DIR__.'/auth.php';
 
 Route::get('/profile/your_watchlist', [ProfileController::class, 'showList'])->name('profile.list');
+Route::get('/profile/your_donations', [ProfileController::class, 'showDonations'])->name('profile.donation');
 Route::get('/profile/your_ratings', [ProfileController::class, 'showRatings'])->name('profile.rating');
 
 Route::get('/', [HomePageController::class, 'index'])->name('home.index');

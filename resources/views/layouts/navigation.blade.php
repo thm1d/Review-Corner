@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('profile.rating')" :active="request()->routeIs('profile.rating')">
                         {{ __('Your Ratings') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('profile.donation')" :active="request()->routeIs('profile.donation')">
+                        {{ __('Your Payments') }}
+                    </x-nav-link>
 
                 </div>
             </div>
