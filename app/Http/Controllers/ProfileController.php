@@ -139,7 +139,7 @@ class ProfileController extends Controller
             ->get('https://api.themoviedb.org/3/movie/'. $movie)
             ->json();
 
-            $apikey = 'ef1c5717';
+            $apikey = env('OMDB_TOKEN');
 
 
             if ($movieSingle['imdb_id'] != "") {
@@ -162,12 +162,12 @@ class ProfileController extends Controller
 
         foreach (array_slice($userListTv,1) as $tvShow) {
             $tvSingle = http::withToken(config('services.tmdb.token'))
-            ->get('https://api.themoviedb.org/3/tv/'. $tvShow)
+            ->get('https://api.themoviedb.org/3/tv/'. $tvShow.'?append_to_response=external_ids')
             ->json();
 
-            $apikey = 'ef1c5717';
+            //dd($tvSingle);
 
-
+            $apikey = env('OMDB_TOKEN');
             if ($tvSingle['external_ids']['imdb_id'] != "") {
                 $imdb = Http::get('http://www.omdbapi.com/?i='.$tvSingle['external_ids']['imdb_id'].'&apikey='.$apikey)
                 ->Json();
@@ -223,7 +223,7 @@ class ProfileController extends Controller
             ->get('https://api.themoviedb.org/3/movie/'. $movie['movie_id'])
             ->json();
 
-            $apikey = 'ef1c5717';
+            $apikey = env('OMDB_TOKEN');
 
 
             if ($movieSingle['imdb_id'] != "") {
@@ -275,7 +275,7 @@ class ProfileController extends Controller
             ->get('https://api.themoviedb.org/3/tv/'. $tvShow['tv_id']. '?append_to_response=external_ids')
             ->json();
 
-            $apikey = 'ef1c5717';
+           $apikey = env('OMDB_TOKEN');
 
 
             if ($tvSingle['external_ids']['imdb_id'] != "") {

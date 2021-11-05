@@ -120,7 +120,7 @@ class TvController extends Controller
             ->json();
 
         //dump($movie);
-        $apikey = 'ef1c5717';
+        $apikey = env('OMDB_TOKEN');
 
         if ($tvShow['external_ids']['imdb_id'] != "" || $tvShow['external_ids']['imdb_id'] != null) {
             $imdb = Http::get('http://www.omdbapi.com/?i='.$tvShow['external_ids']['imdb_id'].'&apikey='.$apikey)

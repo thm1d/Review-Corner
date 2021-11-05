@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2021 at 08:28 PM
+-- Generation Time: Nov 05, 2021 at 09:40 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.3.27
 
@@ -106,7 +106,8 @@ CREATE TABLE `games` (
 --
 
 INSERT INTO `games` (`id`, `game_slug`, `title`, `created_at`, `updated_at`) VALUES
-(1, 'far-cry-6', 'Far Cry 6', '2021-11-02 13:24:05', '2021-11-02 13:24:05');
+(1, 'far-cry-6', 'Far Cry 6', '2021-11-02 13:24:05', '2021-11-02 13:24:05'),
+(2, 'cosmic-star-heroine', 'Cosmic Star Heroine', '2021-11-02 20:48:38', '2021-11-02 20:48:38');
 
 -- --------------------------------------------------------
 
@@ -160,7 +161,13 @@ CREATE TABLE `movies` (
 INSERT INTO `movies` (`id`, `movie_id`, `title`, `created_at`, `updated_at`) VALUES
 (1, 157336, 'Interstellar', '2021-11-02 13:18:43', '2021-11-02 13:18:43'),
 (2, 438631, 'Dune', '2021-11-02 13:22:32', '2021-11-02 13:22:32'),
-(3, 550988, 'Free Guy', '2021-11-02 13:24:54', '2021-11-02 13:24:54');
+(3, 550988, 'Free Guy', '2021-11-02 13:24:54', '2021-11-02 13:24:54'),
+(4, 436305, 'The Farthest', '2021-11-02 20:47:56', '2021-11-02 20:47:56'),
+(5, 385128, 'F9', '2021-11-02 20:48:04', '2021-11-02 20:48:04'),
+(6, 524434, 'Eternals', '2021-11-02 20:48:14', '2021-11-02 20:48:14'),
+(7, 370172, 'No Time to Die', '2021-11-02 20:49:04', '2021-11-02 20:49:04'),
+(8, 23790, 'Magadheera', '2021-11-02 23:15:10', '2021-11-02 23:15:10'),
+(9, 334541, 'Manchester by the Sea', '2021-11-05 02:15:52', '2021-11-05 02:15:52');
 
 -- --------------------------------------------------------
 
@@ -202,7 +209,10 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`id`, `name`, `value`, `method`, `tranx_id`, `sender_number`, `contact_number`, `depositor_name`, `bank_name`, `bank_account_no`, `status`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 'Tahmid Rahman', '1000', 'bkash', 'qwerty', 1781939372, 1781939372, NULL, NULL, NULL, 0, 9, '2021-11-02 13:25:50', '2021-11-02 13:25:50');
+(1, 'Tahmid Rahman', '1000', 'bkash', 'qwerty', 1781939372, 1781939372, NULL, NULL, NULL, 1, 9, '2021-11-02 13:25:50', '2021-11-02 19:38:07'),
+(2, 'Tahmid Rahman', '400', 'bank', NULL, NULL, 1781939372, NULL, 'citybank', 12345678, 1, 9, '2021-11-02 20:50:08', '2021-11-02 20:53:23'),
+(3, 'Tahmid Rahman', '500', 'nagad', 'serfgyuj', 1781939372, 1939979553, NULL, NULL, NULL, 0, 9, '2021-11-02 20:54:45', '2021-11-02 20:54:45'),
+(4, 'Tahmid Rahman', '400', 'rocket', 'vfhhjkfd', 1781939372, 1717887522, NULL, NULL, NULL, 1, 9, '2021-11-02 20:57:33', '2021-11-02 20:58:12');
 
 -- --------------------------------------------------------
 
@@ -305,7 +315,9 @@ CREATE TABLE `ratings` (
 INSERT INTO `ratings` (`id`, `created_at`, `updated_at`, `rating`, `rateable_type`, `rateable_id`, `user_id`) VALUES
 (1, '2021-11-02 13:18:46', '2021-11-02 13:18:46', 5, 'App\\Models\\Movie', 1, 9),
 (2, '2021-11-02 13:22:34', '2021-11-02 13:22:34', 5, 'App\\Models\\Movie', 2, 9),
-(3, '2021-11-02 13:24:07', '2021-11-02 13:24:07', 5, 'App\\Models\\Game', 1, 9);
+(3, '2021-11-02 13:24:07', '2021-11-02 13:24:07', 5, 'App\\Models\\Game', 1, 9),
+(4, '2021-11-02 22:24:27', '2021-11-02 22:24:27', 5, 'App\\Models\\Tv', 4, 9),
+(5, '2021-11-02 22:25:16', '2021-11-02 22:25:16', 5, 'App\\Models\\Movie', 6, 9);
 
 -- --------------------------------------------------------
 
@@ -332,7 +344,10 @@ INSERT INTO `reviews` (`id`, `item_id`, `item_type`, `review`, `user_id`, `creat
 (2, 438631, 'movie', 'Deserunt aut rerum p', 9, '2021-11-02 13:22:51', '2021-11-02 13:22:51'),
 (3, 127235, 'tv', 'Est sapiente in iur', 9, '2021-11-02 13:23:43', '2021-11-02 13:23:43'),
 (4, 126290, 'game', 'Ea rerum id corporis', 9, '2021-11-02 13:24:17', '2021-11-02 13:24:17'),
-(5, 550988, 'movie', 'Corporis voluptas co', 9, '2021-11-02 13:25:14', '2021-11-02 13:25:14');
+(5, 550988, 'movie', 'Corporis voluptas co', 9, '2021-11-02 13:25:14', '2021-11-02 13:25:14'),
+(6, 370172, 'movie', 'Waiting', 9, '2021-11-02 20:49:24', '2021-11-02 20:49:24'),
+(7, 1399, 'tv', 'Error sit corporis c', 9, '2021-11-02 22:24:45', '2021-11-02 22:24:45'),
+(8, 524434, 'movie', 'Molestias voluptas a', 9, '2021-11-02 22:25:31', '2021-11-02 22:25:31');
 
 -- --------------------------------------------------------
 
@@ -394,7 +409,16 @@ INSERT INTO `role_user` (`role_id`, `user_id`, `user_type`) VALUES
 (3, 19, 'App\\Models\\User'),
 (3, 20, 'App\\Models\\User'),
 (3, 21, 'App\\Models\\User'),
-(3, 22, 'App\\Models\\User');
+(3, 22, 'App\\Models\\User'),
+(3, 24, 'App\\Models\\User'),
+(3, 25, 'App\\Models\\User'),
+(3, 26, 'App\\Models\\User'),
+(3, 27, 'App\\Models\\User'),
+(3, 28, 'App\\Models\\User'),
+(3, 29, 'App\\Models\\User'),
+(3, 30, 'App\\Models\\User'),
+(3, 31, 'App\\Models\\User'),
+(3, 32, 'App\\Models\\User');
 
 -- --------------------------------------------------------
 
@@ -415,7 +439,10 @@ CREATE TABLE `tvs` (
 --
 
 INSERT INTO `tvs` (`id`, `tv_id`, `title`, `created_at`, `updated_at`) VALUES
-(1, 127235, 'Invasion', '2021-11-02 13:23:25', '2021-11-02 13:23:25');
+(1, 127235, 'Invasion', '2021-11-02 13:23:25', '2021-11-02 13:23:25'),
+(2, 119770, 'Nachtlinie', '2021-11-02 14:23:09', '2021-11-02 14:23:09'),
+(3, 48449, 'Der Sonntags-Stammtisch', '2021-11-02 14:30:50', '2021-11-02 14:30:50'),
+(4, 1399, 'Game of Thrones', '2021-11-02 22:24:24', '2021-11-02 22:24:24');
 
 -- --------------------------------------------------------
 
@@ -453,19 +480,28 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `ge
 (5, 'Brianna Owens', 'behyr@mailinator.com', NULL, '$2y$10$LD/WF4UvQgO.MAvy5ENA2e9zjSMQnd410HR6Z1W9XQQskJbug3Fce', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:48:52', '2021-11-02 12:48:52'),
 (7, 'Inga Murphy', 'zoko@mailinator.com', NULL, '$2y$10$qpBPbbEerjo5ct7tn9AOkOdzgB0UhRdnbkg.qXT5XGj1DcJagJEzG', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:49:21', '2021-11-02 12:49:21'),
 (8, 'Tahmid Rahman', 'tahmid11q@gmail.com', NULL, '$2y$10$/LWP0lXOPVOS3uRXJLdriOB2sKS91ESUBoVzhPznUwHCWi51Xkcu6', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:50:00', '2021-11-02 12:50:00'),
-(9, 'Tahmid Rahman', 'tahmid@gmail.com', NULL, '$2y$10$AC9f0SqP0t2irvsQoCbVbudotAlJmdX8oZIKoDLcqk5h23h5qVGeq', 'Male', 'Pabna', 'Cumilla', '14/08/1998', '01781939372', NULL, '[\"000000\",\"157336\",\"438631\",\"550988\"]', '[\"000000\",\"127235\"]', '2021-11-02 12:50:48', '2021-11-02 13:25:00'),
+(9, 'Tahmid Rahman', 'tahmid@gmail.com', NULL, '$2y$10$AC9f0SqP0t2irvsQoCbVbudotAlJmdX8oZIKoDLcqk5h23h5qVGeq', 'Male', 'Pabna', 'Cumilla', '14/08/1998', '01712345678', NULL, '[\"000000\",\"524434\"]', '[\"000000\",\"1399\"]', '2021-11-02 12:50:48', '2021-11-05 02:38:28'),
 (10, 'Dahlia Ramos', 'tupub@mailinator.com', NULL, '$2y$10$Nevo0EvFvaPdqFRE5XzZ9e6EzEUijWuwieZhKZ048XnkmESGz.irC', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:52:52', '2021-11-02 12:52:52'),
 (11, 'Nathaniel Bradley', 'quho@mailinator.com', NULL, '$2y$10$TwRQz49tr0jpjyBUCPDk2Ok/0noRo0jN7zZB8WFhj4gAuRYegsdxi', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:53:07', '2021-11-02 12:53:07'),
 (12, 'Wade Freeman', 'zyfibimet@mailinator.com', NULL, '$2y$10$AgNHeO7kSANgA9BGKttYIuWZe5YNOSx017hYR7WZskwUMSYWK0BC.', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:53:19', '2021-11-02 12:53:19'),
 (14, 'Chase Guy', 'honolyse@mailinator.com', NULL, '$2y$10$2TNfNTl4tNYzOjeBbkMBxOxRJbszp1T0DpJxcwwaYADW3uYhlzbYK', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:53:45', '2021-11-02 12:53:45'),
 (15, 'Eagan Lynch', 'quwymet@mailinator.com', NULL, '$2y$10$f9gUqCx6bOqq0YbDKidMvuQuO7hY.LXqh3jOH5fgvet/3cojinNNK', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:53:55', '2021-11-02 12:53:55'),
 (16, 'Selma Valdez', 'xixowufi@mailinator.com', NULL, '$2y$10$yCHXaZHfunYGAaBTCHnJxeD7Sns6x5CEHFPT9aCOXya8hPV4PpAGy', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:54:09', '2021-11-02 12:54:09'),
-(17, 'Germaine Church', 'tebiluz@mailinator.com', NULL, '$2y$10$aHKmeySZoLb3pL3QEKgx3.tZIDTmWUNCeXg2ZECLkGRkSQD7vpAai', 'Male', 'Assumenda in tempora', 'Voluptas aliquam ull', '5', '01234567890', NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:54:20', '2021-11-02 12:54:39'),
+(17, 'Germaine Church', 'tebiluz@mailinator.com', NULL, '$2y$10$aHKmeySZoLb3pL3QEKgx3.tZIDTmWUNCeXg2ZECLkGRkSQD7vpAai', 'Male', 'Assumenda in tempora', 'Voluptas aliquam ull', '01/01/01', '01234567890', NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:54:20', '2021-11-02 12:54:39'),
 (18, 'Kennedy Mclean', 'gurilijad@mailinator.com', NULL, '$2y$10$HYoycwXakLyzGNSxZrG/SuEwix1hZk.iCq.2Wu0ETkk5nqAeyYXHS', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:54:54', '2021-11-02 12:54:54'),
 (19, 'Pearl Nielsen', 'mosyjyqojo@mailinator.com', NULL, '$2y$10$FKZQ11JrvMLBHogtYIUKJunOuNF7c.TX7IqsgHDr6TVcZWMckxBfO', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:55:06', '2021-11-02 12:55:06'),
 (20, 'Petra Vargas', 'bomov@mailinator.com', NULL, '$2y$10$HPhzlnn7hyYadXjE8cqdRuMgP5VfNl2K4tK2SPoU51VKcXJvvLJfS', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:55:18', '2021-11-02 12:55:18'),
 (21, 'Magee Morrow', 'dybuxi@mailinator.com', NULL, '$2y$10$SjpuZqon0Y34yTdhxSSVbOalfVLW5Dgh0vIKO.iwLABZGip6cJWLG', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:55:31', '2021-11-02 12:55:31'),
-(22, 'Carson Wagner', 'majegilivu@mailinator.com', NULL, '$2y$10$e2t2aJQ49KileVRTE5CCoecZbbJGvxLEJxNVXoMEOHHxekhF3Gnt2', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:55:43', '2021-11-02 12:55:43');
+(22, 'Carson Wagner', 'majegilivu@mailinator.com', NULL, '$2y$10$e2t2aJQ49KileVRTE5CCoecZbbJGvxLEJxNVXoMEOHHxekhF3Gnt2', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 12:55:43', '2021-11-02 12:55:43'),
+(24, 'Dustin Huffman', 'putuc@mailinator.com', NULL, '$2y$10$ynUZd94OEcOkstWsO1HuLeneick6tPryXeDjr/VHZp.BTERaSYIgi', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 20:51:01', '2021-11-02 20:51:01'),
+(25, 'Dale Guthrie', 'nopofiqoca@mailinator.com', NULL, '$2y$10$ShtkPcXczPvVT4mr/GzQr.LJRBBzP7d.TmwEWDp9fbVOkqmeVHCNG', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 20:51:13', '2021-11-02 20:51:13'),
+(26, 'Raya Larsen', 'noji@mailinator.com', NULL, '$2y$10$0.ffGBWyYVsMsNvM0ry6suvc1ZwQJu8D5agMgPnx8Ezpuas43b.7G', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 20:51:25', '2021-11-02 20:51:25'),
+(27, 'Donna Heath', 'rahurizek@mailinator.com', NULL, '$2y$10$4ZXMmD8i9waGa7E.IQ4qvOczwVcAUZPOqpn.VI8JLZbt9bOOtf0X2', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 20:51:35', '2021-11-02 20:51:35'),
+(28, 'Joy Perez', 'cazabazu@mailinator.com', NULL, '$2y$10$pet4Y2Xu62rQuMM5U/.gGuNUfpcSLXRASTEhSEHiXmFKaf8fyrsQC', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 20:59:50', '2021-11-02 20:59:50'),
+(29, 'Odysseus Vargas', 'xovygusuhy@mailinator.com', NULL, '$2y$10$m2CKnlj8sj3b01VTNMxENuLisCwy6WEGngU8FUpCx76OUPohc7Ioa', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 21:00:14', '2021-11-02 21:00:14'),
+(30, 'Lester Morrow', 'cybefa@mailinator.com', NULL, '$2y$10$6CD306/godenTUZDMvmsZ.wbFV9eh5AhDtOg0A4gwPBV8731VxneC', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 21:00:27', '2021-11-02 21:00:27'),
+(31, 'Remedios Pope', 'hywyfikeb@mailinator.com', NULL, '$2y$10$oy1p2TouMz7V2sOZiXS4/e2JNHXQBnb.CN5XpN8BpzaYBxKV6PG/2', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 21:00:40', '2021-11-02 21:00:40'),
+(32, 'Alfonso Case', 'pukavafy@mailinator.com', NULL, '$2y$10$poxZ0Xknzrb7875IahkpF.RoBbgyQJG18qWfCADAmymsBr6ukepA2', NULL, NULL, NULL, NULL, NULL, NULL, '[\"000000\"]', '[\"000000\"]', '2021-11-02 21:00:53', '2021-11-02 21:00:53');
 
 --
 -- Indexes for dumped tables
@@ -612,7 +648,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -624,13 +660,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `movies`
 --
 ALTER TABLE `movies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -642,13 +678,13 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -660,13 +696,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `tvs`
 --
 ALTER TABLE `tvs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables

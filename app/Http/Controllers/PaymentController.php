@@ -69,6 +69,6 @@ class PaymentController extends Controller
 	    }
         // $url = URL::route('donate.index', ['#2']);
         // Redirect::to($url);
-        return Redirect::to(URL::previous() . "#2")->with('msg', 'Request Submitted. Please wait for the confirmation mail');
+        return Redirect::to(URL::previous() . "#2")->with('msg', 'Request Submitted. Please wait for confirmation');
     }
 }

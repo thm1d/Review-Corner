@@ -159,7 +159,7 @@ class MoviesController extends Controller
             ->get('https://api.themoviedb.org/3/movie/'.$id.'?append_to_response=credits,videos,images,reviews,similar')
             ->json();
 
-        $apikey = 'ef1c5717';
+        $apikey = env('OMDB_TOKEN');
 
 
         if ($movie['imdb_id'] != "") {

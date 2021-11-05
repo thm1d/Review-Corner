@@ -78,7 +78,7 @@
                                 @if ($donation['status'] == 0)
                                 <form action="{{ route('donation.update', $donation['id']) }}" method="POST">
                                     @csrf
-                                    <button class="text-indigo-600 hover:text-indigo-900 flex flex-row justify-center items-center" onclick="return confirm('Are you sure?')"><img src="{{ asset('/img/approve.png') }}" class="w-4 mr-2">Approve</button>
+                                    <button class="text-indigo-600 hover:text-indigo-900 flex flex-row justify-center items-center" onclick="return confirm('Are you sure?')"><img src="{{ asset('/img/question.png') }}" class="w-4 mr-2">Approve</button>
                                 </form>
                                 @else
                                 <div class="text-indigo-600 hover:text-indigo-900 flex flex-row justify-center items-center"><img src="{{ asset('/img/approve.png') }}" class="w-4 mr-2">Approved</div>
